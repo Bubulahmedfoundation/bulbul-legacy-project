@@ -1,10 +1,10 @@
-
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Award, Gift, File, Users, Heart } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import AwardGallery from "@/components/AwardGallery";
 
 const Programs = () => {
   const location = useLocation();
@@ -14,11 +14,9 @@ const Programs = () => {
   const schoolsRef = useRef<HTMLDivElement>(null);
   const covidRef = useRef<HTMLDivElement>(null);
   
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
     
-    // Handle hash navigation
     if (location.hash) {
       setTimeout(() => {
         const targetRef = {
@@ -30,7 +28,7 @@ const Programs = () => {
         }[location.hash];
         
         if (targetRef && targetRef.current) {
-          const yOffset = -80; // Header height offset
+          const yOffset = -80;
           const y = targetRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({top: y, behavior: 'smooth'});
         }
@@ -67,7 +65,6 @@ const Programs = () => {
 
   return (
     <>
-      {/* Page Header */}
       <section className="pt-32 pb-20 bg-baft-cream/30">
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-playfair font-bold mb-6 heading-decoration">
@@ -80,7 +77,6 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* Memorial Award */}
       <section ref={awardRef} id="awards" className="py-20">
         <div className="container">
           <div className="flex items-center mb-8">
@@ -106,13 +102,15 @@ const Programs = () => {
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=2000" 
-                  alt="Bulbul Ahmed Memorial Award Ceremony" 
+                  src="/lovable-uploads/ab477424-f4c8-478f-b729-dad0a950aff8.png"
+                  alt="Award ceremony" 
                   className="w-full h-full object-cover"
                 />
               </div>
             </div>
           </div>
+
+          <AwardGallery />
 
           <h3 className="text-2xl font-playfair font-semibold mb-6">Recent Recipients</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -138,7 +136,6 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* Winter Drives */}
       <section ref={winterRef} id="winter" className="py-20 bg-baft-cream/30">
         <div className="container">
           <div className="flex items-center mb-8">
@@ -177,7 +174,6 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* Rohingya Support */}
       <section ref={refugeeRef} id="refugee" className="py-20">
         <div className="container">
           <div className="flex items-center mb-8">
@@ -216,7 +212,6 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* School Support */}
       <section ref={schoolsRef} id="schools" className="py-20 bg-baft-cream/30">
         <div className="container">
           <div className="flex items-center mb-8">
@@ -258,7 +253,6 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* COVID-19 Relief */}
       <section ref={covidRef} id="covid" className="py-20">
         <div className="container">
           <div className="flex items-center mb-8">
@@ -294,7 +288,6 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* Impact Report */}
       <section className="py-16 bg-baft-maroon text-white">
         <div className="container">
           <div className="flex flex-col md:flex-row items-center justify-between">
