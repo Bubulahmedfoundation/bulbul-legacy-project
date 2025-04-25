@@ -34,7 +34,10 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <span className="text-baft-maroon font-playfair text-xl md:text-2xl font-bold">
+          <span className={cn(
+            "font-playfair text-xl md:text-2xl font-bold transition-colors",
+            isScrolled ? "text-baft-maroon" : "text-white drop-shadow-md"
+          )}>
             Bulbul Ahmed Foundation Trust
           </span>
         </Link>
@@ -45,21 +48,51 @@ const Navbar = () => {
           onClick={toggleMobileMenu}
           aria-label="Toggle mobile menu"
         >
-          <span className={`block h-0.5 w-6 bg-baft-darkgray transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></span>
-          <span className={`block h-0.5 w-6 bg-baft-darkgray mt-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-          <span className={`block h-0.5 w-6 bg-baft-darkgray mt-1 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1' : ''}`}></span>
+          <span className={`block h-0.5 w-6 ${isScrolled ? 'bg-baft-darkgray' : 'bg-white'} transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></span>
+          <span className={`block h-0.5 w-6 ${isScrolled ? 'bg-baft-darkgray' : 'bg-white'} mt-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+          <span className={`block h-0.5 w-6 ${isScrolled ? 'bg-baft-darkgray' : 'bg-white'} mt-1 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1' : ''}`}></span>
         </button>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-baft-darkgray hover:text-baft-maroon transition-colors">Home</Link>
-          <Link to="/about" className="text-baft-darkgray hover:text-baft-maroon transition-colors">About Us</Link>
-          <Link to="/programs" className="text-baft-darkgray hover:text-baft-maroon transition-colors">Programs</Link>
-          <Link to="/news" className="text-baft-darkgray hover:text-baft-maroon transition-colors">News & Events</Link>
-          <Link to="/get-involved" className="text-baft-darkgray hover:text-baft-maroon transition-colors">Get Involved</Link>
+          <Link to="/" className={cn(
+            "transition-colors hover:text-baft-gold",
+            isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
+          )}>
+            Home
+          </Link>
+          <Link to="/about" className={cn(
+            "transition-colors hover:text-baft-gold",
+            isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
+          )}>
+            About Us
+          </Link>
+          <Link to="/programs" className={cn(
+            "transition-colors hover:text-baft-gold",
+            isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
+          )}>
+            Programs
+          </Link>
+          <Link to="/news" className={cn(
+            "transition-colors hover:text-baft-gold",
+            isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
+          )}>
+            News & Events
+          </Link>
+          <Link to="/get-involved" className={cn(
+            "transition-colors hover:text-baft-gold",
+            isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
+          )}>
+            Get Involved
+          </Link>
           <Link 
             to="/get-involved#donate" 
-            className="px-5 py-2 bg-baft-maroon text-white rounded hover:bg-baft-maroon/90 transition-colors"
+            className={cn(
+              "px-5 py-2 rounded transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5",
+              isScrolled 
+                ? "bg-baft-maroon text-white hover:bg-baft-maroon/90" 
+                : "bg-baft-gold text-baft-darkgray hover:bg-baft-gold/90"
+            )}
           >
             Donate
           </Link>

@@ -5,10 +5,10 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 
 const Introduction = () => {
   return (
-    <section id="introduction" className="py-24 bg-gradient-to-b from-baft-cream/30 to-white">
+    <section id="introduction" className="py-28 bg-gradient-to-b from-baft-cream/30 to-white">
       <div className="container">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6 animate-on-scroll">
+          <div className="space-y-8 animate-on-scroll">
             <h2 className="text-3xl md:text-4xl font-playfair font-semibold heading-decoration">
               About the Foundation
             </h2>
@@ -23,9 +23,9 @@ const Introduction = () => {
               on communities across Bangladesh, particularly focusing on underprivileged 
               children, displaced populations, and preserving cultural heritage.
             </p>
-            <div className="pt-4">
+            <div className="pt-6">
               <Link to="/about">
-                <Button className="bg-baft-maroon hover:bg-baft-maroon/90 text-lg group">
+                <Button className="bg-baft-maroon hover:bg-baft-maroon/90 text-lg group shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300">
                   Our Story
                   <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
                 </Button>
