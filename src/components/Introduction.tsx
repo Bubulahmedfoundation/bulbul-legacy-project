@@ -1,43 +1,59 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 const Introduction = () => {
   return (
-    <section className="py-20 bg-baft-cream/30">
+    <section id="introduction" className="py-24 bg-gradient-to-b from-baft-cream/30 to-white">
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-playfair font-semibold mb-6 heading-decoration">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6 animate-on-scroll">
+            <h2 className="text-3xl md:text-4xl font-playfair font-semibold heading-decoration">
               About the Foundation
             </h2>
-            <p className="text-lg mb-6 leading-relaxed">
+            <p className="text-lg leading-relaxed text-gray-700">
               The Bulbul Ahmed Foundation Trust (BAFT) was established in 2015 to honor the legacy of 
               the renowned Bangladeshi actor Bulbul Ahmed. Our mission is to preserve his 
               cultural contributions while empowering future generations through education, 
               humanitarian relief, and artistic patronage.
             </p>
-            <p className="text-lg mb-8 leading-relaxed">
+            <p className="text-lg leading-relaxed text-gray-700">
               Through our various programs and initiatives, we strive to make a positive impact 
               on communities across Bangladesh, particularly focusing on underprivileged 
               children, displaced populations, and preserving cultural heritage.
             </p>
-            <Link to="/about">
-              <Button className="bg-baft-maroon hover:bg-baft-maroon/90">
-                Our Story
-              </Button>
-            </Link>
-          </div>
-          <div className="relative">
-            <div className="border-8 border-white shadow-lg rounded overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=2000" 
-                alt="Foundation activities" 
-                className="w-full h-full object-cover"
-              />
+            <div className="pt-4">
+              <Link to="/about">
+                <Button className="bg-baft-maroon hover:bg-baft-maroon/90 text-lg group">
+                  Our Story
+                  <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
+                </Button>
+              </Link>
             </div>
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-baft-gold/20 -z-10"></div>
-            <div className="absolute -top-6 -right-6 w-32 h-32 bg-baft-maroon/20 -z-10"></div>
+          </div>
+          <div className="relative animate-on-scroll">
+            <div className="border-8 border-white shadow-xl rounded-lg overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
+              <HoverCard>
+                <HoverCardTrigger asChild>
+                  <img 
+                    src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=2000" 
+                    alt="Foundation activities" 
+                    className="w-full h-[500px] object-cover"
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent className="w-80">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold">Making a Difference</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Our initiatives have touched thousands of lives across Bangladesh through various humanitarian programs.
+                    </p>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+            </div>
+            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-baft-gold/20 -z-10 rounded-full"></div>
+            <div className="absolute -top-6 -right-6 w-32 h-32 bg-baft-maroon/20 -z-10 rounded-full"></div>
           </div>
         </div>
       </div>
