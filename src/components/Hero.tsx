@@ -11,26 +11,35 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay - Changed to a darker overlay for better contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/60 z-10"></div>
+      {/* Background Image with Portrait Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-black/70 z-10"></div>
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0" 
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=2000')" }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" 
+        style={{ backgroundImage: "url('/lovable-uploads/d2323b36-dea7-4903-a308-691a5984f1fd.png')" }}
       ></div>
       
-      {/* Content - Improved spacing between elements */}
+      {/* Content */}
       <div className="container relative z-20 text-center text-white">
-        <div className="space-y-10 animate-fade-in">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold text-white drop-shadow-md">
+        <div className="space-y-8 animate-fade-in">
+          <div className="inline-block rounded-full p-1 px-4 bg-baft-gold/10 backdrop-blur-sm mb-4">
+            <span className="text-baft-gold text-sm font-medium">Established 2015</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold text-white drop-shadow-lg">
             Bulbul Ahmed Foundation Trust
           </h1>
-          <div className="w-24 h-1 bg-baft-gold mx-auto"></div>
-          <p className="text-xl md:text-2xl font-light mb-12 max-w-3xl mx-auto leading-relaxed text-white drop-shadow-sm">
-            Celebrating a Legend. Empowering Communities.
-          </p>
-          <div className="flex flex-wrap justify-center gap-8">
+          
+          <div className="flex items-center justify-center gap-2 opacity-90">
+            <div className="h-[1px] w-12 bg-baft-gold"></div>
+            <p className="text-xl md:text-2xl font-light max-w-3xl mx-auto leading-relaxed text-white/90">
+              Celebrating a Legend. Empowering Communities.
+            </p>
+            <div className="h-[1px] w-12 bg-baft-gold"></div>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 pt-4">
             <Link to="/about">
-              <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/10 hover:bg-white/20 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl">
+              <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl">
                 Learn About Bulbul
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Button>
@@ -42,7 +51,7 @@ const Hero = () => {
               </Button>
             </Link>
             <Link to="/programs#awards">
-              <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/10 hover:bg-white/20 text-lg flex items-center gap-2 shadow-lg hover:shadow-xl">
+              <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg flex items-center gap-2 shadow-lg hover:shadow-xl">
                 <Award className="w-5 h-5" />
                 Award Archive
               </Button>
@@ -50,13 +59,13 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Enhanced Scroll Indicator with animation */}
+        {/* Enhanced Scroll Indicator */}
         <button 
           onClick={scrollToNext}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-pulse"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow"
           aria-label="Scroll to next section"
         >
-          <span className="text-sm font-medium">Our Mission</span>
+          <span className="text-sm font-medium tracking-wider uppercase">Our Mission</span>
           <ArrowDown className="w-6 h-6" />
         </button>
       </div>
