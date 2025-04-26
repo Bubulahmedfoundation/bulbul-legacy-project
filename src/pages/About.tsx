@@ -1,4 +1,3 @@
-
 import { Separator } from "@/components/ui/separator";
 import {
   Carousel,
@@ -10,7 +9,6 @@ import {
 import { useEffect } from "react";
 
 const About = () => {
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -66,8 +64,8 @@ const About = () => {
             <div className="relative">
               <div className="border-8 border-white shadow-lg rounded overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=2000" 
-                  alt="Bulbul Ahmed Foundation Story" 
+                  src="/lovable-uploads/2e9a5905-d504-48d7-88f6-2ca462762cbc.png"
+                  alt="Bulbul Ahmed Portrait" 
                   className="w-full h-[400px] object-cover"
                 />
               </div>
@@ -90,7 +88,7 @@ const About = () => {
               <div className="w-full md:w-1/3 mb-4 md:mb-0">
                 <div className="aspect-square rounded-lg overflow-hidden border-4 border-white shadow-md">
                   <img 
-                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" 
+                    src="/lovable-uploads/cde9bbf0-bcc8-48c7-8d4a-da3ca68c99b7.png"
                     alt="Daisy Ahmed" 
                     className="w-full h-full object-cover"
                   />
@@ -110,12 +108,12 @@ const About = () => {
               </div>
             </div>
             
-            {/* Tahsin Farzana Tilottoma */}
+            {/* Tahsin Farzana */}
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="w-full md:w-1/3 mb-4 md:mb-0">
                 <div className="aspect-square rounded-lg overflow-hidden border-4 border-white shadow-md">
                   <img 
-                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" 
+                    src="/lovable-uploads/c233c5e6-f861-4739-83a4-229a531b868c.png"
                     alt="Tahsin Farzana Tilottoma" 
                     className="w-full h-full object-cover"
                   />
@@ -133,6 +131,65 @@ const About = () => {
                   humanitarian aid has been vital to the foundation's success.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Foundation's Work */}
+      <section className="py-20">
+        <div className="container">
+          <h2 className="text-3xl font-playfair font-semibold mb-12 heading-decoration text-center">
+            Our Impact
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Senior Care */}
+            <div className="space-y-4">
+              <div className="aspect-video rounded-lg overflow-hidden border-4 border-white shadow-lg">
+                <img 
+                  src="/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png"
+                  alt="Ramadan Senior Center Program" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-playfair font-semibold">Senior Care Support</h3>
+              <p className="text-gray-600">
+                Our dedicated programs at Golden Years Senior Daycare Center provide essential 
+                support and care for elderly community members.
+              </p>
+            </div>
+
+            {/* School Programs */}
+            <div className="space-y-4">
+              <div className="aspect-video rounded-lg overflow-hidden border-4 border-white shadow-lg">
+                <img 
+                  src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
+                  alt="School Meal Program" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-playfair font-semibold">Education Support</h3>
+              <p className="text-gray-600">
+                Supporting young students through our educational initiatives and meal programs, 
+                ensuring children have the resources they need to thrive.
+              </p>
+            </div>
+
+            {/* Healthcare Support */}
+            <div className="space-y-4">
+              <div className="aspect-video rounded-lg overflow-hidden border-4 border-white shadow-lg">
+                <img 
+                  src="/lovable-uploads/ba61021c-40ec-4122-bd0f-a942b3a38c0d.png"
+                  alt="Healthcare Support Program" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-playfair font-semibold">Healthcare Initiatives</h3>
+              <p className="text-gray-600">
+                Providing critical medical supplies and support to patients and healthcare 
+                facilities across Bangladesh.
+              </p>
             </div>
           </div>
         </div>
