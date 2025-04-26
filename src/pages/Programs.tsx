@@ -5,7 +5,6 @@ import { Award, Gift, File, Users, Heart } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import AwardGallery from "@/components/AwardGallery";
-
 const Programs = () => {
   const location = useLocation();
   const awardRef = useRef<HTMLDivElement>(null);
@@ -13,10 +12,8 @@ const Programs = () => {
   const refugeeRef = useRef<HTMLDivElement>(null);
   const schoolsRef = useRef<HTMLDivElement>(null);
   const covidRef = useRef<HTMLDivElement>(null);
-  
   useEffect(() => {
     window.scrollTo(0, 0);
-    
     if (location.hash) {
       setTimeout(() => {
         const targetRef = {
@@ -24,47 +21,41 @@ const Programs = () => {
           "#winter": winterRef,
           "#refugee": refugeeRef,
           "#schools": schoolsRef,
-          "#covid": covidRef,
+          "#covid": covidRef
         }[location.hash];
-        
         if (targetRef && targetRef.current) {
           const yOffset = -80;
           const y = targetRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({top: y, behavior: 'smooth'});
+          window.scrollTo({
+            top: y,
+            behavior: 'smooth'
+          });
         }
       }, 100);
     }
   }, [location]);
-
-  const awardRecipients = [
-    {
-      year: 2023,
-      name: "Anisul Hoque",
-      category: "Literature",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      year: 2022,
-      name: "Ferdous Ahmed",
-      category: "Film",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      year: 2021,
-      name: "Chanchal Chowdhury",
-      category: "Acting",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      year: 2020,
-      name: "Shayan Chowdhury Arnob",
-      category: "Music",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800"
-    }
-  ];
-
-  return (
-    <>
+  const awardRecipients = [{
+    year: 2023,
+    name: "Anisul Hoque",
+    category: "Literature",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800"
+  }, {
+    year: 2022,
+    name: "Ferdous Ahmed",
+    category: "Film",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"
+  }, {
+    year: 2021,
+    name: "Chanchal Chowdhury",
+    category: "Acting",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
+  }, {
+    year: 2020,
+    name: "Shayan Chowdhury Arnob",
+    category: "Music",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800"
+  }];
+  return <>
       <section className="pt-32 pb-20 bg-baft-cream/30">
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-playfair font-bold mb-6 heading-decoration">
@@ -101,11 +92,7 @@ const Programs = () => {
             </div>
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
-                <img 
-                  src="/lovable-uploads/e0625e97-686a-4c1c-83f6-9a2017a9cbc1.png"
-                  alt="Bulbul Ahmed" 
-                  className="w-full object-cover"
-                />
+                <img alt="Bulbul Ahmed" src="/lovable-uploads/76d0401f-4560-4de5-b17d-8e3e19c41826.jpg" className="w-full object-scale-down" />
               </div>
             </div>
           </div>
@@ -114,14 +101,9 @@ const Programs = () => {
 
           <h3 className="text-2xl font-playfair font-semibold mb-6">Recent Recipients</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {awardRecipients.map((recipient, index) => (
-              <Card key={index} className="overflow-hidden">
+            {awardRecipients.map((recipient, index) => <Card key={index} className="overflow-hidden">
                 <div className="h-56 overflow-hidden">
-                  <img 
-                    src={recipient.image} 
-                    alt={recipient.name} 
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
+                  <img src={recipient.image} alt={recipient.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
                 </div>
                 <CardContent className="pt-4">
                   <h4 className="font-playfair font-semibold text-lg">{recipient.name}</h4>
@@ -130,8 +112,7 @@ const Programs = () => {
                     <span className="font-medium">{recipient.year}</span>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -148,11 +129,7 @@ const Programs = () => {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="relative order-2 md:order-1">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
-                <img 
-                  src="/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png"
-                  alt="Winter drive distribution" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png" alt="Winter drive distribution" className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="order-1 md:order-2">
@@ -201,11 +178,7 @@ const Programs = () => {
             </div>
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
-                <img 
-                  src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
-                  alt="School support program" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png" alt="School support program" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -228,11 +201,7 @@ const Programs = () => {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="relative order-2 md:order-1">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
-                <img 
-                  src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
-                  alt="School support program" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png" alt="School support program" className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="order-1 md:order-2">
@@ -277,11 +246,7 @@ const Programs = () => {
             </div>
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
-                <img 
-                  src="/lovable-uploads/ba61021c-40ec-4122-bd0f-a942b3a38c0d.png"
-                  alt="Healthcare support program" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/ba61021c-40ec-4122-bd0f-a942b3a38c0d.png" alt="Healthcare support program" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -306,8 +271,6 @@ const Programs = () => {
           </div>
         </div>
       </section>
-    </>
-  );
+    </>;
 };
-
 export default Programs;
