@@ -102,9 +102,9 @@ const Programs = () => {
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
                 <img 
-                  src="/lovable-uploads/ab477424-f4c8-478f-b729-dad0a950aff8.png"
-                  alt="Award ceremony" 
-                  className="w-full h-full object-cover"
+                  src="/lovable-uploads/e0625e97-686a-4c1c-83f6-9a2017a9cbc1.png"
+                  alt="Bulbul Ahmed" 
+                  className="w-full object-cover"
                 />
               </div>
             </div>
@@ -149,7 +149,7 @@ const Programs = () => {
             <div className="relative order-2 md:order-1">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=2000" 
+                  src="/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png"
                   alt="Winter drive distribution" 
                   className="w-full h-full object-cover"
                 />
@@ -202,8 +202,8 @@ const Programs = () => {
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000" 
-                  alt="Refugee support program" 
+                  src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
+                  alt="School support program" 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -229,7 +229,7 @@ const Programs = () => {
             <div className="relative order-2 md:order-1">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000" 
+                  src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
                   alt="School support program" 
                   className="w-full h-full object-cover"
                 />
@@ -278,8 +278,8 @@ const Programs = () => {
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1527576539890-dfa815648363?auto=format&fit=crop&q=80&w=2000" 
-                  alt="COVID-19 relief initiative" 
+                  src="/lovable-uploads/ba61021c-40ec-4122-bd0f-a942b3a38c0d.png"
+                  alt="Healthcare support program" 
                   className="w-full h-full object-cover"
                 />
               </div>
