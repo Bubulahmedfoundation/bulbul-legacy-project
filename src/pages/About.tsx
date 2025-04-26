@@ -1,27 +1,12 @@
-
 import { Separator } from "@/components/ui/separator";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useEffect } from "react";
-
 const About = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const careerImages = [
-    "/lovable-uploads/9fb94e29-6ee4-4067-a70d-d4c5051c47cb.png",
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000",
-    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=2000",
-  ];
-
-  return (
-    <>
+  const careerImages = ["/lovable-uploads/9fb94e29-6ee4-4067-a70d-d4c5051c47cb.png", "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000", "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=2000"];
+  return <>
       {/* Page Header */}
       <section className="pt-32 pb-20 bg-baft-cream/30">
         <div className="container">
@@ -64,11 +49,7 @@ const About = () => {
             </div>
             <div className="relative">
               <div className="border-8 border-white shadow-lg rounded overflow-hidden">
-                <img 
-                  src="/lovable-uploads/2e9a5905-d504-48d7-88f6-2ca462762cbc.png"
-                  alt="Bulbul Ahmed Portrait" 
-                  className="w-full h-[400px] object-cover"
-                />
+                <img src="/lovable-uploads/2e9a5905-d504-48d7-88f6-2ca462762cbc.png" alt="Bulbul Ahmed Portrait" className="w-full h-[400px] object-cover" />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-baft-gold/20 -z-10"></div>
             </div>
@@ -88,11 +69,7 @@ const About = () => {
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="w-full md:w-1/3 mb-4 md:mb-0">
                 <div className="aspect-square rounded-lg overflow-hidden border-4 border-white shadow-md">
-                  <img 
-                    src="/lovable-uploads/cde9bbf0-bcc8-48c7-8d4a-da3ca68c99b7.png"
-                    alt="Daisy Ahmed" 
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="/lovable-uploads/cde9bbf0-bcc8-48c7-8d4a-da3ca68c99b7.png" alt="Daisy Ahmed" className="w-full h-full object-cover" />
                 </div>
               </div>
               <div className="w-full md:w-2/3">
@@ -113,11 +90,7 @@ const About = () => {
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="w-full md:w-1/3 mb-4 md:mb-0">
                 <div className="aspect-square rounded-lg overflow-hidden border-4 border-white shadow-md">
-                  <img 
-                    src="/lovable-uploads/c233c5e6-f861-4739-83a4-229a531b868c.png"
-                    alt="Tahsin Farzana Tilottoma" 
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="/lovable-uploads/c233c5e6-f861-4739-83a4-229a531b868c.png" alt="Tahsin Farzana Tilottoma" className="w-full h-full object-cover" />
                 </div>
               </div>
               <div className="w-full md:w-2/3">
@@ -148,11 +121,7 @@ const About = () => {
             {/* Senior Care */}
             <div className="space-y-4">
               <div className="aspect-video rounded-lg overflow-hidden border-4 border-white shadow-lg">
-                <img 
-                  src="/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png"
-                  alt="Ramadan Senior Center Program" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png" alt="Ramadan Senior Center Program" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-xl font-playfair font-semibold">Senior Care Support</h3>
               <p className="text-gray-600">
@@ -164,11 +133,7 @@ const About = () => {
             {/* School Programs */}
             <div className="space-y-4">
               <div className="aspect-video rounded-lg overflow-hidden border-4 border-white shadow-lg">
-                <img 
-                  src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
-                  alt="School Meal Program" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png" alt="School Meal Program" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-xl font-playfair font-semibold">Education Support</h3>
               <p className="text-gray-600">
@@ -180,11 +145,7 @@ const About = () => {
             {/* Healthcare Support */}
             <div className="space-y-4">
               <div className="aspect-video rounded-lg overflow-hidden border-4 border-white shadow-lg">
-                <img 
-                  src="/lovable-uploads/ba61021c-40ec-4122-bd0f-a942b3a38c0d.png"
-                  alt="Healthcare Support Program" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/lovable-uploads/ba61021c-40ec-4122-bd0f-a942b3a38c0d.png" alt="Healthcare Support Program" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-xl font-playfair font-semibold">Healthcare Initiatives</h3>
               <p className="text-gray-600">
@@ -205,17 +166,11 @@ const About = () => {
           
           <Carousel className="w-full max-w-4xl mx-auto">
             <CarouselContent>
-              {careerImages.map((image, index) => (
-                <CarouselItem key={index} className="pl-0">
+              {careerImages.map((image, index) => <CarouselItem key={index} className="pl-0">
                   <div className="border-8 border-white shadow-lg rounded overflow-hidden">
-                    <img 
-                      src={image} 
-                      alt={`Bulbul Ahmed career moment ${index + 1}`} 
-                      className="w-full h-[500px] object-cover"
-                    />
+                    <img src={image} alt={`Bulbul Ahmed career moment ${index + 1}`} className="w-full h-[500px] object-contain" />
                   </div>
-                </CarouselItem>
-              ))}
+                </CarouselItem>)}
             </CarouselContent>
             <div className="flex justify-center mt-8">
               <CarouselPrevious className="mr-2" />
@@ -232,8 +187,6 @@ const About = () => {
           </div>
         </div>
       </section>
-    </>
-  );
+    </>;
 };
-
 export default About;
