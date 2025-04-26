@@ -17,7 +17,7 @@ const Navbar = () => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  return <nav className="bg-zinc-900 py-[17px] mx-0 rounded">
+  return <nav className="py-[17px] mx-0 rounded bg-baft-darkgray">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <span className={cn("font-playfair text-xl md:text-2xl font-bold transition-colors", isScrolled ? "text-baft-maroon" : "text-white drop-shadow-md")}>
