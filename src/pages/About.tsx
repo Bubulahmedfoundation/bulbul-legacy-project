@@ -1,3 +1,4 @@
+
 import { Separator } from "@/components/ui/separator";
 import {
   Carousel,
@@ -14,7 +15,7 @@ const About = () => {
   }, []);
 
   const careerImages = [
-    "https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&q=80&w=2000",
+    "/lovable-uploads/9fb94e29-6ee4-4067-a70d-d4c5051c47cb.png",
     "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000",
     "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=2000",
   ];
