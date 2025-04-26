@@ -15,7 +15,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-black/70 z-10"></div>
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" 
-        style={{ backgroundImage: "url('/lovable-uploads/d2323b36-dea7-4903-a308-691a5984f1fd.png')" }}
+        style={{ backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')" }}
       ></div>
       
       {/* Content */}

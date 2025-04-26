@@ -10,18 +10,16 @@ const Introduction = () => {
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="space-y-8 animate-on-scroll">
             <h2 className="text-3xl md:text-4xl font-playfair font-semibold heading-decoration">
-              About the Foundation
+              Our Impact
             </h2>
             <p className="text-lg leading-relaxed text-gray-700">
-              The Bulbul Ahmed Foundation Trust (BAFT) was established in 2015 to honor the legacy of 
-              the renowned Bangladeshi actor Bulbul Ahmed. Our mission extends beyond preserving his 
-              cultural contributions to empowering future generations through education, 
-              humanitarian relief, and artistic patronage.
+              Since 2015, the Bulbul Ahmed Foundation Trust has been dedicated to preserving 
+              the cultural legacy of the renowned actor while making a real difference in 
+              communities across Bangladesh through education, humanitarian aid, and artistic support.
             </p>
             <p className="text-lg leading-relaxed text-gray-700">
-              Through our various programs and initiatives, we strive to make a positive impact 
-              on communities across Bangladesh, particularly focusing on underprivileged 
-              children, displaced populations, and preserving cultural heritage.
+              Our programs reach from senior care centers to schools, providing essential 
+              support and fostering cultural growth through various initiatives.
             </p>
             <div className="pt-6">
               <Link to="/about">
@@ -39,13 +37,13 @@ const Introduction = () => {
                 <HoverCardTrigger asChild>
                   <img 
                     src="/lovable-uploads/76e461a8-c599-419e-b8d0-3358c6d4cb4f.png"
-                    alt="Foundation's work at Golden Years Senior Daycare Center" 
+                    alt="Senior care program at Golden Years Center" 
                     className="w-full h-64 object-cover rounded-lg shadow-lg transform hover:scale-[1.02] transition-transform duration-300"
                   />
                 </HoverCardTrigger>
                 <HoverCardContent className="w-80">
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold">Community Outreach</h4>
+                    <h4 className="text-sm font-semibold">Senior Care Support</h4>
                     <p className="text-sm text-muted-foreground">
                       Our work at Golden Years Senior Daycare Center, bringing support and dignity to the elderly.
                     </p>
@@ -57,15 +55,15 @@ const Introduction = () => {
                 <HoverCardTrigger asChild>
                   <img 
                     src="/lovable-uploads/77a638bc-7a3e-42cf-b3bc-cf77e7641b6d.png"
-                    alt="School outreach program" 
+                    alt="School meal program" 
                     className="w-full h-48 object-cover rounded-lg shadow-lg transform hover:scale-[1.02] transition-transform duration-300"
                   />
                 </HoverCardTrigger>
                 <HoverCardContent className="w-80">
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold">Education Initiative</h4>
+                    <h4 className="text-sm font-semibold">School Meal Program</h4>
                     <p className="text-sm text-muted-foreground">
-                      Supporting young students through our educational programs and meal distribution.
+                      Supporting young students through our educational and nutritional support initiatives.
                     </p>
                   </div>
                 </HoverCardContent>
@@ -77,15 +75,15 @@ const Introduction = () => {
                 <HoverCardTrigger asChild>
                   <img 
                     src="/lovable-uploads/535b1ac0-c57f-4223-a49d-6babcd965bf8.png"
-                    alt="Foundation's humanitarian work" 
+                    alt="Medical supply distribution" 
                     className="w-full h-48 object-cover rounded-lg shadow-lg transform hover:scale-[1.02] transition-transform duration-300"
                   />
                 </HoverCardTrigger>
                 <HoverCardContent className="w-80">
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold">Humanitarian Aid</h4>
+                    <h4 className="text-sm font-semibold">Healthcare Support</h4>
                     <p className="text-sm text-muted-foreground">
-                      Distribution of essential supplies to communities in need.
+                      Distribution of medical supplies and healthcare support to communities in need.
                     </p>
                   </div>
                 </HoverCardContent>
@@ -94,8 +92,8 @@ const Introduction = () => {
               <HoverCard>
                 <HoverCardTrigger asChild>
                   <img 
-                    src="/lovable-uploads/945d586c-97f3-41bd-8ee2-71d614c5c220.png"
-                    alt="BAFT Award presentation" 
+                    src="/lovable-uploads/ab477424-f4c8-478f-b729-dad0a950aff8.png"
+                    alt="Memorial award ceremony" 
                     className="w-full h-64 object-cover rounded-lg shadow-lg transform hover:scale-[1.02] transition-transform duration-300"
                   />
                 </HoverCardTrigger>
@@ -103,7 +101,7 @@ const Introduction = () => {
                   <div className="space-y-2">
                     <h4 className="text-sm font-semibold">Cultural Legacy</h4>
                     <p className="text-sm text-muted-foreground">
-                      The Bulbul Ahmed Memorial Award, recognizing excellence in arts and culture.
+                      The Bulbul Ahmed Memorial Award ceremony, recognizing excellence in arts and culture.
                     </p>
                   </div>
                 </HoverCardContent>
