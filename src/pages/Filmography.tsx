@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Film } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -52,12 +51,6 @@ const films = [
     title: "The Father",
     year: 1979,
     videoUrl: "https://www.youtube.com/embed/bF9UeoRRVtw",
-  },
-  {
-    id: 9,
-    title: "Mayer Dabi",
-    year: 1986,
-    videoUrl: "https://www.youtube.com/embed/F316NS80rkU",
   },
   {
     id: 10,
