@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Programs from "./pages/Programs";
 import News from "./pages/News";
 import GetInvolved from "./pages/GetInvolved";
+import Filmography from "./pages/Filmography";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/programs" element={<Programs />} />
             <Route path="/news" element={<News />} />
             <Route path="/get-involved" element={<GetInvolved />} />
+            <Route path="/filmography" element={<Filmography />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

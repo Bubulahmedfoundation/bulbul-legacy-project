@@ -1,9 +1,12 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -14,9 +17,11 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
   return <nav className="py-[17px] mx-0 rounded bg-baft-darkgray">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
@@ -43,6 +48,9 @@ const Navbar = () => {
           <Link to="/programs" className={cn("transition-colors hover:text-baft-gold", isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm")}>
             Programs
           </Link>
+          <Link to="/filmography" className={cn("transition-colors hover:text-baft-gold", isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm")}>
+            Filmography
+          </Link>
           <Link to="/news" className={cn("transition-colors hover:text-baft-gold", isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm")}>
             News & Events
           </Link>
@@ -67,6 +75,9 @@ const Navbar = () => {
           <Link to="/programs" className="text-baft-darkgray hover:text-baft-maroon transition-colors px-4 py-2" onClick={() => setIsMobileMenuOpen(false)}>
             Programs
           </Link>
+          <Link to="/filmography" className="text-baft-darkgray hover:text-baft-maroon transition-colors px-4 py-2" onClick={() => setIsMobileMenuOpen(false)}>
+            Filmography
+          </Link>
           <Link to="/news" className="text-baft-darkgray hover:text-baft-maroon transition-colors px-4 py-2" onClick={() => setIsMobileMenuOpen(false)}>
             News & Events
           </Link>
@@ -80,4 +91,5 @@ const Navbar = () => {
       </div>
     </nav>;
 };
+
 export default Navbar;
