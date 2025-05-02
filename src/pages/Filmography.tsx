@@ -100,7 +100,7 @@ const Filmography = () => {
   return (
     <div className="bg-baft-lightgray py-24">
       <div className="container mx-auto">
-        <div className="max-w-4xl mx-auto mb-12 text-center animate-on-scroll">
+        <div className="max-w-4xl mx-auto mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-playfair font-bold mb-6 text-baft-maroon heading-decoration">
             Bulbul Ahmed's Filmography
           </h1>
@@ -123,7 +123,7 @@ const Filmography = () => {
             <TabsContent key={decade} value={decade} className="mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {decadeFilms.map((film) => (
-                  <div key={film.id} className="animate-on-scroll">
+                  <div key={film.id}>
                     <VideoCard
                       title={film.title}
                       year={film.year}
@@ -136,7 +136,7 @@ const Filmography = () => {
           ))}
         </Tabs>
 
-        <div className="max-w-2xl mx-auto mt-16 text-center bg-white p-8 rounded-lg shadow-md animate-on-scroll">
+        <div className="max-w-2xl mx-auto mt-16 text-center bg-white p-8 rounded-lg shadow-md">
           <div className="flex items-center justify-center mb-4">
             <Film className="text-baft-gold h-8 w-8 mr-2" />
             <h2 className="text-2xl font-playfair font-semibold">Film Legacy</h2>
