@@ -81,7 +81,7 @@ const Hero = () => {
               </Link>
               
               <Link to="/programs#awards" className="w-full">
-                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl w-full h-14">
+                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl w-full h-14 my-[40px]">
                   <Award className="w-5 h-5" />
                   Award Archive
                 </Button>
