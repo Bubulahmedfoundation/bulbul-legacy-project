@@ -1,0 +1,75 @@
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads" # Media files will be stored in the repo under public/uploads
+public_folder: "/uploads" # The src attribute for uploaded media will begin with /uploads
+
+collections:
+  - name: "news"
+    label: "News"
+    folder: "content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Type", name: "type", widget: "select", options: ["news", "event"]}
+      - {label: "Excerpt", name: "excerpt", widget: "text"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "programs"
+    label: "Programs"
+    folder: "content/programs"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Icon", name: "icon", widget: "select", options: ["award", "gift", "users", "education", "heart"]}
+      - {label: "Order", name: "order", widget: "number"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Description", name: "description", widget: "markdown"}
+
+  - name: "award-recipients"
+    label: "Award Recipients"
+    folder: "content/award-recipients"
+    create: true
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Year", name: "year", widget: "number"}
+      - {label: "Category", name: "category", widget: "string"}
+      - {label: "Portrait", name: "image", widget: "image"}
+      - {label: "Bio", name: "bio", widget: "markdown"}
+
+  - name: "events"
+    label: "Events"
+    folder: "content/events"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Event Date", name: "date", widget: "datetime"}
+      - {label: "End Date", name: "endDate", widget: "datetime", required: false}
+      - {label: "Location", name: "location", widget: "string"}
+      - {label: "Description", name: "description", widget: "markdown"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+
+  - name: "press-releases"
+    label: "Press Releases"
+    folder: "content/press-releases"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Release Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "videos"
+    label: "Videos"
+    folder: "content/videos"
+    create: true
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Video URL (YouTube or Vimeo)", name: "videoUrl", widget: "string"}
+      - {label: "Thumbnail", name: "thumbnail", widget: "image"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
