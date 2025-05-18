@@ -10,7 +10,7 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -49,17 +49,7 @@ const Navbar = () => {
         </Link>
 
         {/* Mobile menu button */}
-        <div className="md:hidden flex items-center gap-2">
-          <Link 
-            to="/bn" 
-            aria-label="Switch to Bengali language"
-            className={cn(
-              "p-2 rounded-full flex items-center justify-center transition-colors",
-              isScrolled ? "text-baft-darkgray hover:bg-gray-100" : "text-white hover:bg-white/10"
-            )}
-          >
-            <Globe size={20} />
-          </Link>
+        <div className="md:hidden flex items-center">
           <button 
             className="flex items-center p-2" 
             onClick={toggleMobileMenu} 
@@ -128,18 +118,6 @@ const Navbar = () => {
                   Donate
                 </Link>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link 
-                  to="/bn" 
-                  className={cn(
-                    "p-2 rounded-full flex items-center justify-center transition-colors",
-                    isScrolled ? "text-baft-darkgray hover:bg-gray-100" : "text-white hover:bg-white/10"
-                  )}
-                  aria-label="Switch to Bengali language"
-                >
-                  <Globe size={18} />
-                </Link>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         )}
@@ -196,17 +174,6 @@ const Navbar = () => {
           >
             Get Involved
           </Link>
-          
-          <div className="py-2 flex items-center px-4">
-            <Link 
-              to="/bn" 
-              className="text-baft-darkgray flex items-center gap-2 hover:text-baft-maroon"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Globe size={16} />
-              <span>বাংলা</span>
-            </Link>
-          </div>
           
           <div className="pt-4 mt-4 border-t border-gray-200">
             <Link 
