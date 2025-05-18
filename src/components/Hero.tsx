@@ -12,7 +12,14 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Portrait Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-black/70 z-10"></div>
+      <div 
+        className="absolute inset-0 z-10" 
+        style={{ 
+          backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')", 
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
+      ></div>
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" 
         style={{ backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')" }}
