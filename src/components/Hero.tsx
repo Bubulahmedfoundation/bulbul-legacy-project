@@ -32,13 +32,13 @@ const Hero = () => {
       </Helmet>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background layers */}
-        <div className="absolute inset-0 z-10" style={{
+        <div style={{
         backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
         backgroundSize: "cover",
         backgroundPosition: "center"
-      }} aria-hidden="true"></div>
+      }} aria-hidden="true" className="absolute inset-0 z-10 mx-0 px-0 py-[44px]"></div>
         {/* Semi-transparent overlay for better text contrast */}
-        <div className="absolute inset-0 bg-black/40 z-20" aria-hidden="true"></div>
+        <div aria-hidden="true" className="absolute inset-0 bg-black/40 z-20 py-0 my-0"></div>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" style={{
         backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
       }} aria-hidden="true"></div>
