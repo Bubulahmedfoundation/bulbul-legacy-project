@@ -1,9 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-
 const Hero = () => {
   const scrollToNext = () => {
     const nextSection = document.querySelector('#introduction');
@@ -11,7 +9,6 @@ const Hero = () => {
       behavior: 'smooth'
     });
   };
-
   return <>
       <Helmet>
         <script type="application/ld+json">
@@ -36,15 +33,15 @@ const Hero = () => {
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
         {/* Background layers */}
         <div className="absolute inset-0 z-10" style={{
-          backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }} aria-hidden="true"></div>
+        backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }} aria-hidden="true"></div>
         {/* Semi-transparent overlay for better text contrast */}
         <div className="absolute inset-0 bg-black/40 z-20" aria-hidden="true"></div>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" style={{
-          backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
-        }} aria-hidden="true"></div>
+        backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
+      }} aria-hidden="true"></div>
         
         {/* Content */}
         <div className="container relative z-30 text-center text-white px-4 md:px-6 py-16">
@@ -93,13 +90,7 @@ const Hero = () => {
         
         {/* "WHAT WE DO" section at bottom */}
         <div className="absolute z-30 bottom-8 md:bottom-16 w-full text-center">
-          <button 
-            onClick={scrollToNext}
-            className="flex flex-col items-center justify-center text-white/90 hover:text-white gap-2 transition-colors group"
-          >
-            <span className="text-sm md:text-base font-medium tracking-wider">WHAT WE DO</span>
-            <ArrowDown className="w-5 h-5 animate-bounce" />
-          </button>
+          
         </div>
       </section>
     </>;
