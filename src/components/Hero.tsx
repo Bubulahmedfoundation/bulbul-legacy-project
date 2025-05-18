@@ -1,7 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { useIsMobile } from "@/hooks/use-mobile";
+
 const Hero = () => {
   const scrollToNext = () => {
     const nextSection = document.querySelector('#introduction');
@@ -9,6 +12,7 @@ const Hero = () => {
       behavior: 'smooth'
     });
   };
+  
   return <>
       <Helmet>
         <script type="application/ld+json">
@@ -67,32 +71,36 @@ const Hero = () => {
             {/* Evenly spaced buttons with consistent widths */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mt-8">
               <Link to="/about" className="w-full">
-                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl w-full h-14 my-[40px]">
+                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl w-full h-14">
                   Learn About Bulbul
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Button>
               </Link>
               
               <Link to="/get-involved#donate" className="w-full">
-                <Button size="lg" className="bg-baft-gold hover:bg-baft-gold/90 text-black text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full h-14 py-0 my-[44px]">
+                <Button size="lg" className="bg-baft-gold hover:bg-baft-gold/90 text-black text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full h-14">
                   <HandCoins className="w-5 h-5" />
                   Donate Now
                 </Button>
               </Link>
               
               <Link to="/programs#awards" className="w-full">
-                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl w-full h-14 my-[40px]">
+                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl w-full h-14">
                   <Award className="w-5 h-5" />
                   Award Archive
                 </Button>
               </Link>
             </div>
             
-            {/* "What We Do" section moved below all buttons */}
-            <div className="mt-12">
-              <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow my-[66px]">
-                <span className="text-sm font-medium tracking-wider uppercase my-0">What we do</span>
-                <ArrowDown className="w-6 h-6 my-0" />
+            {/* "What We Do" section - centered and improved for mobile */}
+            <div className="flex justify-center w-full mt-8 mb-4">
+              <button 
+                onClick={scrollToNext} 
+                aria-label="Scroll to next section" 
+                className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow py-2"
+              >
+                <span className="text-sm font-medium tracking-wider uppercase">What we do</span>
+                <ArrowDown className="w-6 h-6" />
               </button>
             </div>
           </div>
