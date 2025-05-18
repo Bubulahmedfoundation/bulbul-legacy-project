@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import NewsAndPrograms from "./pages/NewsAndPrograms";
@@ -17,27 +18,29 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/news-and-programs" element={<NewsAndPrograms />} />
-            {/* Redirect old routes to the new combined page */}
-            <Route path="/news" element={<Navigate to="/news-and-programs" />} />
-            <Route path="/programs" element={<Navigate to="/news-and-programs" />} />
-            <Route path="/get-involved" element={<GetInvolved />} />
-            <Route path="/filmography" element={<Filmography />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </BrowserRouter>
-    </TooltipProvider>
+    <HelmetProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/news-and-programs" element={<NewsAndPrograms />} />
+              {/* Redirect old routes to the new combined page */}
+              <Route path="/news" element={<Navigate to="/news-and-programs" />} />
+              <Route path="/programs" element={<Navigate to="/news-and-programs" />} />
+              <Route path="/get-involved" element={<GetInvolved />} />
+              <Route path="/filmography" element={<Filmography />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+        </BrowserRouter>
+      </TooltipProvider>
+    </HelmetProvider>
   </QueryClientProvider>
 );
 

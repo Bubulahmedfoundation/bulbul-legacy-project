@@ -1,14 +1,27 @@
+
+# Allow all web crawlers to index the entire site
+User-agent: *
+Allow: /
+
+# Specific permissions for major search engines
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
+User-agent: Yandexbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Social media crawlers
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+# Sitemap location (for future implementation)
+Sitemap: https://bulbulahmeffoundationtrust.org/sitemap.xml

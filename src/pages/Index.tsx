@@ -1,5 +1,6 @@
 
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import Hero from "@/components/Hero";
 import Introduction from "@/components/Introduction";
 import CallToAction from "@/components/CallToAction";
@@ -34,6 +35,29 @@ const Index = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Bulbul Ahmed Foundation Trust (BAFT) | Celebrating a Legend, Empowering Communities</title>
+        <meta name="description" content="The Bulbul Ahmed Foundation Trust (BAFT) preserves the legacy of legendary actor Bulbul Ahmed while supporting humanitarian causes across Bangladesh." />
+        <meta name="keywords" content="Bulbul Ahmed, বুলবুল আহমেদ, Bulbul Ahmed Foundation Trust, BAFT, মহানায়ক বুলবুল আহমেদ, Bangladeshi actor, humanitarian organization, cultural heritage" />
+        <link rel="canonical" href="https://bulbulahmefoundationtrust.org" />
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "url": "https://bulbulahmefoundationtrust.org/",
+              "name": "Bulbul Ahmed Foundation Trust",
+              "alternateName": "BAFT",
+              "description": "The Bulbul Ahmed Foundation Trust (BAFT) preserves the legacy of legendary actor Bulbul Ahmed while supporting humanitarian causes across Bangladesh.",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://bulbulahmefoundationtrust.org/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            }
+          `}
+        </script>
+      </Helmet>
       <Hero />
       <Introduction />
       <CallToAction />

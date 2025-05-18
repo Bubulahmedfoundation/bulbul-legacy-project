@@ -10,7 +10,7 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,22 +43,35 @@ const Navbar = () => {
             "font-playfair text-xl md:text-2xl font-bold transition-colors",
             isScrolled ? "text-baft-maroon" : "text-white drop-shadow-md"
           )}>
-            Bulbul Ahmed Foundation Trust
+            <span className="hidden sm:inline">Bulbul Ahmed Foundation Trust</span>
+            <span className="sm:hidden">BAFT</span>
           </span>
         </Link>
 
         {/* Mobile menu button */}
-        <button 
-          className="md:hidden flex items-center p-2" 
-          onClick={toggleMobileMenu} 
-          aria-label="Toggle mobile menu"
-        >
-          {isMobileMenuOpen ? (
-            <X className={isScrolled ? "text-baft-darkgray" : "text-white"} size={24} />
-          ) : (
-            <Menu className={isScrolled ? "text-baft-darkgray" : "text-white"} size={24} />
-          )}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <Link 
+            to="/bn" 
+            aria-label="Switch to Bengali language"
+            className={cn(
+              "p-2 rounded-full flex items-center justify-center transition-colors",
+              isScrolled ? "text-baft-darkgray hover:bg-gray-100" : "text-white hover:bg-white/10"
+            )}
+          >
+            <Globe size={20} />
+          </Link>
+          <button 
+            className="flex items-center p-2" 
+            onClick={toggleMobileMenu} 
+            aria-label="Toggle mobile menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className={isScrolled ? "text-baft-darkgray" : "text-white"} size={24} />
+            ) : (
+              <Menu className={isScrolled ? "text-baft-darkgray" : "text-white"} size={24} />
+            )}
+          </button>
+        </div>
 
         {/* Desktop Navigation */}
         {!isMobile && (
@@ -113,6 +126,18 @@ const Navbar = () => {
                   )}
                 >
                   Donate
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link 
+                  to="/bn" 
+                  className={cn(
+                    "p-2 rounded-full flex items-center justify-center transition-colors",
+                    isScrolled ? "text-baft-darkgray hover:bg-gray-100" : "text-white hover:bg-white/10"
+                  )}
+                  aria-label="Switch to Bengali language"
+                >
+                  <Globe size={18} />
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -171,6 +196,17 @@ const Navbar = () => {
           >
             Get Involved
           </Link>
+          
+          <div className="py-2 flex items-center px-4">
+            <Link 
+              to="/bn" 
+              className="text-baft-darkgray flex items-center gap-2 hover:text-baft-maroon"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Globe size={16} />
+              <span>বাংলা</span>
+            </Link>
+          </div>
           
           <div className="pt-4 mt-4 border-t border-gray-200">
             <Link 
