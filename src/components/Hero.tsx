@@ -1,10 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useIsMobile } from "@/hooks/use-mobile";
-
 const Hero = () => {
   const scrollToNext = () => {
     const nextSection = document.querySelector('#introduction');
@@ -95,7 +93,7 @@ const Hero = () => {
         
         {/* "WHAT WE DO" section positioned in the center of the page context */}
         <div className="absolute z-30 text-center w-full bottom-16">
-          <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-1 animate-bounce-slow">
+          <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-1 animate-bounce-slow mx-[550px]">
             <div className="font-semibold tracking-widest uppercase text-sm">
               <span className="block">WHAT WE</span>
               <span className="block">DO</span>
