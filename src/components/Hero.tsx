@@ -91,18 +91,18 @@ const Hero = () => {
               </Link>
             </div>
           </div>
-          
-          {/* "What We Do" section - positioned at bottom center of viewport */}
-          <div className="absolute bottom-10 left-0 right-0 z-30 text-center">
-            <button 
-              onClick={scrollToNext} 
-              aria-label="Scroll to next section" 
-              className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow py-3 mx-auto"
-            >
-              <span className="text-sm font-medium tracking-wider uppercase">WHAT WE DO</span>
-              <ArrowDown className="w-6 h-6" />
-            </button>
-          </div>
+        </div>
+        
+        {/* "WHAT WE DO" section positioned in the center of the page context */}
+        <div className="absolute z-30 text-center w-full bottom-16">
+          <button 
+            onClick={scrollToNext} 
+            aria-label="Scroll to next section" 
+            className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-1 animate-bounce-slow mx-auto"
+          >
+            <span className="text-sm font-semibold tracking-widest uppercase">WHAT WE DO</span>
+            <ArrowDown className="w-6 h-6" />
+          </button>
         </div>
       </section>
     </>;
