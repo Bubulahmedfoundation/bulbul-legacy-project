@@ -1,7 +1,9 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+
 const Hero = () => {
   const scrollToNext = () => {
     const nextSection = document.querySelector('#introduction');
@@ -9,6 +11,7 @@ const Hero = () => {
       behavior: 'smooth'
     });
   };
+
   return <>
       <Helmet>
         <script type="application/ld+json">
@@ -53,7 +56,6 @@ const Hero = () => {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold text-white drop-shadow-lg">
               <span lang="en">Bulbul Ahmed Foundation Trust</span>
               <span className="sr-only"> - </span>
-              
             </h1>
             
             <div className="flex items-center justify-center gap-2 opacity-90">
@@ -67,21 +69,22 @@ const Hero = () => {
               <div className="h-[1px] w-12 bg-baft-gold"></div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6 pt-4">
-              <Link to="/about">
-                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl">
+            {/* Centered buttons with improved layout */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 pt-4 mx-auto max-w-3xl">
+              <Link to="/about" className="w-full md:w-auto">
+                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl w-full md:w-auto">
                   Learn About Bulbul
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Button>
               </Link>
-              <Link to="/get-involved#donate">
-                <Button size="lg" className="bg-baft-gold hover:bg-baft-gold/90 text-black text-lg flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+              <Link to="/get-involved#donate" className="w-full md:w-auto">
+                <Button size="lg" className="bg-baft-gold hover:bg-baft-gold/90 text-black text-lg flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full md:w-auto">
                   <HandCoins className="w-5 h-5" />
                   Donate Now
                 </Button>
               </Link>
-              <Link to="/programs#awards">
-                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg flex items-center gap-2 shadow-lg hover:shadow-xl">
+              <Link to="/programs#awards" className="w-full md:w-auto">
+                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg flex items-center gap-2 shadow-lg hover:shadow-xl w-full md:w-auto">
                   <Award className="w-5 h-5" />
                   Award Archive
                 </Button>
@@ -98,4 +101,5 @@ const Hero = () => {
       </section>
     </>;
 };
+
 export default Hero;
