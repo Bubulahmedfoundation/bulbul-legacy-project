@@ -95,9 +95,9 @@ const Hero = () => {
         <div className="absolute z-30 text-center w-full bottom-16">
           <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-1 animate-bounce-slow mx-auto">
             <div className="font-semibold tracking-widest uppercase text-sm">
-              
+              WHAT WE DO
             </div>
-            <ArrowDown className="w-10 h-10 text-white my-[63px] px-0 py-0 mx-[-99997px]" />
+            <ArrowDown className="w-10 h-10" />
           </button>
         </div>
       </section>
