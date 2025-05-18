@@ -1,9 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-
 const Hero = () => {
   const scrollToNext = () => {
     const nextSection = document.querySelector('#introduction');
@@ -11,9 +9,7 @@ const Hero = () => {
       behavior: 'smooth'
     });
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <script type="application/ld+json">
           {`
@@ -37,15 +33,15 @@ const Hero = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background layers */}
         <div className="absolute inset-0 z-10" style={{
-          backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }} aria-hidden="true"></div>
+        backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }} aria-hidden="true"></div>
         {/* Semi-transparent overlay for better text contrast */}
         <div className="absolute inset-0 bg-black/40 z-20" aria-hidden="true"></div>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" style={{
-          backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
-        }} aria-hidden="true"></div>
+        backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
+      }} aria-hidden="true"></div>
         
         {/* Content */}
         <div className="container relative z-30 text-center text-white px-4">
@@ -94,18 +90,12 @@ const Hero = () => {
         
         {/* "WHAT WE DO" section positioned in the center at the bottom */}
         <div className="absolute z-30 bottom-16 w-full text-center">
-          <button 
-            onClick={scrollToNext} 
-            aria-label="Scroll to next section" 
-            className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2"
-          >
-            <span className="text-lg font-medium">WHAT WE DO</span>
-            <ArrowDown className="w-6 h-6 animate-bounce-slow" />
+          <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2">
+            
+            <ArrowDown className="w-6 h-6 animate-bounce-slow mx-[555px] px-0 py-0 my-[95px]" />
           </button>
         </div>
       </section>
-    </>
-  );
+    </>;
 };
-
 export default Hero;
