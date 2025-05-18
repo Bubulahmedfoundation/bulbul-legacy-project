@@ -45,7 +45,7 @@ const Hero = () => {
         
         {/* Content */}
         <div className="container relative z-30 text-center text-white px-4">
-          <div className="space-y-6 animate-fade-in max-w-4xl mx-auto">
+          <div className="space-y-6 animate-fade-in max-w-4xl mx-auto py-[35px] my-[240px] px-[25px]">
             <div className="inline-block rounded-full p-1 px-4 bg-baft-gold/10 backdrop-blur-sm">
               <span className="text-baft-gold text-sm font-medium">Established 2015</span>
             </div>
