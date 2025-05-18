@@ -67,7 +67,7 @@ const Hero = () => {
             {/* Evenly spaced buttons with consistent widths */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mt-8">
               <Link to="/about" className="w-full">
-                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl w-full h-14">
+                <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-lg group transition-all duration-300 shadow-lg hover:shadow-xl w-full h-14 my-[45px]">
                   Learn About Bulbul
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Button>
