@@ -93,7 +93,7 @@ const Hero = () => {
         
         {/* "WHAT WE DO" section positioned in the center of the page context */}
         <div className="absolute z-30 text-center w-full bottom-16">
-          <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-1 animate-bounce-slow mx-auto">
+          <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-1 animate-bounce-slow mx-[550px] my-[17px] px-[40px] py-0">
             <div className="font-semibold tracking-widest uppercase text-sm">
               WHAT WE DO
             </div>
