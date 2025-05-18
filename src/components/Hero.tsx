@@ -1,8 +1,9 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { useIsMobile } from "@/hooks/use-mobile";
+
 const Hero = () => {
   const scrollToNext = () => {
     const nextSection = document.querySelector('#introduction');
@@ -10,7 +11,9 @@ const Hero = () => {
       behavior: 'smooth'
     });
   };
-  return <>
+
+  return (
+    <>
       <Helmet>
         <script type="application/ld+json">
           {`
@@ -34,15 +37,15 @@ const Hero = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background layers */}
         <div className="absolute inset-0 z-10" style={{
-        backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center"
-      }} aria-hidden="true"></div>
+          backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }} aria-hidden="true"></div>
         {/* Semi-transparent overlay for better text contrast */}
         <div className="absolute inset-0 bg-black/40 z-20" aria-hidden="true"></div>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" style={{
-        backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
-      }} aria-hidden="true"></div>
+          backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
+        }} aria-hidden="true"></div>
         
         {/* Content */}
         <div className="container relative z-30 text-center text-white px-4">
@@ -53,14 +56,12 @@ const Hero = () => {
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold text-white drop-shadow-lg my-4">
               <span lang="en">Bulbul Ahmed Foundation Trust</span>
-              <span className="sr-only"> - </span>
             </h1>
             
             <div className="flex items-center justify-center gap-2 mb-6">
               <div className="h-[1px] w-12 bg-baft-gold"></div>
               <p className="text-xl md:text-2xl font-light text-white/90">
                 <span lang="en">Celebrating a Legend. Empowering Communities.</span>
-                <span className="sr-only"> - </span>
               </p>
               <div className="h-[1px] w-12 bg-baft-gold"></div>
             </div>
@@ -91,14 +92,20 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* "WHAT WE DO" section positioned in the center of the page context */}
-        <div className="absolute z-30 text-center w-full bottom-16">
-          <button onClick={scrollToNext} aria-label="Scroll to next section" className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-1 animate-bounce-slow my-[17px] px-[60px] py mx-[560px] py-0">
-            
-            <ArrowDown className="w-10 h-10" />
+        {/* "WHAT WE DO" section positioned in the center at the bottom */}
+        <div className="absolute z-30 bottom-16 w-full text-center">
+          <button 
+            onClick={scrollToNext} 
+            aria-label="Scroll to next section" 
+            className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2"
+          >
+            <span className="text-lg font-medium">WHAT WE DO</span>
+            <ArrowDown className="w-6 h-6 animate-bounce-slow" />
           </button>
         </div>
       </section>
-    </>;
+    </>
+  );
 };
+
 export default Hero;

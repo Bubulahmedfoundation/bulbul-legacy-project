@@ -3,13 +3,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
@@ -34,19 +27,63 @@ const Navbar = () => {
 
   return (
     <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 py-[17px] transition-all duration-300",
-      isScrolled ? "bg-white shadow-md" : "bg-baft-darkgray"
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+      isScrolled ? "bg-white shadow-md py-4" : "bg-baft-darkgray py-6"
     )}>
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
           <span className={cn(
             "font-playfair text-xl md:text-2xl font-bold transition-colors",
-            isScrolled ? "text-baft-maroon" : "text-white drop-shadow-md"
+            isScrolled ? "text-baft-maroon" : "text-white"
           )}>
-            <span className="hidden sm:inline">Bulbul Ahmed Foundation Trust</span>
-            <span className="sm:hidden">BAFT</span>
+            <span>Bulbul Ahmed Foundation Trust</span>
           </span>
         </Link>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-6">
+          <Link to="/" className={cn(
+            "transition-colors hover:text-baft-gold px-2 py-1",
+            isScrolled ? "text-baft-darkgray" : "text-white"
+          )}>
+            Home
+          </Link>
+          <Link to="/about" className={cn(
+            "transition-colors hover:text-baft-gold px-2 py-1",
+            isScrolled ? "text-baft-darkgray" : "text-white"
+          )}>
+            About Us
+          </Link>
+          <Link to="/news-and-programs" className={cn(
+            "transition-colors hover:text-baft-gold px-2 py-1",
+            isScrolled ? "text-baft-darkgray" : "text-white"
+          )}>
+            News & Programs
+          </Link>
+          <Link to="/filmography" className={cn(
+            "transition-colors hover:text-baft-gold px-2 py-1",
+            isScrolled ? "text-baft-darkgray" : "text-white"
+          )}>
+            Filmography
+          </Link>
+          <Link to="/get-involved" className={cn(
+            "transition-colors hover:text-baft-gold px-2 py-1",
+            isScrolled ? "text-baft-darkgray" : "text-white"
+          )}>
+            Get Involved
+          </Link>
+          <Link 
+            to="/get-involved#donate" 
+            className={cn(
+              "px-6 py-2 rounded-md transition-all duration-300", 
+              isScrolled 
+                ? "bg-baft-gold text-white hover:bg-baft-gold/90" 
+                : "bg-baft-gold text-baft-darkgray hover:bg-baft-gold/90"
+            )}
+          >
+            Donate
+          </Link>
+        </div>
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center">
@@ -62,65 +99,6 @@ const Navbar = () => {
             )}
           </button>
         </div>
-
-        {/* Desktop Navigation */}
-        {!isMobile && (
-          <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList className="flex items-center space-x-6">
-              <NavigationMenuItem>
-                <Link to="/" className={cn(
-                  "transition-colors hover:text-baft-gold px-2 py-1",
-                  isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
-                )}>
-                  Home
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/about" className={cn(
-                  "transition-colors hover:text-baft-gold px-2 py-1",
-                  isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
-                )}>
-                  About Us
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/news-and-programs" className={cn(
-                  "transition-colors hover:text-baft-gold px-2 py-1",
-                  isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
-                )}>
-                  News & Programs
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/filmography" className={cn(
-                  "transition-colors hover:text-baft-gold px-2 py-1",
-                  isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
-                )}>
-                  Filmography
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/get-involved" className={cn(
-                  "transition-colors hover:text-baft-gold px-2 py-1",
-                  isScrolled ? "text-baft-darkgray" : "text-white drop-shadow-sm"
-                )}>
-                  Get Involved
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link 
-                  to="/get-involved#donate" 
-                  className={cn(
-                    "px-5 py-2 rounded transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5", 
-                    isScrolled ? "bg-baft-maroon text-white hover:bg-baft-maroon/90" : "bg-baft-gold text-baft-darkgray hover:bg-baft-gold/90"
-                  )}
-                >
-                  Donate
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        )}
       </div>
 
       {/* Mobile Navigation Drawer */}
@@ -178,7 +156,7 @@ const Navbar = () => {
           <div className="pt-4 mt-4 border-t border-gray-200">
             <Link 
               to="/get-involved#donate" 
-              className="w-full px-5 py-3 bg-baft-maroon text-white rounded text-center hover:bg-baft-maroon/90 transition-colors font-medium flex items-center justify-center"
+              className="w-full px-5 py-3 bg-baft-gold text-baft-darkgray rounded-md text-center hover:bg-baft-gold/90 transition-colors font-medium flex items-center justify-center"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Donate Now
