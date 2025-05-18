@@ -32,20 +32,20 @@ const Hero = () => {
       </Helmet>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background layers */}
-        <div style={{
+        <div className="absolute inset-0 z-10" style={{
         backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
         backgroundSize: "cover",
         backgroundPosition: "center"
-      }} aria-hidden="true" className="absolute inset-0 z-10 mx-0 px-0 py-[44px]"></div>
+      }} aria-hidden="true"></div>
         {/* Semi-transparent overlay for better text contrast */}
-        <div aria-hidden="true" className="absolute inset-0 bg-black/40 z-20 py-0 my-0"></div>
+        <div className="absolute inset-0 bg-black/40 z-20" aria-hidden="true"></div>
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" style={{
         backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')"
       }} aria-hidden="true"></div>
         
         {/* Content */}
         <div className="container relative z-30 text-center text-white px-4">
-          <div className="space-y-6 animate-fade-in max-w-4xl mx-auto">
+          <div className="space-y-6 animate-fade-in max-w-4xl mx-auto py-[35px] my-[240px] px-[25px]">
             <div className="inline-block rounded-full p-1 px-4 bg-baft-gold/10 backdrop-blur-sm">
               <span className="text-baft-gold text-sm font-medium">Established 2015</span>
             </div>
