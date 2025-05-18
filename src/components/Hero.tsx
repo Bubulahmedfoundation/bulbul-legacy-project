@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
@@ -35,7 +34,7 @@ const Hero = () => {
         </script>
       </Helmet>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Portrait Overlay */}
+        {/* Background layers */}
         <div className="absolute inset-0 z-10" style={{
         backgroundImage: "url('/lovable-uploads/81643c27-eed6-4405-ba78-6fe2e3186990.png')",
         backgroundSize: "cover",
@@ -93,14 +92,14 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* "What We Do" section - properly centered in the middle */}
-          <div className="flex justify-center w-full mt-16">
+          {/* "What We Do" section - positioned at bottom center of viewport */}
+          <div className="absolute bottom-10 left-0 right-0 z-30 text-center">
             <button 
               onClick={scrollToNext} 
               aria-label="Scroll to next section" 
-              className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow py-3"
+              className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow py-3 mx-auto"
             >
-              <span className="text-sm font-medium tracking-wider uppercase">What we do</span>
+              <span className="text-sm font-medium tracking-wider uppercase">WHAT WE DO</span>
               <ArrowDown className="w-6 h-6" />
             </button>
           </div>
