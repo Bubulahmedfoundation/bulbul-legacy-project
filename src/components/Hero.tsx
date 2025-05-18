@@ -74,7 +74,7 @@ const Hero = () => {
               </Link>
               
               <Link to="/get-involved#donate" className="w-full">
-                <Button size="lg" className="bg-baft-gold hover:bg-baft-gold/90 text-black text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full h-14 py-0 my-[45px]">
+                <Button size="lg" className="bg-baft-gold hover:bg-baft-gold/90 text-black text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full h-14 py-0 my-[44px]">
                   <HandCoins className="w-5 h-5" />
                   Donate Now
                 </Button>
