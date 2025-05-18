@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { HandCoins, Award, ArrowDown } from "lucide-react";
@@ -20,13 +19,15 @@ const Hero = () => {
           backgroundPosition: "center"
         }}
       ></div>
+      {/* Semi-transparent overlay for better text contrast */}
+      <div className="absolute inset-0 bg-black/40 z-20"></div>
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 animate-subtle-zoom" 
         style={{ backgroundImage: "url('/lovable-uploads/d80a5ee6-eab9-4a70-ad7b-5b9382e00d01.png')" }}
       ></div>
       
       {/* Content */}
-      <div className="container relative z-20 text-center text-white">
+      <div className="container relative z-30 text-center text-white">
         <div className="space-y-8 animate-fade-in">
           <div className="inline-block rounded-full p-1 px-4 bg-baft-gold/10 backdrop-blur-sm mb-4">
             <span className="text-baft-gold text-sm font-medium">Established 2015</span>
