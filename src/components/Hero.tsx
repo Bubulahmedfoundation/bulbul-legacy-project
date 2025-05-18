@@ -90,9 +90,9 @@ const Hero = () => {
           </div>
 
           {/* Enhanced Scroll Indicator */}
-          <button onClick={scrollToNext} aria-label="Scroll to next section" className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow my-[67px]">
-            <span className="text-sm font-medium tracking-wider uppercase my-[61px]">Our Mission</span>
-            <ArrowDown className="w-6 h-6" />
+          <button onClick={scrollToNext} aria-label="Scroll to next section" className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow my-[66px]">
+            <span className="text-sm font-medium tracking-wider uppercase my-0">HELP OUR MISSION</span>
+            <ArrowDown className="w-6 h-6 my-0" />
           </button>
         </div>
       </section>
