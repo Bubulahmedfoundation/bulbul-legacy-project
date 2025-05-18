@@ -92,12 +92,12 @@ const Hero = () => {
               </Link>
             </div>
             
-            {/* "What We Do" section - centered and improved for mobile */}
-            <div className="flex justify-center w-full mt-8 mb-4">
+            {/* "What We Do" section - centered horizontally and vertically */}
+            <div className="flex justify-center items-center w-full mt-12">
               <button 
                 onClick={scrollToNext} 
                 aria-label="Scroll to next section" 
-                className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow py-2"
+                className="text-white hover:text-baft-gold transition-colors flex flex-col items-center gap-2 animate-bounce-slow py-3 mx-auto"
               >
                 <span className="text-sm font-medium tracking-wider uppercase">What we do</span>
                 <ArrowDown className="w-6 h-6" />
