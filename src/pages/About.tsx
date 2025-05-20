@@ -1,6 +1,8 @@
+
 import { Separator } from "@/components/ui/separator";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useEffect } from "react";
+
 const About = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,8 +83,51 @@ const About = () => {
                 <h3 className="text-2xl font-playfair font-semibold mb-2">Tahsin Farzana Tilottoma</h3>
                 <p className="text-baft-maroon mb-4">General Secretary</p>
                 <Separator className="mb-4" />
-                <p className="leading-relaxed">Tahsin Farzana Tilottoma, As General Secretary oversees the day-to-day operations of Bulbul Ahmed Foundation Trust. With extensive experience in nonprofit management and community development, she has successfully expanded the foundation's reach and impact since joining in 2017. Her dedication to both preserving cultural heritage and providing humanitarian aid has been vital to the foundation's success.</p>
+                <p className="leading-relaxed">Tahsin Farzana Tilottoma, As General Secretary oversees the day-to-day operations of Bulbul Ahmed Foundation Trust. With extensive experience in nonprofit management and community development, she has successfully expanded the foundation's reach and impact since joining in 2017. Her dedication to both preserving cultural heritage and providing humanitarian aid has been vital to the foundation's success.</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Trustees Section */}
+      <section className="py-20">
+        <div className="container">
+          <h2 className="text-3xl font-playfair font-semibold mb-12 heading-decoration text-center">
+            Trustees
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Tazrin Faraha Oindrila */}
+            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-playfair font-semibold mb-2">Tazrin Faraha Oindrila</h3>
+              <p className="text-baft-maroon">Trustee</p>
+              <Separator className="my-4 mx-auto w-16" />
+              <p className="text-gray-600">Board member since 2018</p>
+            </div>
+            
+            {/* Wasif Ahmed Shubho */}
+            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-playfair font-semibold mb-2">Wasif Ahmed Shubho</h3>
+              <p className="text-baft-maroon">Trustee</p>
+              <Separator className="my-4 mx-auto w-16" />
+              <p className="text-gray-600">Board member since 2019</p>
+            </div>
+            
+            {/* Naser Ezaz Bijoy */}
+            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-playfair font-semibold mb-2">Naser Ezaz Bijoy</h3>
+              <p className="text-baft-maroon">Trustee</p>
+              <Separator className="my-4 mx-auto w-16" />
+              <p className="text-gray-600">Board member since 2017</p>
+            </div>
+            
+            {/* Shukla Sarwat Siraj */}
+            <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-playfair font-semibold mb-2">Shukla Sarwat Siraj</h3>
+              <p className="text-baft-maroon">Trustee</p>
+              <Separator className="my-4 mx-auto w-16" />
+              <p className="text-gray-600">Board member since 2016</p>
             </div>
           </div>
         </div>
