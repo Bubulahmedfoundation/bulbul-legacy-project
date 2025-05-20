@@ -66,13 +66,7 @@ const About = () => {
                 <h3 className="text-2xl font-playfair font-semibold mb-2">Daisy Ahmed</h3>
                 <p className="text-baft-maroon mb-4">Chairperson</p>
                 <Separator className="mb-4" />
-                <p className="leading-relaxed">
-                  Daisy Ahmed, widow of the late Bulbul Ahmed, has led the foundation since its 
-                  inception. With a background in education and cultural administration, she brings 
-                  decades of experience to her role as Chairperson. Her vision and leadership have 
-                  been instrumental in establishing the foundation as a respected cultural and 
-                  humanitarian organization in Bangladesh.
-                </p>
+                <p className="leading-relaxed">Daisy Ahmed, wife of the late Bulbul Ahmed, has led the foundation since its inception. With a background in education and cultural administration, she brings decades of experience to her role as Chairperson. Her vision and leadership have been instrumental in establishing the Foundation Trust as a respected cultural and humanitarian organization in Bangladesh.</p>
               </div>
             </div>
             
@@ -87,13 +81,7 @@ const About = () => {
                 <h3 className="text-2xl font-playfair font-semibold mb-2">Tahsin Farzana Tilottoma</h3>
                 <p className="text-baft-maroon mb-4">General Secretary</p>
                 <Separator className="mb-4" />
-                <p className="leading-relaxed">
-                  As General Secretary, Tahsin Farzana Tilottoma oversees the day-to-day operations 
-                  of the foundation. With extensive experience in nonprofit management and community 
-                  development, she has successfully expanded the foundation's reach and impact since 
-                  joining in 2017. Her dedication to both preserving cultural heritage and providing 
-                  humanitarian aid has been vital to the foundation's success.
-                </p>
+                <p className="leading-relaxed">Tahsin Farzana Tilottoma, As General Secretary oversees the day-to-day operations of Bulbul Ahmed Foundation Trust. With extensive experience in nonprofit management and community development, she has successfully expanded the foundation's reach and impact since joining in 2017. Her dedication to both preserving cultural heritage and providing humanitarian aid has been vital to the foundation's success.</p>
               </div>
             </div>
           </div>
