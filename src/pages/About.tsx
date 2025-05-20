@@ -34,13 +34,7 @@ const About = () => {
                 was created to honor his memory and continue his lifelong commitment to arts, 
                 culture, and humanitarian causes.
               </p>
-              <p className="mb-4 leading-relaxed">
-                Born on February 1, 1940, Bulbul Ahmed was one of Bangladesh's most versatile and 
-                beloved actors. His career spanned over four decades, during which he portrayed 
-                memorable characters in cinema, television, and theater. Beyond his artistic 
-                contributions, he was known for his philanthropic activities and support for 
-                social causes.
-              </p>
+              <p className="mb-4 leading-relaxed">Born on 4th September 1941, Bulbul Ahmed was one of Bangladesh's most versatile and beloved actors. His career spanned over four decades, during which he portrayed memorable characters in cinema, television, and theater. Beyond his artistic contributions, he was known for his philanthropic activities and support for social causes.</p>
               <p className="leading-relaxed">
                 Today, the foundation works to preserve his cultural legacy while extending his 
                 humanitarian spirit through various programs focused on education, cultural 
