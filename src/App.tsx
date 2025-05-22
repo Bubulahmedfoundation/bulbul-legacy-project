@@ -27,6 +27,7 @@ const App = () => (
           <Routes>
             {/* Admin route without Navbar/Footer */}
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/*" element={<Admin />} />
             
             {/* Regular routes with Navbar/Footer */}
             <Route path="/" element={
