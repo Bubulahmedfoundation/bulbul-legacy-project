@@ -49,6 +49,24 @@
     h1 {
       color: #800020;
     }
+    #config-error {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border-radius: 4px;
+      text-align: left;
+    }
+    #loading-timeout {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border-radius: 4px;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -56,6 +74,8 @@
   <!-- Loading indicator that will be replaced by CMS or login -->
   <div class="loading-indicator">
     <p>Loading content management system...</p>
+    <div id="config-error"></div>
+    <div id="loading-timeout"></div>
   </div>
   
   <!-- Include the script that builds the page and powers Netlify CMS -->
@@ -63,16 +83,34 @@
   <script>
     // Check if netlifyIdentity is defined
     if (window.netlifyIdentity) {
+      // Set a timeout to detect if the CMS is taking too long to load
+      const loadingTimeout = setTimeout(() => {
+        const loadingTimeoutEl = document.getElementById('loading-timeout');
+        loadingTimeoutEl.style.display = 'block';
+        loadingTimeoutEl.innerHTML = `
+          <h3>Loading timeout</h3>
+          <p>The CMS is taking too long to load. This could be due to one of these issues:</p>
+          <ul>
+            <li>The config.yml file is not properly configured or accessible</li>
+            <li>Netlify Identity service has not been enabled for this site</li>
+            <li>Git Gateway is not properly configured or enabled</li>
+          </ul>
+          <p>Try refreshing the page. If the issue persists, check your Netlify site settings.</p>
+          <button onclick="location.reload()" style="padding: 10px; margin-top: 10px;">Refresh Page</button>
+        `;
+      }, 10000);
+      
       // Hide loading indicator when CMS is loaded
       window.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
           const loadingIndicator = document.querySelector('.loading-indicator');
           if (loadingIndicator && document.getElementById('nc-root').children.length > 0) {
             loadingIndicator.style.display = 'none';
+            clearTimeout(loadingTimeout);
           } else if (loadingIndicator) {
             loadingIndicator.innerHTML = '<p>Waiting for authentication...</p>';
           }
-        }, 1000);
+        }, 2000);
       });
       
       // Initialize the widget
@@ -94,6 +132,7 @@
               </div>
             </div>
           `;
+          clearTimeout(loadingTimeout);
         }
       });
       
@@ -105,6 +144,7 @@
       // Handle errors
       window.netlifyIdentity.on("error", err => {
         console.error("Netlify Identity error:", err);
+        clearTimeout(loadingTimeout);
         document.body.innerHTML += `
           <div class="login-container">
             <div class="error-container">
@@ -122,14 +162,14 @@
           name: 'onError',
           handler: function(err) {
             console.error('CMS Error:', err);
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'error-container';
-            errorMessage.innerHTML = `
-              <strong>CMS Error:</strong>
+            clearTimeout(loadingTimeout);
+            const configError = document.getElementById('config-error');
+            configError.style.display = 'block';
+            configError.innerHTML = `
+              <h3>CMS Error</h3>
               <p>${err.message || 'Failed to load the CMS. Please check your configuration.'}</p>
               <p>If you're seeing a config error, make sure your config.yml file is correctly formatted and accessible.</p>
             `;
-            document.body.appendChild(errorMessage);
           }
         });
       }

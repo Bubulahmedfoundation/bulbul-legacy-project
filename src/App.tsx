@@ -30,7 +30,7 @@ const App = () => (
             <Route path="/admin/*" element={<Admin />} />
             
             {/* Regular routes with Navbar/Footer */}
-            <Route path="/" element={
+            <Route path="*" element={
               <>
                 <Navbar />
                 <main>
