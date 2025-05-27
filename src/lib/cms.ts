@@ -94,11 +94,11 @@ const getCollectionFiles = async (collection: string): Promise<string[]> => {
   // Updated paths to point to public/content
   const knownFiles: Record<string, string[]> = {
     'news': [
-      '/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md'
+      '/public/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md'
     ],
     'press-releases': [
-      '/content/press-releases/testing-if-this-works.md',
-      '/content/press-releases/test.md'
+      '/public/content/press-releases/testing-if-this-works.md',
+      '/public/content/press-releases/test.md'
     ],
     'programs': [],
     'events': [],
