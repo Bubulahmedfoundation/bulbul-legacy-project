@@ -124,7 +124,7 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
                 <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.excerpt}</p>
               )}
               <div className="prose prose-sm max-w-none">
-                <p className="line-clamp-3">{item.body}</p>
+                <p className="line-clamp-3 whitespace-pre-line">{item.body}</p>
               </div>
             </CardContent>
           </Card>

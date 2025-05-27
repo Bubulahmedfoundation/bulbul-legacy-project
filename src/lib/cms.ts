@@ -23,11 +23,11 @@ const parseFrontmatter = (content: string) => {
   const match = content.match(frontmatterRegex);
   
   if (!match) {
-    return { frontmatter: {}, content: content };
+    return { frontmatter: {}, content: content.trim() };
   }
   
   const frontmatterStr = match[1];
-  const bodyContent = match[2];
+  const bodyContent = match[2].trim();
   
   const frontmatter: any = {};
   frontmatterStr.split('\n').forEach(line => {
@@ -71,7 +71,7 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
       title: frontmatter.title || 'Untitled',
       slug,
       date: frontmatter.date,
-      body: body.trim(),
+      body: body,
       image: frontmatter.image,
       thumbnail: frontmatter.image || frontmatter.thumbnail,
       excerpt: frontmatter.excerpt,
