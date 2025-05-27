@@ -54,8 +54,10 @@ const parseFrontmatter = (content: string) => {
  */
 const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> => {
   try {
+    console.log(`Fetching markdown file: ${filePath}`);
     const response = await fetch(filePath);
     if (!response.ok) {
+      console.log(`Failed to fetch ${filePath}: ${response.status}`);
       return null;
     }
     
@@ -65,17 +67,20 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
     // Extract slug from file path
     const slug = filePath.split('/').pop()?.replace('.md', '') || '';
     
-    return {
-      title: frontmatter.title || '',
+    const result: CMSContent = {
+      title: frontmatter.title || 'Untitled',
       slug,
       date: frontmatter.date,
       body: body.trim(),
       image: frontmatter.image,
-      thumbnail: frontmatter.image, // Use image as thumbnail if no separate thumbnail
+      thumbnail: frontmatter.image || frontmatter.thumbnail,
       excerpt: frontmatter.excerpt,
       type: frontmatter.type,
       ...frontmatter
     };
+    
+    console.log(`Successfully parsed ${filePath}:`, result);
+    return result;
   } catch (error) {
     console.error(`Error fetching ${filePath}:`, error);
     return null;
@@ -86,7 +91,7 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
  * Get list of markdown files for a collection
  */
 const getCollectionFiles = async (collection: string): Promise<string[]> => {
-  // Updated to include the actual files from your CMS
+  // Updated paths to point to public/content
   const knownFiles: Record<string, string[]> = {
     'news': [
       '/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md'
@@ -111,7 +116,6 @@ export const fetchCollection = async (collection: string): Promise<CMSContent[]>
   try {
     console.log(`Fetching ${collection} collection...`);
     
-    // Try to fetch real markdown files first
     const files = await getCollectionFiles(collection);
     const realContent: CMSContent[] = [];
     
@@ -122,7 +126,6 @@ export const fetchCollection = async (collection: string): Promise<CMSContent[]>
       }
     }
     
-    // If we have real content, use it; otherwise fall back to mock data
     if (realContent.length > 0) {
       console.log(`Found ${realContent.length} real content items for ${collection}`);
       // Sort by date, newest first
