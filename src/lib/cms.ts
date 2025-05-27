@@ -30,6 +30,8 @@ const parseFrontmatter = (content: string) => {
   const bodyContent = match[2].trim();
   
   const frontmatter: any = {};
+  
+  // Parse each line of frontmatter
   frontmatterStr.split('\n').forEach(line => {
     const colonIndex = line.indexOf(':');
     if (colonIndex > 0) {
@@ -61,8 +63,8 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
       return null;
     }
     
-    const content = await response.text();
-    const { frontmatter, content: body } = parseFrontmatter(content);
+    const rawContent = await response.text();
+    const { frontmatter, content: body } = parseFrontmatter(rawContent);
     
     // Extract slug from file path
     const slug = filePath.split('/').pop()?.replace('.md', '') || '';
@@ -70,12 +72,12 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
     const result: CMSContent = {
       title: frontmatter.title || 'Untitled',
       slug,
-      date: frontmatter.date,
+      date: frontmatter.date || undefined,
       body: body,
-      image: frontmatter.image,
-      thumbnail: frontmatter.image || frontmatter.thumbnail,
-      excerpt: frontmatter.excerpt,
-      type: frontmatter.type,
+      image: frontmatter.image || undefined,
+      thumbnail: frontmatter.image || frontmatter.thumbnail || undefined,
+      excerpt: frontmatter.excerpt || undefined,
+      type: frontmatter.type || undefined,
       ...frontmatter
     };
     
@@ -91,7 +93,6 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
  * Get list of markdown files for a collection
  */
 const getCollectionFiles = async (collection: string): Promise<string[]> => {
-  // Updated paths to point to public/content
   const knownFiles: Record<string, string[]> = {
     'news': [
       '/public/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md'
