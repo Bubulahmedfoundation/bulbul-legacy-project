@@ -1,0 +1,10 @@
+
+# Netlify redirects file for SPA routing
+# This ensures that all routes are handled by the React app
+
+# Admin routes
+/admin/index.html   /admin/index.html   200
+/admin/*            /admin/index.html   200
+
+# All other routes should be handled by the React app
+/*    /index.html   200

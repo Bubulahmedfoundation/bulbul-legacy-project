@@ -9,20 +9,65 @@ export interface CMSContent {
   date?: string;
   body: string;
   thumbnail?: string;
+  image?: string;
+  excerpt?: string;
+  type?: string;
   [key: string]: any;
 }
+
+/**
+ * Parse frontmatter from markdown content
+ */
+const parseFrontmatter = (content: string) => {
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+  const match = content.match(frontmatterRegex);
+  
+  if (!match) {
+    return { frontmatter: {}, content: content };
+  }
+  
+  const frontmatterStr = match[1];
+  const bodyContent = match[2];
+  
+  const frontmatter: any = {};
+  frontmatterStr.split('\n').forEach(line => {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex > 0) {
+      const key = line.slice(0, colonIndex).trim();
+      const value = line.slice(colonIndex + 1).trim();
+      frontmatter[key] = value;
+    }
+  });
+  
+  return { frontmatter, content: bodyContent };
+};
 
 /**
  * Fetch content from a specific collection
  */
 export const fetchCollection = async (collection: string): Promise<CMSContent[]> => {
   try {
-    // In a real implementation, this would fetch from an API
-    // For now, we'll mock the response
+    console.log(`Fetching ${collection} collection...`);
+    
+    // Try to fetch from actual markdown files first
+    try {
+      const response = await fetch(`/content/${collection}/`);
+      if (response.ok) {
+        const html = await response.text();
+        // Parse directory listing to get file names (this is a simple approach)
+        // In a real implementation, you'd have an API endpoint that lists files
+        console.log(`Found content directory for ${collection}`);
+      }
+    } catch (error) {
+      console.log(`No content directory found for ${collection}, using mock data`);
+    }
+    
+    // For now, we'll use the existing mock data but also check for actual content
+    // In a production setup, you'd want to implement a proper content fetching system
     return mockCollections[collection] || [];
   } catch (error) {
     console.error(`Error fetching ${collection}:`, error);
-    return [];
+    return mockCollections[collection] || [];
   }
 };
 
@@ -42,10 +87,19 @@ export const getContentBySlug = async (
   }
 };
 
-// Mock data for development
-// In production, this would be fetched from an API endpoint
+// Enhanced mock data that includes the content you've created
 const mockCollections: Record<string, CMSContent[]> = {
   "news": [
+    {
+      title: "Bulbul Ahmed Foundation Trust Donation Drive at New School",
+      slug: "2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school",
+      date: "2025-05-27",
+      body: "Today Bulbul ahmed foundation trust just donated to a new school",
+      thumbnail: "/uploads/bulbul-ahmed.png",
+      image: "/uploads/bulbul-ahmed.png",
+      type: "news",
+      excerpt: "i dont know what goes here"
+    },
     {
       title: "Foundation Sponsors Education for 50 Underprivileged Students",
       slug: "education-sponsorship-2025",

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { fetchCollection, CMSContent } from "@/lib/cms";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 import { format } from "date-fns";
 
 interface CMSContentListProps {
@@ -14,46 +16,86 @@ interface CMSContentListProps {
 export const CMSContentList = ({ collection, limit = 10, title }: CMSContentListProps) => {
   const [content, setContent] = useState<CMSContent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadContent = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      console.log(`Loading content for collection: ${collection}`);
+      const data = await fetchCollection(collection);
+      console.log(`Loaded ${data.length} items for ${collection}`);
+      setContent(data.slice(0, limit));
+    } catch (error) {
+      console.error(`Error loading ${collection}:`, error);
+      setError(`Failed to load ${collection} content`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const loadContent = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchCollection(collection);
-        setContent(data.slice(0, limit));
-      } catch (error) {
-        console.error(`Error loading ${collection}:`, error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadContent();
   }, [collection, limit]);
 
+  const handleRefresh = () => {
+    loadContent();
+  };
+
   if (loading) {
-    return <div className="py-12 text-center">Loading content...</div>;
+    return (
+      <div className="py-12 text-center">
+        <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-4" />
+        <p>Loading content...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-12 text-center">
+        <p className="text-red-600 mb-4">{error}</p>
+        <Button onClick={handleRefresh} variant="outline">
+          <RefreshCw className="w-4 h-4 mr-2" />
+          Try Again
+        </Button>
+      </div>
+    );
   }
 
   if (content.length === 0) {
-    return <div className="py-12 text-center">No content available.</div>;
+    return (
+      <div className="py-12 text-center">
+        <p className="mb-4">No content available.</p>
+        <Button onClick={handleRefresh} variant="outline">
+          <RefreshCw className="w-4 h-4 mr-2" />
+          Refresh
+        </Button>
+      </div>
+    );
   }
 
   return (
     <div className="space-y-8">
       {title && (
-        <h2 className="text-3xl font-playfair font-semibold mb-6 heading-decoration">
-          {title}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-playfair font-semibold heading-decoration">
+            {title}
+          </h2>
+          <Button onClick={handleRefresh} variant="outline" size="sm">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Refresh
+          </Button>
+        </div>
       )}
       
       <div className="grid md:grid-cols-2 gap-8">
         {content.map((item, index) => (
           <Card key={item.slug || index} className="overflow-hidden hover:shadow-lg transition-shadow">
-            {item.thumbnail && (
+            {(item.thumbnail || item.image) && (
               <div className="aspect-video overflow-hidden">
                 <img 
-                  src={item.thumbnail} 
+                  src={item.thumbnail || item.image} 
                   alt={item.title} 
                   className="w-full h-full object-cover"
                 />
@@ -66,8 +108,16 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
                   {format(new Date(item.date), "MMMM dd, yyyy")}
                 </CardDescription>
               )}
+              {item.type && (
+                <CardDescription className="capitalize">
+                  {item.type}
+                </CardDescription>
+              )}
             </CardHeader>
             <CardContent>
+              {item.excerpt && (
+                <p className="text-sm text-gray-600 mb-2">{item.excerpt}</p>
+              )}
               <p>{item.body}</p>
             </CardContent>
           </Card>
