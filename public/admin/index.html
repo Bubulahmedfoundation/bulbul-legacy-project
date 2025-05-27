@@ -42,6 +42,13 @@
       border-radius: 4px;
       margin: 20px 0;
     }
+    .success {
+      background-color: #d1edff;
+      color: #0c5460;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
@@ -49,7 +56,7 @@
   
   <div class="container" id="loading-container">
     <h1>BAFT Content Manager</h1>
-    <p>Loading content management system...</p>
+    <p id="status-message">Initializing content management system...</p>
     <div id="error-container" style="display: none;"></div>
   </div>
 
@@ -58,12 +65,18 @@
     console.log("Admin CMS page loaded");
     
     let hasTimedOut = false;
+    let isInitialized = false;
     
     // Set timeout to prevent infinite loading
     const loadingTimeout = setTimeout(() => {
-      hasTimedOut = true;
-      console.log("CMS loading timeout");
-      
+      if (!isInitialized) {
+        hasTimedOut = true;
+        console.log("CMS loading timeout");
+        showError("CMS Loading Timeout", "The CMS is taking too long to load. Please check your Netlify configuration.");
+      }
+    }, 10000);
+
+    function showError(title, message) {
       const errorContainer = document.getElementById('error-container');
       const loadingContainer = document.getElementById('loading-container');
       
@@ -71,20 +84,21 @@
         errorContainer.style.display = 'block';
         errorContainer.innerHTML = `
           <div class="error">
-            <h3>CMS Loading Timeout</h3>
-            <p>The CMS is taking too long to load. This usually means:</p>
-            <ul style="text-align: left;">
-              <li>Netlify Identity is not enabled</li>
-              <li>Git Gateway is not configured</li>
-              <li>config.yml file has errors</li>
-              <li>You need to be invited as an admin</li>
-            </ul>
+            <h3>${title}</h3>
+            <p>${message}</p>
             <button class="btn" onclick="location.reload()">Try Again</button>
             <button class="btn" onclick="window.location.href='/admin'">Back to Admin</button>
           </div>
         `;
       }
-    }, 8000);
+    }
+
+    function updateStatus(message) {
+      const statusElement = document.getElementById('status-message');
+      if (statusElement) {
+        statusElement.textContent = message;
+      }
+    }
 
     // Check if Netlify Identity is available
     if (window.netlifyIdentity) {
@@ -95,55 +109,45 @@
         
         if (!user && !hasTimedOut) {
           clearTimeout(loadingTimeout);
-          document.body.innerHTML = `
-            <div class="container">
-              <h1>BAFT Content Manager</h1>
-              <p>Please log in to access the content management system.</p>
-              <button class="btn" onclick="window.netlifyIdentity.open()">Log In</button>
-              <button class="btn" onclick="window.location.href='/admin'">Back to Admin</button>
-            </div>
+          document.getElementById('loading-container').innerHTML = `
+            <h1>BAFT Content Manager</h1>
+            <p>Please log in to access the content management system.</p>
+            <button class="btn" onclick="window.netlifyIdentity.open()">Log In</button>
+            <button class="btn" onclick="window.location.href='/admin'">Back to Admin</button>
           `;
+        } else if (user) {
+          updateStatus("User authenticated, loading CMS...");
+          // User is logged in, let the CMS load naturally
+          isInitialized = true;
+          clearTimeout(loadingTimeout);
         }
       });
 
-      window.netlifyIdentity.on("login", () => {
-        console.log("User logged in, reloading...");
+      window.netlifyIdentity.on("login", (user) => {
+        console.log("User logged in:", user);
+        updateStatus("Login successful, loading CMS...");
+        // Don't redirect immediately, let the CMS load
+        isInitialized = true;
         clearTimeout(loadingTimeout);
-        document.location.href = "/admin/index.html";
+      });
+
+      window.netlifyIdentity.on("logout", () => {
+        console.log("User logged out");
+        window.location.href = "/admin";
       });
 
       window.netlifyIdentity.on("error", err => {
         console.error("Netlify Identity error:", err);
         clearTimeout(loadingTimeout);
-        
-        const errorContainer = document.getElementById('error-container');
-        if (errorContainer) {
-          errorContainer.style.display = 'block';
-          errorContainer.innerHTML = `
-            <div class="error">
-              <h3>Authentication Error</h3>
-              <p>${err.message || 'Authentication failed'}</p>
-              <button class="btn" onclick="location.reload()">Try Again</button>
-            </div>
-          `;
-        }
+        showError("Authentication Error", err.message || 'Authentication failed');
       });
     } else {
       console.error("Netlify Identity not available");
       clearTimeout(loadingTimeout);
-      
-      document.body.innerHTML = `
-        <div class="container">
-          <div class="error">
-            <h3>Netlify Identity Not Available</h3>
-            <p>The Netlify Identity widget failed to load.</p>
-            <button class="btn" onclick="location.reload()">Reload Page</button>
-          </div>
-        </div>
-      `;
+      showError("Netlify Identity Not Available", "The Netlify Identity widget failed to load.");
     }
 
-    // Hide loading container when CMS loads successfully
+    // Check if CMS loaded successfully
     setTimeout(() => {
       const cmsRoot = document.getElementById('nc-root');
       const loadingContainer = document.getElementById('loading-container');
@@ -152,8 +156,19 @@
         console.log("CMS loaded successfully");
         clearTimeout(loadingTimeout);
         loadingContainer.style.display = 'none';
+        isInitialized = true;
       }
     }, 3000);
+
+    // Additional check for CMS initialization
+    setTimeout(() => {
+      if (!isInitialized && !hasTimedOut) {
+        const cmsRoot = document.getElementById('nc-root');
+        if (!cmsRoot || cmsRoot.children.length === 0) {
+          showError("CMS Failed to Load", "The content management system failed to initialize. Please check your configuration.");
+        }
+      }
+    }, 8000);
   </script>
 </body>
 </html>
