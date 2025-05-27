@@ -86,14 +86,14 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
  * Get list of markdown files for a collection
  */
 const getCollectionFiles = async (collection: string): Promise<string[]> => {
-  // For now, we'll use the known files from our existing content
-  // In a production setup, you'd want a proper API to list files
+  // Updated to include the actual files from your CMS
   const knownFiles: Record<string, string[]> = {
     'news': [
       '/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md'
     ],
     'press-releases': [
-      '/content/press-releases/testing-if-this-works.md'
+      '/content/press-releases/testing-if-this-works.md',
+      '/content/press-releases/test.md'
     ],
     'programs': [],
     'events': [],

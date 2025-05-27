@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -6,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Award, Gift, File, Users, Heart, Calendar } from "lucide-react";
 import AwardGallery from "@/components/AwardGallery";
+import { CMSContentList } from "@/components/CMSContent";
 
 const NewsAndPrograms = () => {
   const location = useLocation();
@@ -134,142 +134,25 @@ const NewsAndPrograms = () => {
         </div>
       </section>
 
-      {/* Latest News and Updates */}
+      {/* Latest News and Updates - using CMS */}
       <section id="latest-news" className="py-20">
         <div className="container">
-          <h2 className="text-3xl font-playfair font-semibold mb-12 heading-decoration">
-            Latest News & Updates
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Featured News */}
-            <Card className="overflow-hidden border-none shadow-lg">
-              <div className="relative h-80">
-                <img 
-                  src={newsItems[0].image} 
-                  alt={newsItems[0].title} 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 right-4 bg-baft-maroon text-white px-3 py-1 rounded-full text-sm">
-                  Featured
-                </div>
-              </div>
-              <CardContent className="pt-6">
-                <div className="flex items-center text-baft-maroon text-sm mb-2">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span>{newsItems[0].date}</span>
-                </div>
-                <h3 className="text-2xl font-playfair font-semibold mb-3">
-                  {newsItems[0].title}
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  {newsItems[0].excerpt} The event was attended by prominent cultural figures, 
-                  government officials, and previous award recipients. Mr. Hoque's acceptance speech 
-                  highlighted the importance of preserving Bangladesh's literary heritage in the 
-                  digital age.
-                </p>
-              </CardContent>
-              <CardFooter className="pt-0">
-                <a href="#" className="text-baft-maroon font-medium hover:underline">
-                  Read more →
-                </a>
-              </CardFooter>
-            </Card>
-
-            {/* News List */}
-            <div className="space-y-6">
-              {newsItems.slice(1).map((item, index) => (
-                <div key={index} className="flex gap-4 pb-6 border-b last:border-b-0">
-                  <div className="w-1/3">
-                    <div className="aspect-video rounded overflow-hidden">
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-2/3">
-                    <div className="flex items-center text-baft-maroon text-sm mb-1">
-                      <Calendar className="w-3 h-3 mr-1" />
-                      <span>{item.date}</span>
-                    </div>
-                    <h3 className="text-lg font-playfair font-semibold mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 line-clamp-2">
-                      {item.excerpt}
-                    </p>
-                    <a href="#" className="text-baft-maroon text-sm font-medium mt-2 inline-block hover:underline">
-                      Read more
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <CMSContentList 
+            collection="news" 
+            limit={6} 
+            title="Latest News & Updates" 
+          />
         </div>
       </section>
 
-      {/* Press Releases */}
+      {/* Press Releases - using CMS */}
       <section className="py-20 bg-baft-cream/30">
         <div className="container">
-          <h2 className="text-3xl font-playfair font-semibold mb-6 heading-decoration">
-            Press Releases
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="flex items-center text-baft-maroon text-sm mb-3">
-                <Calendar className="w-4 h-4 mr-2" />
-                <span>December 10, 2023</span>
-              </div>
-              <h3 className="text-xl font-playfair font-semibold mb-3">
-                Foundation Receives Government Recognition for Cultural Preservation
-              </h3>
-              <p className="text-gray-600 mb-4">
-                The Ministry of Cultural Affairs has recognized BAFT's contributions to preserving 
-                Bangladesh's cultural heritage through its various programs and initiatives.
-              </p>
-              <a href="#" className="text-baft-maroon font-medium hover:underline">
-                Read full press release
-              </a>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="flex items-center text-baft-maroon text-sm mb-3">
-                <Calendar className="w-4 h-4 mr-2" />
-                <span>October 5, 2023</span>
-              </div>
-              <h3 className="text-xl font-playfair font-semibold mb-3">
-                Partnership with International Relief Organization Announced
-              </h3>
-              <p className="text-gray-600 mb-4">
-                BAFT has entered into a partnership with Global Relief Initiative to expand its 
-                humanitarian work in the Cox's Bazar refugee camps.
-              </p>
-              <a href="#" className="text-baft-maroon font-medium hover:underline">
-                Read full press release
-              </a>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="flex items-center text-baft-maroon text-sm mb-3">
-                <Calendar className="w-4 h-4 mr-2" />
-                <span>August 23, 2023</span>
-              </div>
-              <h3 className="text-xl font-playfair font-semibold mb-3">
-                Annual Report Shows 30% Increase in Program Reach
-              </h3>
-              <p className="text-gray-600 mb-4">
-                The foundation's 2023 annual report reveals a significant increase in program reach 
-                and impact compared to previous years.
-              </p>
-              <a href="#" className="text-baft-maroon font-medium hover:underline">
-                Read full press release
-              </a>
-            </div>
-          </div>
+          <CMSContentList 
+            collection="press-releases" 
+            limit={6} 
+            title="Press Releases" 
+          />
         </div>
       </section>
 
