@@ -24,7 +24,7 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
     try {
       console.log(`Loading content for collection: ${collection}`);
       const data = await fetchCollection(collection);
-      console.log(`Loaded ${data.length} items for ${collection}`);
+      console.log(`Loaded ${data.length} items for ${collection}`, data);
       setContent(data.slice(0, limit));
     } catch (error) {
       console.error(`Error loading ${collection}:`, error);
@@ -39,6 +39,7 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
   }, [collection, limit]);
 
   const handleRefresh = () => {
+    console.log(`Refreshing ${collection} content...`);
     loadContent();
   };
 
@@ -66,7 +67,7 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
   if (content.length === 0) {
     return (
       <div className="py-12 text-center">
-        <p className="mb-4">No content available.</p>
+        <p className="mb-4">No content available for {collection}.</p>
         <Button onClick={handleRefresh} variant="outline">
           <RefreshCw className="w-4 h-4 mr-2" />
           Refresh
@@ -98,11 +99,15 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
                   src={item.thumbnail || item.image} 
                   alt={item.title} 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    console.log(`Failed to load image: ${item.thumbnail || item.image}`);
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
               </div>
             )}
             <CardHeader>
-              <CardTitle>{item.title}</CardTitle>
+              <CardTitle className="line-clamp-2">{item.title}</CardTitle>
               {item.date && (
                 <CardDescription>
                   {format(new Date(item.date), "MMMM dd, yyyy")}
@@ -116,12 +121,18 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
             </CardHeader>
             <CardContent>
               {item.excerpt && (
-                <p className="text-sm text-gray-600 mb-2">{item.excerpt}</p>
+                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.excerpt}</p>
               )}
-              <p>{item.body}</p>
+              <div className="prose prose-sm max-w-none">
+                <p className="line-clamp-3">{item.body}</p>
+              </div>
             </CardContent>
           </Card>
         ))}
+      </div>
+      
+      <div className="text-center text-sm text-gray-500 mt-4">
+        Showing {content.length} {content.length === 1 ? 'item' : 'items'} from {collection}
       </div>
     </div>
   );
