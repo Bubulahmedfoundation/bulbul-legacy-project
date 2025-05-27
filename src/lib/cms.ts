@@ -31,7 +31,7 @@ const parseFrontmatter = (content: string) => {
   
   const frontmatter: any = {};
   
-  // Parse each line of frontmatter using a more robust approach
+  // Parse each line of frontmatter
   const lines = frontmatterStr.split('\n');
   for (const line of lines) {
     const trimmedLine = line.trim();
@@ -79,7 +79,6 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
     
     const { frontmatter, content: body } = parseFrontmatter(rawContent);
     console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
-    console.log(`Parsed body for ${filePath}:`, body.substring(0, 100));
     
     // Extract slug from file path
     const slug = filePath.split('/').pop()?.replace('.md', '') || '';
@@ -106,10 +105,12 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
 
 /**
  * Get list of markdown files for a collection
+ * Updated to use the correct paths where Netlify CMS stores files
  */
 const getCollectionFiles = async (collection: string): Promise<string[]> => {
   const knownFiles: Record<string, string[]> = {
     'news': [
+      '/content/news/2025-05-27-tes13.md',
       '/public/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md'
     ],
     'press-releases': [
