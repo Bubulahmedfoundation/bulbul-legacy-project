@@ -31,12 +31,14 @@ const parseFrontmatter = (content: string) => {
   
   const frontmatter: any = {};
   
-  // Parse each line of frontmatter
-  frontmatterStr.split('\n').forEach(line => {
-    const colonIndex = line.indexOf(':');
-    if (colonIndex > 0) {
-      const key = line.slice(0, colonIndex).trim();
-      let value = line.slice(colonIndex + 1).trim();
+  // Parse each line of frontmatter using a more robust approach
+  const lines = frontmatterStr.split('\n');
+  for (const line of lines) {
+    const trimmedLine = line.trim();
+    if (trimmedLine && trimmedLine.includes(':')) {
+      const colonIndex = trimmedLine.indexOf(':');
+      const key = trimmedLine.slice(0, colonIndex).trim();
+      let value = trimmedLine.slice(colonIndex + 1).trim();
       
       // Remove quotes if present
       if ((value.startsWith('"') && value.endsWith('"')) || 
@@ -44,9 +46,18 @@ const parseFrontmatter = (content: string) => {
         value = value.slice(1, -1);
       }
       
+      // Handle boolean values
+      if (value === 'true') value = true;
+      if (value === 'false') value = false;
+      
+      // Handle numbers
+      if (!isNaN(Number(value)) && value !== '') {
+        value = Number(value);
+      }
+      
       frontmatter[key] = value;
     }
-  });
+  }
   
   return { frontmatter, content: bodyContent };
 };
@@ -64,7 +75,11 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
     }
     
     const rawContent = await response.text();
+    console.log(`Raw content for ${filePath}:`, rawContent.substring(0, 200));
+    
     const { frontmatter, content: body } = parseFrontmatter(rawContent);
+    console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
+    console.log(`Parsed body for ${filePath}:`, body.substring(0, 100));
     
     // Extract slug from file path
     const slug = filePath.split('/').pop()?.replace('.md', '') || '';
@@ -73,7 +88,7 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
       title: frontmatter.title || 'Untitled',
       slug,
       date: frontmatter.date || undefined,
-      body: body,
+      body: body || '',
       image: frontmatter.image || undefined,
       thumbnail: frontmatter.image || frontmatter.thumbnail || undefined,
       excerpt: frontmatter.excerpt || undefined,
@@ -81,7 +96,7 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
       ...frontmatter
     };
     
-    console.log(`Successfully parsed ${filePath}:`, result);
+    console.log(`Final result for ${filePath}:`, result);
     return result;
   } catch (error) {
     console.error(`Error fetching ${filePath}:`, error);
