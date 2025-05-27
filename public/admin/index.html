@@ -5,175 +5,155 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager | Bulbul Ahmed Foundation Trust</title>
-  <!-- Include the script that enables Netlify Identity -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Add some basic styling -->
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       background-color: #f9f9f9;
     }
-    .login-container {
-      padding: 20px;
-      text-align: center;
-      max-width: 500px;
+    .container {
+      max-width: 600px;
       margin: 50px auto;
-      background-color: white;
+      background: white;
+      padding: 30px;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .netlify-identity-button {
-      margin-top: 20px;
-      background-color: #800020;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      font-size: 16px;
-    }
-    .error-container {
-      padding: 15px;
-      background-color: #fff3cd;
-      color: #856404;
-      border-radius: 4px;
-      margin-top: 20px;
-      text-align: left;
-    }
-    .loading-indicator {
-      margin: 50px auto;
       text-align: center;
     }
-    h1 {
-      color: #800020;
+    .btn {
+      background-color: #800020;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px;
     }
-    #config-error {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
+    .btn:hover {
+      background-color: #600018;
+    }
+    .error {
       background-color: #f8d7da;
       color: #721c24;
-      border-radius: 4px;
-      text-align: left;
-    }
-    #loading-timeout {
-      display: none;
-      margin-top: 20px;
       padding: 15px;
-      background-color: #f8d7da;
-      color: #721c24;
       border-radius: 4px;
-      text-align: left;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
   <div id="nc-root"></div>
-  <!-- Loading indicator that will be replaced by CMS or login -->
-  <div class="loading-indicator">
-    <p>Loading content management system...</p>
-    <div id="config-error"></div>
-    <div id="loading-timeout"></div>
-  </div>
   
-  <!-- Include the script that builds the page and powers Netlify CMS -->
+  <div class="container" id="loading-container">
+    <h1>BAFT Content Manager</h1>
+    <p>Loading content management system...</p>
+    <div id="error-container" style="display: none;"></div>
+  </div>
+
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   <script>
-    // Check if netlifyIdentity is defined
-    if (window.netlifyIdentity) {
-      // Set a timeout to detect if the CMS is taking too long to load
-      const loadingTimeout = setTimeout(() => {
-        const loadingTimeoutEl = document.getElementById('loading-timeout');
-        loadingTimeoutEl.style.display = 'block';
-        loadingTimeoutEl.innerHTML = `
-          <h3>Loading timeout</h3>
-          <p>The CMS is taking too long to load. This could be due to one of these issues:</p>
-          <ul>
-            <li>The config.yml file is not properly configured or accessible</li>
-            <li>Netlify Identity service has not been enabled for this site</li>
-            <li>Git Gateway is not properly configured or enabled</li>
-          </ul>
-          <p>Try refreshing the page. If the issue persists, check your Netlify site settings.</p>
-          <button onclick="location.reload()" style="padding: 10px; margin-top: 10px;">Refresh Page</button>
+    console.log("Admin CMS page loaded");
+    
+    let hasTimedOut = false;
+    
+    // Set timeout to prevent infinite loading
+    const loadingTimeout = setTimeout(() => {
+      hasTimedOut = true;
+      console.log("CMS loading timeout");
+      
+      const errorContainer = document.getElementById('error-container');
+      const loadingContainer = document.getElementById('loading-container');
+      
+      if (errorContainer && loadingContainer) {
+        errorContainer.style.display = 'block';
+        errorContainer.innerHTML = `
+          <div class="error">
+            <h3>CMS Loading Timeout</h3>
+            <p>The CMS is taking too long to load. This usually means:</p>
+            <ul style="text-align: left;">
+              <li>Netlify Identity is not enabled</li>
+              <li>Git Gateway is not configured</li>
+              <li>config.yml file has errors</li>
+              <li>You need to be invited as an admin</li>
+            </ul>
+            <button class="btn" onclick="location.reload()">Try Again</button>
+            <button class="btn" onclick="window.location.href='/admin'">Back to Admin</button>
+          </div>
         `;
-      }, 10000);
+      }
+    }, 8000);
+
+    // Check if Netlify Identity is available
+    if (window.netlifyIdentity) {
+      console.log("Netlify Identity available");
       
-      // Hide loading indicator when CMS is loaded
-      window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-          const loadingIndicator = document.querySelector('.loading-indicator');
-          if (loadingIndicator && document.getElementById('nc-root').children.length > 0) {
-            loadingIndicator.style.display = 'none';
-            clearTimeout(loadingTimeout);
-          } else if (loadingIndicator) {
-            loadingIndicator.innerHTML = '<p>Waiting for authentication...</p>';
-          }
-        }, 2000);
-      });
-      
-      // Initialize the widget
       window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          // If no user, show login button
+        console.log("Netlify Identity initialized", user ? "with user" : "without user");
+        
+        if (!user && !hasTimedOut) {
+          clearTimeout(loadingTimeout);
           document.body.innerHTML = `
-            <div class="login-container">
+            <div class="container">
               <h1>BAFT Content Manager</h1>
-              <p>Please log in with your admin credentials to access the content management system.</p>
-              <button class="netlify-identity-button" onclick="window.netlifyIdentity.open()">Log in</button>
-              <div class="error-container">
-                <strong>Troubleshooting Tips:</strong>
-                <ul>
-                  <li>If you see a permissions error, you need to be invited as an admin first.</li>
-                  <li>Make sure you have enabled Identity in your Netlify site settings.</li>
-                  <li>Check that the site URL is properly configured in Netlify.</li>
-                </ul>
-              </div>
+              <p>Please log in to access the content management system.</p>
+              <button class="btn" onclick="window.netlifyIdentity.open()">Log In</button>
+              <button class="btn" onclick="window.location.href='/admin'">Back to Admin</button>
             </div>
           `;
-          clearTimeout(loadingTimeout);
         }
       });
-      
-      // Handle login success
+
       window.netlifyIdentity.on("login", () => {
-        document.location.href = "/admin/";
+        console.log("User logged in, reloading...");
+        clearTimeout(loadingTimeout);
+        document.location.href = "/admin/index.html";
       });
-      
-      // Handle errors
+
       window.netlifyIdentity.on("error", err => {
         console.error("Netlify Identity error:", err);
         clearTimeout(loadingTimeout);
-        document.body.innerHTML += `
-          <div class="login-container">
-            <div class="error-container">
-              <strong>Authentication error:</strong>
-              <p>${err.message || "Unknown error occurred during authentication"}</p>
-              <p>Please refresh the page and try again. If the issue persists, contact your site administrator.</p>
+        
+        const errorContainer = document.getElementById('error-container');
+        if (errorContainer) {
+          errorContainer.style.display = 'block';
+          errorContainer.innerHTML = `
+            <div class="error">
+              <h3>Authentication Error</h3>
+              <p>${err.message || 'Authentication failed'}</p>
+              <button class="btn" onclick="location.reload()">Try Again</button>
             </div>
-          </div>
-        `;
+          `;
+        }
       });
+    } else {
+      console.error("Netlify Identity not available");
+      clearTimeout(loadingTimeout);
       
-      // Handle CMS errors
-      if (typeof CMS !== 'undefined') {
-        CMS.registerEventListener({
-          name: 'onError',
-          handler: function(err) {
-            console.error('CMS Error:', err);
-            clearTimeout(loadingTimeout);
-            const configError = document.getElementById('config-error');
-            configError.style.display = 'block';
-            configError.innerHTML = `
-              <h3>CMS Error</h3>
-              <p>${err.message || 'Failed to load the CMS. Please check your configuration.'}</p>
-              <p>If you're seeing a config error, make sure your config.yml file is correctly formatted and accessible.</p>
-            `;
-          }
-        });
-      }
+      document.body.innerHTML = `
+        <div class="container">
+          <div class="error">
+            <h3>Netlify Identity Not Available</h3>
+            <p>The Netlify Identity widget failed to load.</p>
+            <button class="btn" onclick="location.reload()">Reload Page</button>
+          </div>
+        </div>
+      `;
     }
+
+    // Hide loading container when CMS loads successfully
+    setTimeout(() => {
+      const cmsRoot = document.getElementById('nc-root');
+      const loadingContainer = document.getElementById('loading-container');
+      
+      if (cmsRoot && cmsRoot.children.length > 0 && loadingContainer) {
+        console.log("CMS loaded successfully");
+        clearTimeout(loadingTimeout);
+        loadingContainer.style.display = 'none';
+      }
+    }, 3000);
   </script>
 </body>
 </html>

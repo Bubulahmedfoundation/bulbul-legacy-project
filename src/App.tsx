@@ -27,24 +27,61 @@ const App = () => (
           <Routes>
             {/* Admin route without Navbar/Footer */}
             <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/*" element={<Admin />} />
             
             {/* Regular routes with Navbar/Footer */}
+            <Route path="/" element={
+              <>
+                <Navbar />
+                <main>
+                  <Index />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/about" element={
+              <>
+                <Navbar />
+                <main>
+                  <About />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/news-and-programs" element={
+              <>
+                <Navbar />
+                <main>
+                  <NewsAndPrograms />
+                </main>
+                <Footer />
+              </>
+            } />
+            {/* Redirect old routes to the new combined page */}
+            <Route path="/news" element={<Navigate to="/news-and-programs" />} />
+            <Route path="/programs" element={<Navigate to="/news-and-programs" />} />
+            <Route path="/get-involved" element={
+              <>
+                <Navbar />
+                <main>
+                  <GetInvolved />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/filmography" element={
+              <>
+                <Navbar />
+                <main>
+                  <Filmography />
+                </main>
+                <Footer />
+              </>
+            } />
             <Route path="*" element={
               <>
                 <Navbar />
                 <main>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/news-and-programs" element={<NewsAndPrograms />} />
-                    {/* Redirect old routes to the new combined page */}
-                    <Route path="/news" element={<Navigate to="/news-and-programs" />} />
-                    <Route path="/programs" element={<Navigate to="/news-and-programs" />} />
-                    <Route path="/get-involved" element={<GetInvolved />} />
-                    <Route path="/filmography" element={<Filmography />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
+                  <NotFound />
                 </main>
                 <Footer />
               </>
