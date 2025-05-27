@@ -38,7 +38,7 @@ const parseFrontmatter = (content: string) => {
     if (trimmedLine && trimmedLine.includes(':')) {
       const colonIndex = trimmedLine.indexOf(':');
       const key = trimmedLine.slice(0, colonIndex).trim();
-      let value = trimmedLine.slice(colonIndex + 1).trim();
+      let value: any = trimmedLine.slice(colonIndex + 1).trim();
       
       // Remove quotes if present
       if ((value.startsWith('"') && value.endsWith('"')) || 
