@@ -31,7 +31,7 @@ const parseFrontmatter = (content: string) => {
   
   const frontmatter: any = {};
   
-  // Parse each line of frontmatter
+  // Parse each line of frontmatter with improved parsing
   const lines = frontmatterStr.split('\n');
   for (const line of lines) {
     const trimmedLine = line.trim();
@@ -50,14 +50,17 @@ const parseFrontmatter = (content: string) => {
       if (value === 'true') value = true;
       if (value === 'false') value = false;
       
-      // Handle numbers
-      if (!isNaN(Number(value)) && value !== '') {
+      // Handle numbers (but not dates)
+      if (!isNaN(Number(value)) && value !== '' && !value.includes('-') && !value.includes('T')) {
         value = Number(value);
       }
       
       frontmatter[key] = value;
     }
   }
+  
+  console.log('Parsed frontmatter:', frontmatter);
+  console.log('Body content:', bodyContent.substring(0, 100));
   
   return { frontmatter, content: bodyContent };
 };
@@ -78,7 +81,7 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
     console.log(`Raw content for ${filePath}:`, rawContent.substring(0, 200));
     
     const { frontmatter, content: body } = parseFrontmatter(rawContent);
-    console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
+    console.log(`Final parsed frontmatter for ${filePath}:`, frontmatter);
     
     // Extract slug from file path
     const slug = filePath.split('/').pop()?.replace('.md', '') || '';
