@@ -1,3 +1,4 @@
+
 /**
  * Utility functions for interacting with the CMS
  */
@@ -20,8 +21,8 @@ export interface CMSContent {
 const parseFrontmatter = (content: string) => {
   console.log('Raw content to parse:', content.substring(0, 300));
   
-  // Updated regex to be more flexible with whitespace
-  const frontmatterRegex = /^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n([\s\S]*)$/;
+  // More robust regex for frontmatter - handles various line endings and whitespace
+  const frontmatterRegex = /^---\s*[\r\n]+([\s\S]*?)[\r\n]+---\s*[\r\n]+([\s\S]*)$/;
   const match = content.match(frontmatterRegex);
   
   if (!match) {
@@ -29,7 +30,7 @@ const parseFrontmatter = (content: string) => {
     return { frontmatter: {}, content: content.trim() };
   }
   
-  const frontmatterStr = match[1];
+  const frontmatterStr = match[1].trim();
   const bodyContent = match[2].trim();
   
   console.log('Frontmatter string found:', frontmatterStr);
@@ -37,8 +38,8 @@ const parseFrontmatter = (content: string) => {
   
   const frontmatter: any = {};
   
-  // Parse YAML-style frontmatter
-  const lines = frontmatterStr.split('\n');
+  // Parse YAML-style frontmatter line by line
+  const lines = frontmatterStr.split(/\r?\n/);
   for (const line of lines) {
     const trimmedLine = line.trim();
     if (trimmedLine && trimmedLine.includes(':')) {
@@ -59,15 +60,16 @@ const parseFrontmatter = (content: string) => {
       if (value === 'true') value = true;
       if (value === 'false') value = false;
       
-      // Handle numbers (but not dates or paths)
+      // Handle numbers (but not dates, paths, or timestamps)
       if (!isNaN(Number(value)) && value !== '' && 
           !value.includes('-') && !value.includes('T') && 
-          !value.includes('/') && !value.includes(':')) {
+          !value.includes('/') && !value.includes(':') &&
+          !value.includes('.')) {
         value = Number(value);
       }
       
       frontmatter[key] = value;
-      console.log(`Parsed ${key}: ${value}`);
+      console.log(`Parsed ${key}: ${value} (type: ${typeof value})`);
     }
   }
   
@@ -91,6 +93,12 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
     
     const rawContent = await response.text();
     console.log(`Raw content for ${filePath}:`, rawContent.substring(0, 300));
+    
+    // Check if content is actually HTML (404 page) instead of markdown
+    if (rawContent.trim().startsWith('<!DOCTYPE html>') || rawContent.trim().startsWith('<html')) {
+      console.log(`File ${filePath} returned HTML instead of markdown - likely 404`);
+      return null;
+    }
     
     const { frontmatter, content: body } = parseFrontmatter(rawContent);
     console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
@@ -155,7 +163,7 @@ export const fetchCollection = async (collection: string): Promise<CMSContent[]>
     
     for (const filePath of files) {
       const content = await fetchMarkdownFile(filePath);
-      if (content) {
+      if (content && content.title !== 'Untitled') {
         realContent.push(content);
       }
     }
