@@ -1,4 +1,3 @@
-
 /**
  * Utility functions for interacting with the CMS
  */
@@ -21,7 +20,8 @@ export interface CMSContent {
 const parseFrontmatter = (content: string) => {
   console.log('Raw content to parse:', content.substring(0, 300));
   
-  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+  // Updated regex to be more flexible with whitespace
+  const frontmatterRegex = /^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n([\s\S]*)$/;
   const match = content.match(frontmatterRegex);
   
   if (!match) {
@@ -32,12 +32,12 @@ const parseFrontmatter = (content: string) => {
   const frontmatterStr = match[1];
   const bodyContent = match[2].trim();
   
-  console.log('Frontmatter string:', frontmatterStr);
-  console.log('Body content:', bodyContent.substring(0, 100));
+  console.log('Frontmatter string found:', frontmatterStr);
+  console.log('Body content preview:', bodyContent.substring(0, 100));
   
   const frontmatter: any = {};
   
-  // Parse each line of frontmatter with improved YAML parsing
+  // Parse YAML-style frontmatter
   const lines = frontmatterStr.split('\n');
   for (const line of lines) {
     const trimmedLine = line.trim();
@@ -59,16 +59,19 @@ const parseFrontmatter = (content: string) => {
       if (value === 'true') value = true;
       if (value === 'false') value = false;
       
-      // Handle numbers (but not dates or empty strings)
-      if (!isNaN(Number(value)) && value !== '' && !value.includes('-') && !value.includes('T') && !value.includes('/')) {
+      // Handle numbers (but not dates or paths)
+      if (!isNaN(Number(value)) && value !== '' && 
+          !value.includes('-') && !value.includes('T') && 
+          !value.includes('/') && !value.includes(':')) {
         value = Number(value);
       }
       
       frontmatter[key] = value;
+      console.log(`Parsed ${key}: ${value}`);
     }
   }
   
-  console.log('Parsed frontmatter:', frontmatter);
+  console.log('Final parsed frontmatter:', frontmatter);
   console.log('Body content length:', bodyContent.length);
   
   return { frontmatter, content: bodyContent };
@@ -90,8 +93,8 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
     console.log(`Raw content for ${filePath}:`, rawContent.substring(0, 300));
     
     const { frontmatter, content: body } = parseFrontmatter(rawContent);
-    console.log(`Final parsed frontmatter for ${filePath}:`, frontmatter);
-    console.log(`Final body for ${filePath}:`, body.substring(0, 200));
+    console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
+    console.log(`Parsed body for ${filePath}:`, body.substring(0, 200));
     
     // Extract slug from file path
     const slug = filePath.split('/').pop()?.replace('.md', '') || '';
@@ -108,7 +111,7 @@ const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> =
       ...frontmatter
     };
     
-    console.log(`Final result for ${filePath}:`, result);
+    console.log(`Final CMS content for ${filePath}:`, result);
     return result;
   } catch (error) {
     console.error(`Error fetching ${filePath}:`, error);
