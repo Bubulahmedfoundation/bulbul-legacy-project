@@ -1,11 +1,12 @@
 
 import { useEffect, useState } from "react";
-import { fetchCollection, CMSContent } from "@/lib/cms";
+import { fetchCollection, CMSContent, refreshContent, clearContentCache } from "@/lib/cms";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Trash2 } from "lucide-react";
 import { format } from "date-fns";
+import { toast } from "@/components/ui/use-toast";
 
 interface CMSContentListProps {
   collection: string;
@@ -18,17 +19,29 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadContent = async () => {
+  const loadContent = async (forceRefresh = false) => {
     setLoading(true);
     setError(null);
     try {
-      console.log(`Loading content for collection: ${collection}`);
-      const data = await fetchCollection(collection);
+      console.log(`Loading content for collection: ${collection}${forceRefresh ? ' (forced refresh)' : ''}`);
+      const data = await fetchCollection(collection, forceRefresh);
       console.log(`Loaded ${data.length} items for ${collection}`, data);
       setContent(data.slice(0, limit));
+      
+      if (forceRefresh && data.length > 0) {
+        toast({
+          title: "Content Updated",
+          description: `Refreshed ${data.length} items from ${collection}`,
+        });
+      }
     } catch (error) {
       console.error(`Error loading ${collection}:`, error);
       setError(`Failed to load ${collection} content`);
+      toast({
+        title: "Error",
+        description: `Failed to load ${collection} content`,
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -40,7 +53,39 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
 
   const handleRefresh = () => {
     console.log(`Refreshing ${collection} content...`);
-    loadContent();
+    loadContent(true);
+  };
+
+  const handleClearCache = () => {
+    console.log('Clearing content cache...');
+    clearContentCache();
+    toast({
+      title: "Cache Cleared",
+      description: "Content cache has been cleared. Refreshing...",
+    });
+    loadContent(true);
+  };
+
+  const handleFullRefresh = async () => {
+    console.log('Full content refresh...');
+    setLoading(true);
+    try {
+      await refreshContent();
+      await loadContent(true);
+      toast({
+        title: "Full Refresh Complete",
+        description: "All content has been refreshed from the CMS",
+      });
+    } catch (error) {
+      console.error('Error during full refresh:', error);
+      toast({
+        title: "Refresh Error",
+        description: "Failed to refresh content from CMS",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -56,10 +101,16 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
     return (
       <div className="py-12 text-center">
         <p className="text-red-600 mb-4">{error}</p>
-        <Button onClick={handleRefresh} variant="outline">
-          <RefreshCw className="w-4 h-4 mr-2" />
-          Try Again
-        </Button>
+        <div className="flex gap-2 justify-center">
+          <Button onClick={handleRefresh} variant="outline">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Try Again
+          </Button>
+          <Button onClick={handleClearCache} variant="outline">
+            <Trash2 className="w-4 h-4 mr-2" />
+            Clear Cache
+          </Button>
+        </div>
       </div>
     );
   }
@@ -68,10 +119,16 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
     return (
       <div className="py-12 text-center">
         <p className="mb-4">No content available for {collection}.</p>
-        <Button onClick={handleRefresh} variant="outline">
-          <RefreshCw className="w-4 h-4 mr-2" />
-          Refresh
-        </Button>
+        <div className="flex gap-2 justify-center">
+          <Button onClick={handleRefresh} variant="outline">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Refresh
+          </Button>
+          <Button onClick={handleFullRefresh} variant="outline">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Full Refresh
+          </Button>
+        </div>
       </div>
     );
   }
@@ -83,10 +140,16 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
           <h2 className="text-3xl font-playfair font-semibold heading-decoration">
             {title}
           </h2>
-          <Button onClick={handleRefresh} variant="outline" size="sm">
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={handleRefresh} variant="outline" size="sm">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh
+            </Button>
+            <Button onClick={handleClearCache} variant="outline" size="sm">
+              <Trash2 className="w-4 h-4 mr-2" />
+              Clear Cache
+            </Button>
+          </div>
         </div>
       )}
       
@@ -133,6 +196,8 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
       
       <div className="text-center text-sm text-gray-500 mt-4">
         Showing {content.length} {content.length === 1 ? 'item' : 'items'} from {collection}
+        <br />
+        <span className="text-xs">Content auto-refreshes every 2 minutes</span>
       </div>
     </div>
   );

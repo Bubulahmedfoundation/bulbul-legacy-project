@@ -79,10 +79,10 @@ const parseFrontmatter = (content: string) => {
 };
 
 /**
- * Import all markdown files from the content directory
+ * Import all markdown files from the content directory with cache busting
  */
-const importMarkdownFiles = async (): Promise<Record<string, CMSContent[]>> => {
-  console.log('Attempting to import markdown files...');
+const importMarkdownFiles = async (bustCache = false): Promise<Record<string, CMSContent[]>> => {
+  console.log('Attempting to import markdown files...', bustCache ? '(cache busted)' : '');
   
   const collections: Record<string, CMSContent[]> = {
     news: [],
@@ -94,9 +94,17 @@ const importMarkdownFiles = async (): Promise<Record<string, CMSContent[]>> => {
   };
 
   try {
-    // Try to import files using Vite's import.meta.glob
-    const modules = import.meta.glob('/content/**/*.md', { as: 'raw', eager: false });
+    // Try to import files using Vite's import.meta.glob with cache busting
+    const cacheParam = bustCache ? `?t=${Date.now()}` : '';
+    const modules = import.meta.glob('/public/content/**/*.md', { as: 'raw', eager: false });
     console.log('Found markdown files:', Object.keys(modules));
+    
+    // If no files found in /public/content, try /content
+    if (Object.keys(modules).length === 0) {
+      const fallbackModules = import.meta.glob('/content/**/*.md', { as: 'raw', eager: false });
+      console.log('Trying fallback path, found:', Object.keys(fallbackModules));
+      Object.assign(modules, fallbackModules);
+    }
     
     for (const [path, moduleLoader] of Object.entries(modules)) {
       try {
@@ -104,14 +112,15 @@ const importMarkdownFiles = async (): Promise<Record<string, CMSContent[]>> => {
         
         // Extract collection from path
         const pathParts = path.split('/');
-        const collection = pathParts[2]; // /content/[collection]/file.md
+        const collectionIndex = pathParts.findIndex(part => part === 'content') + 1;
+        const collection = pathParts[collectionIndex];
         
-        if (!collections[collection]) {
+        if (!collection || !collections[collection]) {
           console.log(`Unknown collection: ${collection}, skipping`);
           continue;
         }
         
-        // Load the file content
+        // Load the file content with cache busting
         const rawContent = await moduleLoader();
         
         if (typeof rawContent !== 'string') {
@@ -168,23 +177,36 @@ const importMarkdownFiles = async (): Promise<Record<string, CMSContent[]>> => {
 };
 
 /**
- * Cached content store
+ * Cached content store with timestamp
  */
-let contentCache: Record<string, CMSContent[]> | null = null;
+let contentCache: { data: Record<string, CMSContent[]>; timestamp: number } | null = null;
+const CACHE_DURATION = 30000; // 30 seconds
 
 /**
- * Fetch content from a specific collection
+ * Check if content cache is expired
  */
-export const fetchCollection = async (collection: string): Promise<CMSContent[]> => {
-  console.log(`Fetching collection: ${collection}`);
+const isCacheExpired = (): boolean => {
+  if (!contentCache) return true;
+  return Date.now() - contentCache.timestamp > CACHE_DURATION;
+};
+
+/**
+ * Fetch content from a specific collection with auto-refresh
+ */
+export const fetchCollection = async (collection: string, forceRefresh = false): Promise<CMSContent[]> => {
+  console.log(`Fetching collection: ${collection}`, forceRefresh ? '(forced refresh)' : '');
   
-  // Load content if not cached
-  if (!contentCache) {
+  // Load content if not cached, expired, or force refresh
+  if (!contentCache || isCacheExpired() || forceRefresh) {
     console.log('Loading content from files...');
-    contentCache = await importMarkdownFiles();
+    const data = await importMarkdownFiles(forceRefresh);
+    contentCache = {
+      data,
+      timestamp: Date.now()
+    };
   }
   
-  const content = contentCache[collection] || [];
+  const content = contentCache.data[collection] || [];
   
   if (content.length > 0) {
     console.log(`Found ${content.length} real items for ${collection}`);
@@ -212,12 +234,66 @@ export const getContentBySlug = async (
 };
 
 /**
- * Clear the content cache (useful for development)
+ * Clear the content cache (useful for development and CMS updates)
  */
 export const clearContentCache = () => {
   contentCache = null;
   console.log('Content cache cleared');
 };
+
+/**
+ * Refresh content from CMS
+ */
+export const refreshContent = async (): Promise<void> => {
+  console.log('Refreshing content from CMS...');
+  contentCache = null;
+  // Pre-load all collections
+  const collections = ['news', 'press-releases', 'programs', 'events', 'award-recipients', 'videos'];
+  await Promise.all(collections.map(collection => fetchCollection(collection, true)));
+};
+
+// Auto-refresh content every 2 minutes when in focus
+let autoRefreshInterval: number | null = null;
+
+/**
+ * Start auto-refresh of content
+ */
+export const startAutoRefresh = () => {
+  if (autoRefreshInterval) return;
+  
+  autoRefreshInterval = window.setInterval(() => {
+    if (!document.hidden) {
+      console.log('Auto-refreshing content...');
+      refreshContent();
+    }
+  }, 120000); // 2 minutes
+};
+
+/**
+ * Stop auto-refresh of content
+ */
+export const stopAutoRefresh = () => {
+  if (autoRefreshInterval) {
+    clearInterval(autoRefreshInterval);
+    autoRefreshInterval = null;
+  }
+};
+
+// Listen for visibility changes to manage auto-refresh
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoRefresh();
+    } else {
+      startAutoRefresh();
+      // Refresh immediately when tab becomes visible
+      refreshContent();
+    }
+  });
+  
+  // Start auto-refresh initially
+  startAutoRefresh();
+}
 
 /**
  * Mock data for development and fallback
