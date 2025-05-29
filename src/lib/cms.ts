@@ -1,6 +1,6 @@
 
 /**
- * Utility functions for interacting with the CMS
+ * Utility functions for interacting with Netlify CMS content
  */
 
 export interface CMSContent {
@@ -16,30 +16,30 @@ export interface CMSContent {
 }
 
 /**
- * Parse frontmatter from markdown content
+ * Parse frontmatter from Netlify CMS markdown content
  */
 const parseFrontmatter = (content: string) => {
-  console.log('Raw content to parse:', content.substring(0, 300));
+  console.log('Parsing content:', content.substring(0, 200));
   
-  // More robust regex for frontmatter - handles various line endings and whitespace
-  const frontmatterRegex = /^---\s*[\r\n]+([\s\S]*?)[\r\n]+---\s*[\r\n]+([\s\S]*)$/;
+  // Netlify CMS uses standard YAML frontmatter
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
   const match = content.match(frontmatterRegex);
   
   if (!match) {
-    console.log('No frontmatter found, treating entire content as body');
+    console.log('No frontmatter found');
     return { frontmatter: {}, content: content.trim() };
   }
   
   const frontmatterStr = match[1].trim();
   const bodyContent = match[2].trim();
   
-  console.log('Frontmatter string found:', frontmatterStr);
-  console.log('Body content preview:', bodyContent.substring(0, 100));
+  console.log('Frontmatter found:', frontmatterStr);
+  console.log('Body content length:', bodyContent.length);
   
   const frontmatter: any = {};
   
-  // Parse YAML-style frontmatter line by line
-  const lines = frontmatterStr.split(/\r?\n/);
+  // Parse YAML frontmatter - Netlify CMS format
+  const lines = frontmatterStr.split('\n');
   for (const line of lines) {
     const trimmedLine = line.trim();
     if (trimmedLine && trimmedLine.includes(':')) {
@@ -50,7 +50,7 @@ const parseFrontmatter = (content: string) => {
       // Skip empty values
       if (!value) continue;
       
-      // Remove quotes if present
+      // Remove quotes
       if ((value.startsWith('"') && value.endsWith('"')) || 
           (value.startsWith("'") && value.endsWith("'"))) {
         value = value.slice(1, -1);
@@ -60,87 +60,94 @@ const parseFrontmatter = (content: string) => {
       if (value === 'true') value = true;
       if (value === 'false') value = false;
       
-      // Handle numbers (but not dates, paths, or timestamps)
-      if (!isNaN(Number(value)) && value !== '' && 
-          !value.includes('-') && !value.includes('T') && 
-          !value.includes('/') && !value.includes(':') &&
-          !value.includes('.')) {
-        value = Number(value);
+      // Handle dates (ISO format from Netlify CMS)
+      if (value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
+        value = value.split('T')[0]; // Extract just the date part
       }
       
       frontmatter[key] = value;
-      console.log(`Parsed ${key}: ${value} (type: ${typeof value})`);
+      console.log(`Parsed ${key}:`, value);
     }
   }
-  
-  console.log('Final parsed frontmatter:', frontmatter);
-  console.log('Body content length:', bodyContent.length);
   
   return { frontmatter, content: bodyContent };
 };
 
 /**
- * Fetch a single markdown file and parse it
+ * Fetch markdown content from various possible locations
  */
 const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> => {
-  try {
-    console.log(`Fetching markdown file: ${filePath}`);
-    const response = await fetch(filePath);
-    if (!response.ok) {
-      console.log(`Failed to fetch ${filePath}: ${response.status}`);
-      return null;
+  const possiblePaths = [
+    filePath,
+    filePath.replace('/content/', '/public/content/'),
+    filePath.replace('/public/content/', '/content/')
+  ];
+  
+  for (const path of possiblePaths) {
+    try {
+      console.log(`Trying to fetch: ${path}`);
+      const response = await fetch(path);
+      
+      if (!response.ok) {
+        console.log(`Failed to fetch ${path}: ${response.status}`);
+        continue;
+      }
+      
+      const rawContent = await response.text();
+      
+      // Check if we got HTML instead of markdown
+      if (rawContent.trim().startsWith('<!DOCTYPE html>') || 
+          rawContent.trim().startsWith('<html')) {
+        console.log(`Got HTML instead of markdown from ${path}`);
+        continue;
+      }
+      
+      console.log(`Successfully fetched content from ${path}`);
+      const { frontmatter, content: body } = parseFrontmatter(rawContent);
+      
+      // Extract slug from filename
+      const fileName = path.split('/').pop() || '';
+      const slug = fileName.replace('.md', '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
+      
+      const result: CMSContent = {
+        title: frontmatter.title || 'Untitled',
+        slug,
+        date: frontmatter.date,
+        body: body || '',
+        image: frontmatter.image,
+        thumbnail: frontmatter.image || frontmatter.thumbnail,
+        excerpt: frontmatter.excerpt,
+        type: frontmatter.type,
+        ...frontmatter
+      };
+      
+      console.log(`Processed content:`, result);
+      return result;
+      
+    } catch (error) {
+      console.log(`Error fetching ${path}:`, error);
+      continue;
     }
-    
-    const rawContent = await response.text();
-    console.log(`Raw content for ${filePath}:`, rawContent.substring(0, 300));
-    
-    // Check if content is actually HTML (404 page) instead of markdown
-    if (rawContent.trim().startsWith('<!DOCTYPE html>') || rawContent.trim().startsWith('<html')) {
-      console.log(`File ${filePath} returned HTML instead of markdown - likely 404`);
-      return null;
-    }
-    
-    const { frontmatter, content: body } = parseFrontmatter(rawContent);
-    console.log(`Parsed frontmatter for ${filePath}:`, frontmatter);
-    console.log(`Parsed body for ${filePath}:`, body.substring(0, 200));
-    
-    // Extract slug from file path
-    const slug = filePath.split('/').pop()?.replace('.md', '') || '';
-    
-    const result: CMSContent = {
-      title: frontmatter.title || 'Untitled',
-      slug,
-      date: frontmatter.date || undefined,
-      body: body || '',
-      image: frontmatter.image || undefined,
-      thumbnail: frontmatter.image || frontmatter.thumbnail || undefined,
-      excerpt: frontmatter.excerpt || undefined,
-      type: frontmatter.type || undefined,
-      ...frontmatter
-    };
-    
-    console.log(`Final CMS content for ${filePath}:`, result);
-    return result;
-  } catch (error) {
-    console.error(`Error fetching ${filePath}:`, error);
-    return null;
   }
+  
+  console.log(`Could not fetch content from any path for: ${filePath}`);
+  return null;
 };
 
 /**
- * Get list of markdown files for a collection
- * Updated to check both content and public/content paths
+ * Get known files for each collection based on Netlify CMS structure
  */
-const getCollectionFiles = async (collection: string): Promise<string[]> => {
+const getCollectionFiles = (collection: string): string[] => {
+  // Known files that exist in the repository
   const knownFiles: Record<string, string[]> = {
     'news': [
-      '/content/news/2025-05-27-tes13.md',
-      '/public/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md'
+      '/public/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md',
+      '/content/news/2025-05-27-tes13.md'
     ],
     'press-releases': [
-      '/content/press-releases/test.md',
       '/public/content/press-releases/testing-if-this-works.md',
-      '/public/content/press-releases/test.md'
+      '/public/content/press-releases/test.md',
+      '/content/press-releases/test.md'
     ],
     'programs': [],
     'events': [],
@@ -155,35 +162,31 @@ const getCollectionFiles = async (collection: string): Promise<string[]> => {
  * Fetch content from a specific collection
  */
 export const fetchCollection = async (collection: string): Promise<CMSContent[]> => {
-  try {
-    console.log(`Fetching ${collection} collection...`);
-    
-    const files = await getCollectionFiles(collection);
-    const realContent: CMSContent[] = [];
-    
-    for (const filePath of files) {
-      const content = await fetchMarkdownFile(filePath);
-      if (content && content.title !== 'Untitled') {
-        realContent.push(content);
-      }
+  console.log(`Fetching collection: ${collection}`);
+  
+  const files = getCollectionFiles(collection);
+  const content: CMSContent[] = [];
+  
+  // Try to fetch real content first
+  for (const filePath of files) {
+    const item = await fetchMarkdownFile(filePath);
+    if (item && item.title && item.title !== 'Untitled') {
+      content.push(item);
     }
-    
-    if (realContent.length > 0) {
-      console.log(`Found ${realContent.length} real content items for ${collection}`);
-      // Sort by date, newest first
-      return realContent.sort((a, b) => {
-        if (!a.date || !b.date) return 0;
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      });
-    }
-    
-    // Fall back to mock data if no real content found
-    console.log(`No real content found for ${collection}, using mock data`);
-    return mockCollections[collection] || [];
-  } catch (error) {
-    console.error(`Error fetching ${collection}:`, error);
-    return mockCollections[collection] || [];
   }
+  
+  if (content.length > 0) {
+    console.log(`Found ${content.length} items for ${collection}`);
+    // Sort by date, newest first
+    return content.sort((a, b) => {
+      if (!a.date || !b.date) return 0;
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+  }
+  
+  // Fallback to mock data if no real content found
+  console.log(`No real content found for ${collection}, using mock data`);
+  return getMockData(collection);
 };
 
 /**
@@ -193,52 +196,55 @@ export const getContentBySlug = async (
   collection: string,
   slug: string
 ): Promise<CMSContent | null> => {
-  try {
-    const items = await fetchCollection(collection);
-    return items.find(item => item.slug === slug) || null;
-  } catch (error) {
-    console.error(`Error getting ${slug} from ${collection}:`, error);
-    return null;
-  }
+  const items = await fetchCollection(collection);
+  return items.find(item => item.slug === slug) || null;
 };
 
-// Enhanced mock data that includes the content you've created
-const mockCollections: Record<string, CMSContent[]> = {
-  "news": [
-    {
-      title: "Foundation Sponsors Education for 50 Underprivileged Students",
-      slug: "education-sponsorship-2025",
-      date: "2025-04-15",
-      body: "BAFT has renewed its commitment to education by sponsoring 50 underprivileged students for the 2025 academic year. The sponsorship covers tuition fees, books, and school supplies.",
-      thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
-    },
-    {
-      title: "Annual Bulbul Ahmed Film Festival Announces 2025 Dates",
-      slug: "film-festival-2025",
-      date: "2025-03-20",
-      body: "The Annual Bulbul Ahmed Film Festival will take place from June 5-12, 2025. This year's festival will feature a retrospective of Bulbul Ahmed's most iconic performances as well as emerging talent in Bangladeshi cinema.",
-      thumbnail: "/lovable-uploads/9fb94e29-6ee4-4067-a70d-d4c5051c47cb.png"
-    }
-  ],
-  "programs": [
-    {
-      title: "Senior Care Initiative",
-      slug: "senior-care-program",
-      body: "Our dedicated programs at Golden Years Senior Daycare Center provide essential support and care for elderly community members.",
-      thumbnail: "/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png"
-    },
-    {
-      title: "Education Support Program",
-      slug: "education-support",
-      body: "Supporting young students through our educational initiatives and meal programs, ensuring children have the resources they need to thrive.",
-      thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
-    }
-  ]
+/**
+ * Mock data for development and fallback
+ */
+const getMockData = (collection: string): CMSContent[] => {
+  const mockCollections: Record<string, CMSContent[]> = {
+    "news": [
+      {
+        title: "Foundation Sponsors Education for 50 Underprivileged Students",
+        slug: "education-sponsorship-2025",
+        date: "2025-04-15",
+        body: "BAFT has renewed its commitment to education by sponsoring 50 underprivileged students for the 2025 academic year. The sponsorship covers tuition fees, books, and school supplies.",
+        thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
+      },
+      {
+        title: "Annual Bulbul Ahmed Film Festival Announces 2025 Dates",
+        slug: "film-festival-2025",
+        date: "2025-03-20",
+        body: "The Annual Bulbul Ahmed Film Festival will take place from June 5-12, 2025. This year's festival will feature a retrospective of Bulbul Ahmed's most iconic performances as well as emerging talent in Bangladeshi cinema.",
+        thumbnail: "/lovable-uploads/9fb94e29-6ee4-4067-a70d-d4c5051c47cb.png"
+      }
+    ],
+    "press-releases": [
+      {
+        title: "Foundation Receives Government Recognition",
+        slug: "government-recognition-2025",
+        date: "2025-04-10",
+        body: "The Bulbul Ahmed Foundation Trust has been officially recognized by the Ministry of Cultural Affairs for its outstanding contributions to preserving Bangladesh's cultural heritage.",
+        type: "press-release"
+      }
+    ],
+    "programs": [
+      {
+        title: "Senior Care Initiative",
+        slug: "senior-care-program",
+        body: "Our dedicated programs at Golden Years Senior Daycare Center provide essential support and care for elderly community members.",
+        thumbnail: "/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png"
+      },
+      {
+        title: "Education Support Program",
+        slug: "education-support",
+        body: "Supporting young students through our educational initiatives and meal programs, ensuring children have the resources they need to thrive.",
+        thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
+      }
+    ]
+  };
+  
+  return mockCollections[collection] || [];
 };
-
-// This interface extends Window to include netlifyIdentity
-declare global {
-  interface Window {
-    netlifyIdentity: any;
-  }
-}
