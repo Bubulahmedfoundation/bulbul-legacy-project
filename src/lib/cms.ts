@@ -26,7 +26,7 @@ const parseFrontmatter = (content: string) => {
   const match = content.match(frontmatterRegex);
   
   if (!match) {
-    console.log('No frontmatter found');
+    console.log('No frontmatter found, treating as plain content');
     return { frontmatter: {}, content: content.trim() };
   }
   
@@ -38,19 +38,19 @@ const parseFrontmatter = (content: string) => {
   
   const frontmatter: any = {};
   
-  // Parse YAML frontmatter - Netlify CMS format
+  // Parse YAML frontmatter - handle Netlify CMS specific format
   const lines = frontmatterStr.split('\n');
   for (const line of lines) {
     const trimmedLine = line.trim();
-    if (trimmedLine && trimmedLine.includes(':')) {
+    if (trimmedLine && trimmedLine.includes(':') && !trimmedLine.startsWith('#')) {
       const colonIndex = trimmedLine.indexOf(':');
       const key = trimmedLine.slice(0, colonIndex).trim();
       let value: any = trimmedLine.slice(colonIndex + 1).trim();
       
       // Skip empty values
-      if (!value) continue;
+      if (!value || value === '') continue;
       
-      // Remove quotes
+      // Remove quotes if present
       if ((value.startsWith('"') && value.endsWith('"')) || 
           (value.startsWith("'") && value.endsWith("'"))) {
         value = value.slice(1, -1);
@@ -60,8 +60,13 @@ const parseFrontmatter = (content: string) => {
       if (value === 'true') value = true;
       if (value === 'false') value = false;
       
-      // Handle dates (ISO format from Netlify CMS)
-      if (value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
+      // Handle numeric values
+      if (!isNaN(value) && !isNaN(parseFloat(value)) && value !== '') {
+        value = parseFloat(value);
+      }
+      
+      // Handle Netlify CMS date format
+      if (typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
         value = value.split('T')[0]; // Extract just the date part
       }
       
@@ -74,89 +79,98 @@ const parseFrontmatter = (content: string) => {
 };
 
 /**
- * Fetch markdown content from various possible locations
+ * Import all markdown files from the content directory
  */
-const fetchMarkdownFile = async (filePath: string): Promise<CMSContent | null> => {
-  const possiblePaths = [
-    filePath,
-    filePath.replace('/content/', '/public/content/'),
-    filePath.replace('/public/content/', '/content/')
-  ];
+const importMarkdownFiles = async (): Promise<Record<string, CMSContent[]>> => {
+  console.log('Attempting to import markdown files...');
   
-  for (const path of possiblePaths) {
-    try {
-      console.log(`Trying to fetch: ${path}`);
-      const response = await fetch(path);
-      
-      if (!response.ok) {
-        console.log(`Failed to fetch ${path}: ${response.status}`);
+  const collections: Record<string, CMSContent[]> = {
+    news: [],
+    'press-releases': [],
+    programs: [],
+    events: [],
+    'award-recipients': [],
+    videos: []
+  };
+
+  try {
+    // Try to import files using Vite's import.meta.glob
+    const modules = import.meta.glob('/content/**/*.md', { as: 'raw', eager: false });
+    console.log('Found markdown files:', Object.keys(modules));
+    
+    for (const [path, moduleLoader] of Object.entries(modules)) {
+      try {
+        console.log(`Processing file: ${path}`);
+        
+        // Extract collection from path
+        const pathParts = path.split('/');
+        const collection = pathParts[2]; // /content/[collection]/file.md
+        
+        if (!collections[collection]) {
+          console.log(`Unknown collection: ${collection}, skipping`);
+          continue;
+        }
+        
+        // Load the file content
+        const rawContent = await moduleLoader();
+        
+        if (typeof rawContent !== 'string') {
+          console.log(`Invalid content type for ${path}:`, typeof rawContent);
+          continue;
+        }
+        
+        // Check if we got HTML instead of markdown
+        if (rawContent.trim().startsWith('<!DOCTYPE html>') || 
+            rawContent.trim().startsWith('<html')) {
+          console.log(`Got HTML instead of markdown from ${path}, skipping`);
+          continue;
+        }
+        
+        console.log(`Successfully loaded content from ${path}`);
+        const { frontmatter, content: body } = parseFrontmatter(rawContent);
+        
+        // Extract slug from filename
+        const fileName = pathParts[pathParts.length - 1] || '';
+        const slug = fileName.replace('.md', '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
+        
+        const item: CMSContent = {
+          title: frontmatter.title || 'Untitled',
+          slug,
+          date: frontmatter.date,
+          body: body || '',
+          image: frontmatter.image,
+          thumbnail: frontmatter.image || frontmatter.thumbnail,
+          excerpt: frontmatter.excerpt,
+          type: frontmatter.type || collection,
+          ...frontmatter
+        };
+        
+        console.log(`Processed content for ${collection}:`, item);
+        collections[collection].push(item);
+        
+      } catch (error) {
+        console.log(`Error processing ${path}:`, error);
         continue;
       }
-      
-      const rawContent = await response.text();
-      
-      // Check if we got HTML instead of markdown
-      if (rawContent.trim().startsWith('<!DOCTYPE html>') || 
-          rawContent.trim().startsWith('<html')) {
-        console.log(`Got HTML instead of markdown from ${path}`);
-        continue;
-      }
-      
-      console.log(`Successfully fetched content from ${path}`);
-      const { frontmatter, content: body } = parseFrontmatter(rawContent);
-      
-      // Extract slug from filename
-      const fileName = path.split('/').pop() || '';
-      const slug = fileName.replace('.md', '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
-      
-      const result: CMSContent = {
-        title: frontmatter.title || 'Untitled',
-        slug,
-        date: frontmatter.date,
-        body: body || '',
-        image: frontmatter.image,
-        thumbnail: frontmatter.image || frontmatter.thumbnail,
-        excerpt: frontmatter.excerpt,
-        type: frontmatter.type,
-        ...frontmatter
-      };
-      
-      console.log(`Processed content:`, result);
-      return result;
-      
-    } catch (error) {
-      console.log(`Error fetching ${path}:`, error);
-      continue;
     }
+    
+    // Log results
+    Object.entries(collections).forEach(([collection, items]) => {
+      console.log(`Collection ${collection}: ${items.length} items loaded`);
+    });
+    
+    return collections;
+    
+  } catch (error) {
+    console.error('Error importing markdown files:', error);
+    return collections;
   }
-  
-  console.log(`Could not fetch content from any path for: ${filePath}`);
-  return null;
 };
 
 /**
- * Get known files for each collection based on Netlify CMS structure
+ * Cached content store
  */
-const getCollectionFiles = (collection: string): string[] => {
-  // Known files that exist in the repository
-  const knownFiles: Record<string, string[]> = {
-    'news': [
-      '/public/content/news/2025-05-27-bulbul-ahmed-foundation-trust-donation-drive-at-new-school.md',
-      '/content/news/2025-05-27-tes13.md'
-    ],
-    'press-releases': [
-      '/public/content/press-releases/testing-if-this-works.md',
-      '/public/content/press-releases/test.md',
-      '/content/press-releases/test.md'
-    ],
-    'programs': [],
-    'events': [],
-    'award-recipients': [],
-    'videos': []
-  };
-  
-  return knownFiles[collection] || [];
-};
+let contentCache: Record<string, CMSContent[]> | null = null;
 
 /**
  * Fetch content from a specific collection
@@ -164,19 +178,16 @@ const getCollectionFiles = (collection: string): string[] => {
 export const fetchCollection = async (collection: string): Promise<CMSContent[]> => {
   console.log(`Fetching collection: ${collection}`);
   
-  const files = getCollectionFiles(collection);
-  const content: CMSContent[] = [];
-  
-  // Try to fetch real content first
-  for (const filePath of files) {
-    const item = await fetchMarkdownFile(filePath);
-    if (item && item.title && item.title !== 'Untitled') {
-      content.push(item);
-    }
+  // Load content if not cached
+  if (!contentCache) {
+    console.log('Loading content from files...');
+    contentCache = await importMarkdownFiles();
   }
   
+  const content = contentCache[collection] || [];
+  
   if (content.length > 0) {
-    console.log(`Found ${content.length} items for ${collection}`);
+    console.log(`Found ${content.length} real items for ${collection}`);
     // Sort by date, newest first
     return content.sort((a, b) => {
       if (!a.date || !b.date) return 0;
@@ -201,9 +212,19 @@ export const getContentBySlug = async (
 };
 
 /**
+ * Clear the content cache (useful for development)
+ */
+export const clearContentCache = () => {
+  contentCache = null;
+  console.log('Content cache cleared');
+};
+
+/**
  * Mock data for development and fallback
  */
 const getMockData = (collection: string): CMSContent[] => {
+  console.log(`Using mock data for collection: ${collection}`);
+  
   const mockCollections: Record<string, CMSContent[]> = {
     "news": [
       {
@@ -211,14 +232,16 @@ const getMockData = (collection: string): CMSContent[] => {
         slug: "education-sponsorship-2025",
         date: "2025-04-15",
         body: "BAFT has renewed its commitment to education by sponsoring 50 underprivileged students for the 2025 academic year. The sponsorship covers tuition fees, books, and school supplies.",
-        thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
+        thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png",
+        type: "news"
       },
       {
         title: "Annual Bulbul Ahmed Film Festival Announces 2025 Dates",
         slug: "film-festival-2025",
         date: "2025-03-20",
         body: "The Annual Bulbul Ahmed Film Festival will take place from June 5-12, 2025. This year's festival will feature a retrospective of Bulbul Ahmed's most iconic performances as well as emerging talent in Bangladeshi cinema.",
-        thumbnail: "/lovable-uploads/9fb94e29-6ee4-4067-a70d-d4c5051c47cb.png"
+        thumbnail: "/lovable-uploads/9fb94e29-6ee4-4067-a70d-d4c5051c47cb.png",
+        type: "news"
       }
     ],
     "press-releases": [
@@ -235,15 +258,20 @@ const getMockData = (collection: string): CMSContent[] => {
         title: "Senior Care Initiative",
         slug: "senior-care-program",
         body: "Our dedicated programs at Golden Years Senior Daycare Center provide essential support and care for elderly community members.",
-        thumbnail: "/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png"
+        thumbnail: "/lovable-uploads/777c0309-72f2-45fe-ab8e-ef4df1c05102.png",
+        type: "program"
       },
       {
         title: "Education Support Program",
         slug: "education-support",
         body: "Supporting young students through our educational initiatives and meal programs, ensuring children have the resources they need to thrive.",
-        thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png"
+        thumbnail: "/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png",
+        type: "program"
       }
-    ]
+    ],
+    "events": [],
+    "award-recipients": [],
+    "videos": []
   };
   
   return mockCollections[collection] || [];
