@@ -145,8 +145,8 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
     );
   }
 
-  // Check if this collection should have clickable items (news and press-releases)
-  const isClickable = collection === 'news' || collection === 'press-releases';
+  // Check if this collection should have clickable items (news, press-releases, and award-recipients)
+  const isClickable = collection === 'news' || collection === 'press-releases' || collection === 'award-recipients';
 
   return (
     <>
