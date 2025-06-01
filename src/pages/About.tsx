@@ -74,7 +74,7 @@ const About = () => {
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="w-full md:w-1/3 mb-4 md:mb-0">
                 <div className="aspect-square rounded-lg overflow-hidden border-4 border-white shadow-md">
-                  <img src="/lovable-uploads/c233c5e6-f861-4739-83a4-229a531b868c.png" alt="Tahsin Farzana Tilottoma" className="w-full h-full object-cover" />
+                  <img alt="Tahsin Farzana Tilottoma" className="w-full h-full object-cover" src="/lovable-uploads/f5e839a2-7889-4e52-9d4f-4277c7563aa7.jpg" />
                 </div>
               </div>
               <div className="w-full md:w-2/3">
