@@ -100,34 +100,66 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Tazrin Faraha Oindrila */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
+                <img 
+                  src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=400" 
+                  alt="Tazrin Faraha Oindrila" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Tazrin Faraha Oindrila</h3>
-              <p className="text-baft-maroon">Trustee</p>
+              <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-gray-600">Board member since 2018</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2018</p>
+              <p className="text-sm leading-relaxed">A dedicated advocate for cultural preservation and education, bringing fresh perspectives to the foundation's initiatives.</p>
             </div>
             
             {/* Wasif Ahmed Shubho */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
+                <img 
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400" 
+                  alt="Wasif Ahmed Shubho" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Wasif Ahmed Shubho</h3>
-              <p className="text-baft-maroon">Trustee</p>
+              <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-gray-600">Board member since 2019</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2019</p>
+              <p className="text-sm leading-relaxed">Specializes in community outreach and program development, ensuring our initiatives reach those who need them most.</p>
             </div>
             
             {/* Naser Ezaz Bijoy */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
+                <img 
+                  src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=400" 
+                  alt="Naser Ezaz Bijoy" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Naser Ezaz Bijoy</h3>
-              <p className="text-baft-maroon">Trustee</p>
+              <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-gray-600">Board member since 2017</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2017</p>
+              <p className="text-sm leading-relaxed">Focuses on strategic planning and organizational development, helping guide the foundation's long-term vision.</p>
             </div>
             
             {/* Shukla Sarwat Siraj */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
+                <img 
+                  src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=400" 
+                  alt="Shukla Sarwat Siraj" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Shukla Sarwat Siraj</h3>
-              <p className="text-baft-maroon">Trustee</p>
+              <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-gray-600">Board member since 2016</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2016</p>
+              <p className="text-sm leading-relaxed">Brings expertise in financial management and donor relations, ensuring sustainable funding for our programs.</p>
             </div>
           </div>
         </div>
