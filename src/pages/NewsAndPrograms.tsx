@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Award, Gift, File, Users, Heart, Calendar } from "lucide-react";
 import AwardGallery from "@/components/AwardGallery";
 import { CMSContentList } from "@/components/CMSContent";
+
 const NewsAndPrograms = () => {
   const location = useLocation();
 
@@ -15,6 +16,7 @@ const NewsAndPrograms = () => {
   const refugeeRef = useRef<HTMLDivElement>(null);
   const schoolsRef = useRef<HTMLDivElement>(null);
   const covidRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -40,42 +42,6 @@ const NewsAndPrograms = () => {
     }
   }, [location]);
 
-  // News content
-  const newsItems = [{
-    title: "2023 Bulbul Ahmed Memorial Award Ceremony",
-    date: "November 15, 2023",
-    excerpt: "The foundation recently hosted the 2023 Memorial Award ceremony, honoring Anisul Hoque for his contributions to Bangladeshi literature.",
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=2000",
-    type: "event"
-  }, {
-    title: "Winter Drive 2023 Preparations Underway",
-    date: "October 20, 2023",
-    excerpt: "Preparations have begun for our annual winter drive, with a goal to distribute 5000 blankets to northern Bangladesh communities.",
-    image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&q=80&w=2000",
-    type: "news"
-  }, {
-    title: "Foundation Opens New Office in Chittagong",
-    date: "September 5, 2023",
-    excerpt: "To better serve communities in southeastern Bangladesh, BAFT has opened a new regional office in Chittagong.",
-    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=2000",
-    type: "news"
-  }, {
-    title: "Educational Support Program Reaches 15 New Schools",
-    date: "August 12, 2023",
-    excerpt: "Our school support program has expanded to include 15 additional schools in rural districts, providing educational materials and teacher training.",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000",
-    type: "news"
-  }];
-  const videoItems = [{
-    title: "2022 Awards Ceremony Highlights",
-    thumbnail: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000",
-    videoId: "dQw4w9WgXcQ"
-  }, {
-    title: "Interview with Foundation Chairperson",
-    thumbnail: "https://images.unsplash.com/photo-1527576539890-dfa815648363?auto=format&fit=crop&q=80&w=2000",
-    videoId: "dQw4w9WgXcQ"
-  }];
-
   // Award recipients from Programs page
   const awardRecipients = [{
     year: 2023,
@@ -98,7 +64,9 @@ const NewsAndPrograms = () => {
     category: "Music",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800"
   }];
-  return <>
+
+  return (
+    <>
       {/* Page Header */}
       <section className="pt-32 pb-16 bg-baft-cream/30">
         <div className="container">
@@ -135,39 +103,10 @@ const NewsAndPrograms = () => {
         </div>
       </section>
 
-      {/* Videos */}
+      {/* Videos - using CMS */}
       <section className="py-20">
         <div className="container">
-          <h2 className="text-3xl font-playfair font-semibold mb-12 heading-decoration text-center">
-            Video Gallery
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-10">
-            {videoItems.map((video, index) => <div key={index} className="relative">
-                <div className="aspect-video rounded-lg overflow-hidden shadow-md">
-                  <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-baft-maroon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="text-xl font-playfair font-semibold mt-4 mb-1">{video.title}</h3>
-                <p className="text-gray-600">From the foundation's media archive</p>
-              </div>)}
-          </div>
-
-          <div className="text-center mt-12">
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-baft-maroon font-medium hover:underline inline-flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-              </svg>
-              Visit our YouTube channel for more videos
-            </a>
-          </div>
+          <CMSContentList collection="videos" limit={6} title="Video Gallery" />
         </div>
       </section>
 
@@ -482,6 +421,8 @@ const NewsAndPrograms = () => {
           </div>
         </div>
       </section>
-    </>;
+    </>
+  );
 };
+
 export default NewsAndPrograms;
