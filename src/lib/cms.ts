@@ -44,16 +44,36 @@ const parseFrontmatter = (content: string) => {
   let currentValue = '';
   let isMultiLine = false;
   
-  for (const line of lines) {
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     const trimmedLine = line.trim();
     
     // Skip empty lines and comments
     if (!trimmedLine || trimmedLine.startsWith('#')) continue;
     
     if (isMultiLine) {
-      // Continue building multi-line value
-      currentValue += '\n' + line;
-      continue;
+      // Check if this line starts a new key (has a colon and isn't indented much)
+      if (trimmedLine.includes(':') && !line.startsWith('  ') && !line.startsWith('\t')) {
+        // This is a new key, save the previous multi-line value
+        if (currentKey && currentValue) {
+          frontmatter[currentKey] = currentValue.trim();
+          console.log(`Parsed multi-line ${currentKey}:`, currentValue.trim());
+        }
+        isMultiLine = false;
+        currentKey = '';
+        currentValue = '';
+        // Process this line as a new key
+        i--; // Go back one line to process it properly
+        continue;
+      } else {
+        // Continue building multi-line value
+        if (currentValue) {
+          currentValue += '\n' + line;
+        } else {
+          currentValue = line;
+        }
+        continue;
+      }
     }
     
     if (trimmedLine.includes(':') && !trimmedLine.startsWith('-')) {
@@ -98,20 +118,13 @@ const parseFrontmatter = (content: string) => {
       frontmatter[currentKey] = value;
       console.log(`Parsed ${currentKey}:`, value);
       currentKey = '';
-    } else if (isMultiLine) {
-      // This is part of a multi-line value
-      if (currentValue) {
-        currentValue += '\n' + line;
-      } else {
-        currentValue = line;
-      }
     }
   }
   
   // Don't forget the last multi-line value if there is one
   if (currentKey && currentValue) {
     frontmatter[currentKey] = currentValue.trim();
-    console.log(`Parsed multi-line ${currentKey}:`, currentValue.trim());
+    console.log(`Parsed final multi-line ${currentKey}:`, currentValue.trim());
   }
   
   return { frontmatter, content: bodyContent };
