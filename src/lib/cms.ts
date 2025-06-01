@@ -1,3 +1,4 @@
+
 /**
  * Utility functions for interacting with Netlify CMS content
  */
@@ -24,9 +25,13 @@ const parseYAML = (yamlStr: string): Record<string, any> => {
   let currentValue = '';
   let isMultiLine = false;
   
+  console.log('Parsing YAML with lines:', lines.length);
+  
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmedLine = line.trim();
+    
+    console.log(`Line ${i}: "${line}" (trimmed: "${trimmedLine}")`);
     
     // Skip empty lines
     if (!trimmedLine) {
@@ -41,6 +46,7 @@ const parseYAML = (yamlStr: string): Record<string, any> => {
       // Save previous multi-line value if exists
       if (currentKey && isMultiLine) {
         result[currentKey] = currentValue.trim();
+        console.log(`Saved multi-line value for ${currentKey}:`, currentValue.trim());
         currentKey = '';
         currentValue = '';
         isMultiLine = false;
@@ -48,7 +54,9 @@ const parseYAML = (yamlStr: string): Record<string, any> => {
       
       const colonIndex = trimmedLine.indexOf(':');
       const key = trimmedLine.slice(0, colonIndex).trim();
-      let value = trimmedLine.slice(colonIndex + 1).trim();
+      let value: any = trimmedLine.slice(colonIndex + 1).trim();
+      
+      console.log(`Found key-value pair: ${key} = "${value}"`);
       
       // Handle quoted values
       if ((value.startsWith('"') && value.endsWith('"')) || 
@@ -61,17 +69,22 @@ const parseYAML = (yamlStr: string): Record<string, any> => {
         currentKey = key;
         currentValue = '';
         isMultiLine = true;
+        console.log(`Starting multi-line value for key: ${key}`);
         continue;
       }
       
       // Handle boolean and numeric values
-      if (value === 'true') value = true;
-      if (value === 'false') value = false;
-      if (!isNaN(Number(value)) && value !== '') {
-        value = Number(value);
+      if (value === 'true') {
+        result[key] = true;
+      } else if (value === 'false') {
+        result[key] = false;
+      } else if (!isNaN(Number(value)) && value !== '') {
+        result[key] = Number(value);
+      } else {
+        result[key] = value;
       }
       
-      result[key] = value;
+      console.log(`Set ${key} to:`, result[key]);
     } else if (isMultiLine) {
       // This is part of a multi-line value
       if (currentValue) {
@@ -79,14 +92,19 @@ const parseYAML = (yamlStr: string): Record<string, any> => {
       } else {
         currentValue = line;
       }
+      console.log(`Added to multi-line value: "${line}"`);
+      console.log(`Current multi-line value length: ${currentValue.length}`);
     }
   }
   
   // Don't forget the last multi-line value
   if (currentKey && isMultiLine) {
     result[currentKey] = currentValue.trim();
+    console.log(`Final save of multi-line value for ${currentKey}:`, currentValue.trim());
+    console.log(`Final value length: ${currentValue.trim().length}`);
   }
   
+  console.log('Final parsed result:', result);
   return result;
 };
 
