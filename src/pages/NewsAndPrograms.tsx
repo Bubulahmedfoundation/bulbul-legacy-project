@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Award, Gift, File, Users, Heart, Calendar } from "lucide-react";
 import AwardGallery from "@/components/AwardGallery";
 import { CMSContentList } from "@/components/CMSContent";
-
 const NewsAndPrograms = () => {
   const location = useLocation();
 
@@ -16,7 +15,6 @@ const NewsAndPrograms = () => {
   const refugeeRef = useRef<HTMLDivElement>(null);
   const schoolsRef = useRef<HTMLDivElement>(null);
   const covidRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -64,9 +62,7 @@ const NewsAndPrograms = () => {
     category: "Music",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800"
   }];
-
-  return (
-    <>
+  return <>
       {/* Page Header */}
       <section className="pt-32 pb-16 bg-baft-cream/30">
         <div className="container">
@@ -112,115 +108,7 @@ const NewsAndPrograms = () => {
 
       {/* Upcoming Events */}
       <section className="py-20 bg-baft-cream/30">
-        <div className="container">
-          <h2 className="text-3xl font-playfair font-semibold mb-12 heading-decoration">
-            Upcoming Events
-          </h2>
-          
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm flex flex-col md:flex-row">
-              <div className="md:w-1/4 mb-4 md:mb-0">
-                <div className="bg-baft-maroon text-white text-center p-4 rounded">
-                  <span className="block text-2xl font-bold">25</span>
-                  <span className="block text-sm">December</span>
-                  <span className="block text-sm">2023</span>
-                </div>
-              </div>
-              <div className="md:w-3/4 md:pl-6">
-                <h3 className="text-xl font-playfair font-semibold mb-2">
-                  Winter Drive Launch Ceremony
-                </h3>
-                <p className="text-gray-600 mb-3">
-                  Join us for the official launch of our 2023 Winter Drive campaign, featuring guest speakers 
-                  and a presentation on this year's distribution plan.
-                </p>
-                <div className="flex flex-wrap gap-4 text-sm">
-                  <span className="flex items-center text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    10:00 AM - 1:00 PM
-                  </span>
-                  <span className="flex items-center text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Foundation Headquarters, Dhaka
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm flex flex-col md:flex-row">
-              <div className="md:w-1/4 mb-4 md:mb-0">
-                <div className="bg-baft-maroon text-white text-center p-4 rounded">
-                  <span className="block text-2xl font-bold">15</span>
-                  <span className="block text-sm">January</span>
-                  <span className="block text-sm">2024</span>
-                </div>
-              </div>
-              <div className="md:w-3/4 md:pl-6">
-                <h3 className="text-xl font-playfair font-semibold mb-2">
-                  Film Screening: Bulbul Ahmed Retrospective
-                </h3>
-                <p className="text-gray-600 mb-3">
-                  A special screening of selected films featuring Bulbul Ahmed, followed by a panel discussion 
-                  on his contributions to Bangladeshi cinema.
-                </p>
-                <div className="flex flex-wrap gap-4 text-sm">
-                  <span className="flex items-center text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    4:00 PM - 8:00 PM
-                  </span>
-                  <span className="flex items-center text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Bangladesh National Museum Auditorium
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm flex flex-col md:flex-row">
-              <div className="md:w-1/4 mb-4 md:mb-0">
-                <div className="bg-baft-maroon text-white text-center p-4 rounded">
-                  <span className="block text-2xl font-bold">10</span>
-                  <span className="block text-sm">February</span>
-                  <span className="block text-sm">2024</span>
-                </div>
-              </div>
-              <div className="md:w-3/4 md:pl-6">
-                <h3 className="text-xl font-playfair font-semibold mb-2">
-                  Fundraising Gala Dinner
-                </h3>
-                <p className="text-gray-600 mb-3">
-                  Annual fundraising dinner to support the foundation's programs for the coming year. 
-                  The event will feature cultural performances and an auction of donated items.
-                </p>
-                <div className="flex flex-wrap gap-4 text-sm">
-                  <span className="flex items-center text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    7:00 PM - 10:00 PM
-                  </span>
-                  <span className="flex items-center text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Radisson Blu Dhaka
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </section>
 
       {/* Programs content - Memorial Award */}
@@ -421,8 +309,6 @@ const NewsAndPrograms = () => {
           </div>
         </div>
       </section>
-    </>
-  );
+    </>;
 };
-
 export default NewsAndPrograms;
