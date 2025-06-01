@@ -141,7 +141,7 @@ const About = () => {
               <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
               <p className="text-sm text-gray-600 mb-3">Board member since 2016</p>
-              <p className="text-sm leading-relaxed">Brings expertise in financial management and donor relations, ensuring sustainable funding for our programs.</p>
+              <p className="text-sm leading-relaxed">Barrister Shukla Sarwat Siraj, a senior Supreme Court lawyer in Bangladesh is another member of the board of Trustees and the legal adviser of BAFT . She actively works to protect Bangladesh’s cultural heritage and traditional products.</p>
             </div>
           </div>
         </div>
