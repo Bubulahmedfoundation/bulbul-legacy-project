@@ -344,21 +344,12 @@ const NewsAndPrograms = () => {
           <AwardGallery />
 
           <h3 className="text-2xl font-playfair font-semibold mb-6">Recent Recipients</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {awardRecipients.map((recipient, index) => (
-              <Card key={index} className="overflow-hidden">
-                <div className="h-56 overflow-hidden">
-                  <img src={recipient.image} alt={recipient.name} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                </div>
-                <CardContent className="pt-4">
-                  <h4 className="font-playfair font-semibold text-lg">{recipient.name}</h4>
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-baft-maroon">{recipient.category}</span>
-                    <span className="font-medium">{recipient.year}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="w-full max-w-5xl mx-auto">
+            <img 
+              src="/lovable-uploads/647daa33-5aba-46b3-b823-99b83ef59a0a.png" 
+              alt="Recent award recipients: Anisul Hoque (Literature, 2023), Ferdous Ahmed (Film, 2022), Chanchal Chowdhury (Acting, 2021), and Shayan Chowdhury Arnob (Music, 2020)" 
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
           </div>
         </div>
       </section>
