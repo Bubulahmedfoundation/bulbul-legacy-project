@@ -135,7 +135,7 @@ const About = () => {
             {/* Shukla Sarwat Siraj */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
-                <img alt="Shukla Sarwat Siraj" className="w-full h-full object-cover" src="/lovable-uploads/ebf2464e-57d9-4b39-b2c7-91a0d3578dc7.jpg" />
+                <img alt="Shukla Sarwat Siraj" className="w-full h-full object-cover" src="/lovable-uploads/5632547c-0725-48ad-a4f4-a9b17825e6be.png" />
               </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Shukla Sarwat Siraj</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
