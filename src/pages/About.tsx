@@ -81,7 +81,7 @@ const About = () => {
                 <h3 className="text-2xl font-playfair font-semibold mb-2">Tahsin Farzana Tilottoma</h3>
                 <p className="text-baft-maroon mb-4">General Secretary</p>
                 <Separator className="mb-4" />
-                <p className="leading-relaxed">Tahsin Farzana Tilottoma, As General Secretary oversees the day-to-day operations of Bulbul Ahmed Foundation Trust. With extensive experience in nonprofit management and community development, she has successfully expanded the foundation's reach and impact since joining in 2017. Her dedication to both preserving cultural heritage and providing humanitarian aid has been vital to the foundation's success.</p>
+                <p className="leading-relaxed">Tahsin Farzana Tilottoma, the eldest daughter of BA is GS of BAFT . By profession she is a lawyer and also a singer. As General Secretary oversees the day-to-day operations of Bulbul Ahmed Foundation Trust. With extensive experience in nonprofit management and community development, she has successfully expanded the foundation's reach and impact since joining in 2015. Her dedication to both preserving cultural heritage and providing humanitarian aid has been vital to the foundation's success.</p>
               </div>
             </div>
           </div>
