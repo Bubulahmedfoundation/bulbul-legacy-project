@@ -4,8 +4,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Award, Gift, File, Users, Heart, Calendar } from "lucide-react";
-import AwardGallery from "@/components/AwardGallery";
 import { CMSContentList } from "@/components/CMSContent";
+
 const NewsAndPrograms = () => {
   const location = useLocation();
 
@@ -15,6 +15,7 @@ const NewsAndPrograms = () => {
   const refugeeRef = useRef<HTMLDivElement>(null);
   const schoolsRef = useRef<HTMLDivElement>(null);
   const covidRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -40,29 +41,8 @@ const NewsAndPrograms = () => {
     }
   }, [location]);
 
-  // Award recipients from Programs page
-  const awardRecipients = [{
-    year: 2023,
-    name: "Anisul Hoque",
-    category: "Literature",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800"
-  }, {
-    year: 2022,
-    name: "Ferdous Ahmed",
-    category: "Film",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"
-  }, {
-    year: 2021,
-    name: "Chanchal Chowdhury",
-    category: "Acting",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=800"
-  }, {
-    year: 2020,
-    name: "Shayan Chowdhury Arnob",
-    category: "Music",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800"
-  }];
-  return <>
+  return (
+    <>
       {/* Page Header */}
       <section className="pt-32 pb-16 bg-baft-cream/30">
         <div className="container">
@@ -141,12 +121,8 @@ const NewsAndPrograms = () => {
             </div>
           </div>
 
-          <AwardGallery />
-
-          
-          <div className="w-full max-w-5xl mx-auto">
-            
-          </div>
+          {/* Award Recipients from CMS */}
+          <CMSContentList collection="award-recipients" limit={8} title="Award Recipients" />
         </div>
       </section>
 
@@ -309,6 +285,8 @@ const NewsAndPrograms = () => {
           </div>
         </div>
       </section>
-    </>;
+    </>
+  );
 };
+
 export default NewsAndPrograms;
