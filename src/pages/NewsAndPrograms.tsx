@@ -318,7 +318,7 @@ const NewsAndPrograms = () => {
 
           <h3 className="text-2xl font-playfair font-semibold mb-6">Recent Recipients</h3>
           <div className="w-full max-w-5xl mx-auto">
-            <img alt="Recent award recipients: Anisul Hoque (Literature, 2023), Ferdous Ahmed (Film, 2022), Chanchal Chowdhury (Acting, 2021), and Shayan Chowdhury Arnob (Music, 2020)" src="/lovable-uploads/a9f7b57b-f726-4b76-a193-62fc76a2b5cf.jpg" className="w-full h-auto rounded-lg shadow-lg object-contain" />
+            <img alt="Recent award recipients: Anisul Hoque (Literature, 2023), Ferdous Ahmed (Film, 2022), Chanchal Chowdhury (Acting, 2021), and Shayan Chowdhury Arnob (Music, 2020)" className="w-full h-auto rounded-lg shadow-lg" src="/lovable-uploads/a9f7b57b-f726-4b76-a193-62fc76a2b5cf.jpg" />
           </div>
         </div>
       </section>
