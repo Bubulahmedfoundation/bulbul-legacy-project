@@ -14,7 +14,7 @@ const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-playfair font-bold text-left">
             {article.title}
@@ -22,6 +22,11 @@ const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
           {article.date && (
             <p className="text-sm text-gray-600 text-left">
               {format(new Date(article.date), "MMMM dd, yyyy")}
+            </p>
+          )}
+          {article.year && !article.date && (
+            <p className="text-sm text-gray-600 text-left">
+              {article.year}
             </p>
           )}
         </DialogHeader>
@@ -37,15 +42,15 @@ const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
           </div>
         )}
         
-        {article.excerpt && (
+        {article.excerpt && article.excerpt !== article.title && (
           <div className="mb-4">
             <p className="text-lg text-gray-700 font-medium">{article.excerpt}</p>
           </div>
         )}
         
         <div className="prose prose-lg max-w-none">
-          <div className="whitespace-pre-line leading-relaxed">
-            {article.body}
+          <div className="whitespace-pre-wrap leading-relaxed text-gray-800">
+            {article.body || article.bio || 'No content available.'}
           </div>
         </div>
       </DialogContent>
