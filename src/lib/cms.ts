@@ -1,4 +1,3 @@
-
 /**
  * Utility functions for interacting with Netlify CMS content
  */
@@ -213,7 +212,7 @@ const importMarkdownFiles = async (bustCache = false): Promise<Record<string, CM
           title,
           slug,
           date: frontmatter.date || frontmatter.year?.toString(),
-          body: body || frontmatter.bio || '',
+          body: body || '', // Now all content types use body consistently
           image: frontmatter.image,
           thumbnail: frontmatter.image || frontmatter.thumbnail,
           excerpt: frontmatter.excerpt || frontmatter.category,
@@ -224,10 +223,7 @@ const importMarkdownFiles = async (bustCache = false): Promise<Record<string, CM
         console.log(`Processed content for ${collection}:`, {
           title: item.title,
           slug: item.slug,
-          bodyLength: item.body.length,
-          bioLength: frontmatter.bio ? frontmatter.bio.length : 0,
-          hasBio: !!frontmatter.bio,
-          bio: frontmatter.bio
+          bodyLength: item.body.length
         });
         collections[collection].push(item);
         

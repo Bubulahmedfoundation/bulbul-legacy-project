@@ -12,11 +12,10 @@ interface ArticleModalProps {
 const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
   if (!article) return null;
 
-  // Get the main content - prioritize bio for award recipients, body for others
-  const mainContent = article.bio || article.body || 'No content available.';
+  // All content types now use body consistently
+  const mainContent = article.body || 'No content available.';
   
   console.log('Article data in modal:', article);
-  console.log('Bio field:', article.bio);
   console.log('Body field:', article.body);
   console.log('Main content being displayed:', mainContent);
   console.log('Main content length:', mainContent.length);
@@ -61,14 +60,6 @@ const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
           <div className="whitespace-pre-wrap leading-relaxed text-gray-800 word-wrap break-words overflow-wrap-anywhere">
             {mainContent}
           </div>
-        </div>
-
-        {/* Debug info - remove this after fixing */}
-        <div className="mt-4 p-2 bg-gray-100 text-xs text-gray-600 rounded">
-          <p>Debug info:</p>
-          <p>Content length: {mainContent.length}</p>
-          <p>Has bio: {!!article.bio}</p>
-          <p>Has body: {!!article.body}</p>
         </div>
       </DialogContent>
     </Dialog>
