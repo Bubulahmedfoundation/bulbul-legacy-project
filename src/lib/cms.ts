@@ -1,4 +1,3 @@
-
 /**
  * Utility functions for interacting with Netlify CMS content
  */
@@ -16,30 +15,11 @@ export interface CMSContent {
 }
 
 /**
- * Parse frontmatter from Netlify CMS markdown content
+ * Simple YAML parser for frontmatter
  */
-const parseFrontmatter = (content: string) => {
-  console.log('Parsing content:', content.substring(0, 200));
-  
-  // Netlify CMS uses standard YAML frontmatter
-  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
-  const match = content.match(frontmatterRegex);
-  
-  if (!match) {
-    console.log('No frontmatter found, treating as plain content');
-    return { frontmatter: {}, content: content.trim() };
-  }
-  
-  const frontmatterStr = match[1].trim();
-  const bodyContent = match[2].trim();
-  
-  console.log('Frontmatter found:', frontmatterStr);
-  console.log('Body content length:', bodyContent.length);
-  
-  const frontmatter: any = {};
-  
-  // Parse YAML frontmatter - handle Netlify CMS specific format
-  const lines = frontmatterStr.split('\n');
+const parseYAML = (yamlStr: string): Record<string, any> => {
+  const result: Record<string, any> = {};
+  const lines = yamlStr.split('\n');
   let currentKey = '';
   let currentValue = '';
   let isMultiLine = false;
@@ -48,86 +28,98 @@ const parseFrontmatter = (content: string) => {
     const line = lines[i];
     const trimmedLine = line.trim();
     
-    // Skip empty lines and comments
-    if (!trimmedLine || trimmedLine.startsWith('#')) continue;
-    
-    if (isMultiLine) {
-      // Check if this line starts a new key (has a colon and isn't indented much)
-      if (trimmedLine.includes(':') && !line.startsWith('  ') && !line.startsWith('\t')) {
-        // This is a new key, save the previous multi-line value
-        if (currentKey && currentValue) {
-          frontmatter[currentKey] = currentValue.trim();
-          console.log(`Parsed multi-line ${currentKey}:`, currentValue.trim());
-        }
-        isMultiLine = false;
-        currentKey = '';
-        currentValue = '';
-        // Process this line as a new key
-        i--; // Go back one line to process it properly
-        continue;
-      } else {
-        // Continue building multi-line value
-        if (currentValue) {
-          currentValue += '\n' + line;
-        } else {
-          currentValue = line;
-        }
-        continue;
+    // Skip empty lines
+    if (!trimmedLine) {
+      if (isMultiLine && currentValue) {
+        currentValue += '\n';
       }
+      continue;
     }
     
-    if (trimmedLine.includes(':') && !trimmedLine.startsWith('-')) {
-      // If we were building a previous multi-line value, save it
-      if (currentKey && currentValue) {
-        frontmatter[currentKey] = currentValue.trim();
+    // Check if this is a key-value pair
+    if (trimmedLine.includes(':') && !isMultiLine) {
+      // Save previous multi-line value if exists
+      if (currentKey && isMultiLine) {
+        result[currentKey] = currentValue.trim();
         currentKey = '';
         currentValue = '';
+        isMultiLine = false;
       }
       
       const colonIndex = trimmedLine.indexOf(':');
-      currentKey = trimmedLine.slice(0, colonIndex).trim();
-      let value: any = trimmedLine.slice(colonIndex + 1).trim();
+      const key = trimmedLine.slice(0, colonIndex).trim();
+      let value = trimmedLine.slice(colonIndex + 1).trim();
       
-      // Check if this starts a multi-line value (no value after colon or ends with pipe/greater than)
-      if (!value || value === '|' || value === '>') {
-        isMultiLine = true;
-        currentValue = '';
-        continue;
-      }
-      
-      // Remove quotes if present
+      // Handle quoted values
       if ((value.startsWith('"') && value.endsWith('"')) || 
           (value.startsWith("'") && value.endsWith("'"))) {
         value = value.slice(1, -1);
       }
       
-      // Handle boolean values
+      // Check if this starts a multi-line value
+      if (!value) {
+        currentKey = key;
+        currentValue = '';
+        isMultiLine = true;
+        continue;
+      }
+      
+      // Handle boolean and numeric values
       if (value === 'true') value = true;
       if (value === 'false') value = false;
-      
-      // Handle numeric values
-      if (!isNaN(value) && !isNaN(parseFloat(value)) && value !== '') {
-        value = parseFloat(value);
+      if (!isNaN(Number(value)) && value !== '') {
+        value = Number(value);
       }
       
-      // Handle Netlify CMS date format
-      if (typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
-        value = value.split('T')[0]; // Extract just the date part
+      result[key] = value;
+    } else if (isMultiLine) {
+      // This is part of a multi-line value
+      if (currentValue) {
+        currentValue += '\n' + line;
+      } else {
+        currentValue = line;
       }
-      
-      frontmatter[currentKey] = value;
-      console.log(`Parsed ${currentKey}:`, value);
-      currentKey = '';
     }
   }
   
-  // Don't forget the last multi-line value if there is one
-  if (currentKey && currentValue) {
-    frontmatter[currentKey] = currentValue.trim();
-    console.log(`Parsed final multi-line ${currentKey}:`, currentValue.trim());
+  // Don't forget the last multi-line value
+  if (currentKey && isMultiLine) {
+    result[currentKey] = currentValue.trim();
   }
   
-  return { frontmatter, content: bodyContent };
+  return result;
+};
+
+/**
+ * Parse frontmatter from Netlify CMS markdown content
+ */
+const parseFrontmatter = (content: string) => {
+  console.log('Raw content received:', content.substring(0, 500));
+  
+  // Handle different frontmatter delimiters
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/;
+  const match = content.match(frontmatterRegex);
+  
+  if (!match) {
+    console.log('No frontmatter found, treating as plain content');
+    return { frontmatter: {}, content: content.trim() };
+  }
+  
+  const frontmatterStr = match[1];
+  const bodyContent = match[2] ? match[2].trim() : '';
+  
+  console.log('Frontmatter string:', frontmatterStr);
+  console.log('Body content:', bodyContent);
+  
+  try {
+    const frontmatter = parseYAML(frontmatterStr);
+    console.log('Parsed frontmatter:', frontmatter);
+    
+    return { frontmatter, content: bodyContent };
+  } catch (error) {
+    console.error('Error parsing YAML:', error);
+    return { frontmatter: {}, content: bodyContent };
+  }
 };
 
 /**
@@ -187,7 +179,7 @@ const importMarkdownFiles = async (bustCache = false): Promise<Record<string, CM
           continue;
         }
         
-        console.log(`Successfully loaded content from ${path}`);
+        console.log(`Successfully loaded content from ${path}, length: ${rawContent.length}`);
         const { frontmatter, content: body } = parseFrontmatter(rawContent);
         
         // Extract slug from filename
@@ -211,7 +203,14 @@ const importMarkdownFiles = async (bustCache = false): Promise<Record<string, CM
           ...frontmatter
         };
         
-        console.log(`Processed content for ${collection}:`, item);
+        console.log(`Processed content for ${collection}:`, {
+          title: item.title,
+          slug: item.slug,
+          bodyLength: item.body.length,
+          bioLength: frontmatter.bio ? frontmatter.bio.length : 0,
+          hasBio: !!frontmatter.bio,
+          bio: frontmatter.bio
+        });
         collections[collection].push(item);
         
       } catch (error) {
