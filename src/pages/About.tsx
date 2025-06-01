@@ -105,7 +105,7 @@ const About = () => {
               <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
               <p className="text-sm text-gray-600 mb-3">Board member since 2018</p>
-              <p className="text-sm leading-relaxed">A dedicated advocate for cultural preservation and education, bringing fresh perspectives to the foundation's initiatives.</p>
+              <p className="text-sm leading-relaxed">Tazrin Farhana Oindrila, the youngest daughter of BA is one of the members of BAFT . She, also known as Oindrila Ahmed, is a Bangladeshi actress, TV presenter, and aspiring filmmaker. As a trustee she helps to fulfill the vision and mission of BAFT</p>
             </div>
             
             {/* Wasif Ahmed Shubho */}
