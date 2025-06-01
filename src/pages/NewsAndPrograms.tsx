@@ -93,7 +93,7 @@ const NewsAndPrograms = () => {
       </section>
 
       {/* Press Releases - using CMS */}
-      <section className="py-20 bg-baft-cream/30">
+      <section className="py-10 bg-baft-cream/30">
         <div className="container">
           <CMSContentList collection="press-releases" limit={6} title="Press Releases" />
         </div>
