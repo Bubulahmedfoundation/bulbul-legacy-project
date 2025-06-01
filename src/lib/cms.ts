@@ -1,3 +1,4 @@
+
 /**
  * Utility functions for interacting with Netlify CMS content
  */
@@ -39,15 +40,40 @@ const parseFrontmatter = (content: string) => {
   
   // Parse YAML frontmatter - handle Netlify CMS specific format
   const lines = frontmatterStr.split('\n');
+  let currentKey = '';
+  let currentValue = '';
+  let isMultiLine = false;
+  
   for (const line of lines) {
     const trimmedLine = line.trim();
-    if (trimmedLine && trimmedLine.includes(':') && !trimmedLine.startsWith('#')) {
+    
+    // Skip empty lines and comments
+    if (!trimmedLine || trimmedLine.startsWith('#')) continue;
+    
+    if (isMultiLine) {
+      // Continue building multi-line value
+      currentValue += '\n' + line;
+      continue;
+    }
+    
+    if (trimmedLine.includes(':') && !trimmedLine.startsWith('-')) {
+      // If we were building a previous multi-line value, save it
+      if (currentKey && currentValue) {
+        frontmatter[currentKey] = currentValue.trim();
+        currentKey = '';
+        currentValue = '';
+      }
+      
       const colonIndex = trimmedLine.indexOf(':');
-      const key = trimmedLine.slice(0, colonIndex).trim();
+      currentKey = trimmedLine.slice(0, colonIndex).trim();
       let value: any = trimmedLine.slice(colonIndex + 1).trim();
       
-      // Skip empty values
-      if (!value || value === '') continue;
+      // Check if this starts a multi-line value (no value after colon or ends with pipe/greater than)
+      if (!value || value === '|' || value === '>') {
+        isMultiLine = true;
+        currentValue = '';
+        continue;
+      }
       
       // Remove quotes if present
       if ((value.startsWith('"') && value.endsWith('"')) || 
@@ -69,9 +95,23 @@ const parseFrontmatter = (content: string) => {
         value = value.split('T')[0]; // Extract just the date part
       }
       
-      frontmatter[key] = value;
-      console.log(`Parsed ${key}:`, value);
+      frontmatter[currentKey] = value;
+      console.log(`Parsed ${currentKey}:`, value);
+      currentKey = '';
+    } else if (isMultiLine) {
+      // This is part of a multi-line value
+      if (currentValue) {
+        currentValue += '\n' + line;
+      } else {
+        currentValue = line;
+      }
     }
+  }
+  
+  // Don't forget the last multi-line value if there is one
+  if (currentKey && currentValue) {
+    frontmatter[currentKey] = currentValue.trim();
+    console.log(`Parsed multi-line ${currentKey}:`, currentValue.trim());
   }
   
   return { frontmatter, content: bodyContent };

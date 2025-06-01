@@ -12,6 +12,12 @@ interface ArticleModalProps {
 const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
   if (!article) return null;
 
+  // Get the main content - prioritize bio for award recipients, body for others
+  const mainContent = article.bio || article.body || 'No content available.';
+  
+  console.log('Article data:', article);
+  console.log('Main content:', mainContent);
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -50,7 +56,7 @@ const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
         
         <div className="prose prose-lg max-w-none">
           <div className="whitespace-pre-wrap leading-relaxed text-gray-800 break-words">
-            {article.body || article.bio || 'No content available.'}
+            {mainContent}
           </div>
         </div>
       </DialogContent>
