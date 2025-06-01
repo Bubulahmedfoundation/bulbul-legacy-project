@@ -111,7 +111,7 @@ const About = () => {
             {/* Wasif Ahmed Shubho */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400" alt="Wasif Ahmed Shubho" className="w-full h-full object-cover" />
+                <img alt="Wasif Ahmed Shubho" className="w-full h-full object-cover" src="/lovable-uploads/40c4ccf5-d043-4b64-81d0-2c271a473ef1.jpg" />
               </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Wasif Ahmed Shubho</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
