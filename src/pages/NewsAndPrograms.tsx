@@ -5,7 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Award, Gift, File, Users, Heart, Calendar } from "lucide-react";
 import { CMSContentList } from "@/components/CMSContent";
-
 const NewsAndPrograms = () => {
   const location = useLocation();
 
@@ -15,7 +14,6 @@ const NewsAndPrograms = () => {
   const refugeeRef = useRef<HTMLDivElement>(null);
   const schoolsRef = useRef<HTMLDivElement>(null);
   const covidRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -40,9 +38,7 @@ const NewsAndPrograms = () => {
       }, 100);
     }
   }, [location]);
-
-  return (
-    <>
+  return <>
       {/* Page Header */}
       <section className="pt-32 pb-16 bg-baft-cream/30">
         <div className="container">
@@ -87,9 +83,7 @@ const NewsAndPrograms = () => {
       </section>
 
       {/* Upcoming Events */}
-      <section className="py-20 bg-baft-cream/30">
-        
-      </section>
+      
 
       {/* Programs content - Memorial Award */}
       <section ref={awardRef} id="awards" className="py-20">
@@ -285,8 +279,6 @@ const NewsAndPrograms = () => {
           </div>
         </div>
       </section>
-    </>
-  );
+    </>;
 };
-
 export default NewsAndPrograms;
