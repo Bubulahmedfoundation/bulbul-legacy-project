@@ -99,7 +99,7 @@ const About = () => {
             {/* Tazrin Faraha Oindrila */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
-                <img src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=400" alt="Tazrin Faraha Oindrila" className="w-full h-full object-cover" />
+                <img alt="Tazrin Faraha Oindrila" className="w-full h-full object-cover" src="/lovable-uploads/896db994-f3c8-460a-9c0a-8d01879d30b7.jpg" />
               </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Tazrin Faraha Oindrila</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
