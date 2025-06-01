@@ -117,7 +117,7 @@ const About = () => {
               <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
               <p className="text-sm text-gray-600 mb-3">Board member since 2019</p>
-              <p className="text-sm leading-relaxed">Specializes in community outreach and program development, ensuring our initiatives reach those who need them most.</p>
+              <p className="text-sm leading-relaxed">Wasif Ahmed Shubho, the eldest son of B.A., is also a trustee of the Foundation. A professional banker based in Australia, he nurtures his passion for acting and singing to uphold the family legacy. Under the umbrella of the Foundation, he supports BAFT activists by providing humanitarian assistance both at home and abroad.</p>
             </div>
             
             {/* Naser Ezaz Bijoy */}
