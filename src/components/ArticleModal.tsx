@@ -31,7 +31,8 @@ const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
             <img 
               src={article.image || article.thumbnail} 
               alt={article.title}
-              className="w-full h-64 object-cover rounded-lg"
+              className="w-full h-auto max-h-96 object-contain rounded-lg cursor-pointer"
+              onClick={() => window.open(article.image || article.thumbnail, '_blank')}
             />
           </div>
         )}
