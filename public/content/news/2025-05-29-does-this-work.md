@@ -1,6 +1,6 @@
 ---
 title: Bulbul Ahmed Foundation Trust Launches Eid Food Pack Drive for Flood Victims
-date: 2025-05-29T14:52:50.893Z
+date: 2025-06-01T14:52:50.893Z
 image: /uploads/c09de3a0-c404-4c49-a853-25b9f1e6ea7d.png
 type: news
 excerpt: In response to the devastating floods affecting communities across the
