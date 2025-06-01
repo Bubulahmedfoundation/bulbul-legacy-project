@@ -49,7 +49,7 @@ const ArticleModal = ({ isOpen, onClose, article }: ArticleModalProps) => {
         )}
         
         <div className="prose prose-lg max-w-none">
-          <div className="whitespace-pre-wrap leading-relaxed text-gray-800">
+          <div className="whitespace-pre-wrap leading-relaxed text-gray-800 break-words">
             {article.body || article.bio || 'No content available.'}
           </div>
         </div>
