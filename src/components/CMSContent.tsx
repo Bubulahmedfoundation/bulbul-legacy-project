@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { fetchCollection, CMSContent, refreshContent, clearContentCache } from "@/lib/cms";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "@/components/ui/use-toast";
+import ArticleModal from "./ArticleModal";
 
 interface CMSContentListProps {
   collection: string;
@@ -18,6 +18,8 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
   const [content, setContent] = useState<CMSContent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<CMSContent | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loadContent = async (forceRefresh = false) => {
     setLoading(true);
@@ -88,6 +90,16 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
     }
   };
 
+  const handleArticleClick = (article: CMSContent) => {
+    setSelectedArticle(article);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedArticle(null);
+  };
+
   if (loading) {
     return (
       <div className="py-12 text-center">
@@ -133,73 +145,93 @@ export const CMSContentList = ({ collection, limit = 10, title }: CMSContentList
     );
   }
 
+  // Check if this collection should have clickable items (news and press-releases)
+  const isClickable = collection === 'news' || collection === 'press-releases';
+
   return (
-    <div className="space-y-8">
-      {title && (
-        <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-playfair font-semibold heading-decoration">
-            {title}
-          </h2>
-          <div className="flex gap-2">
-            <Button onClick={handleRefresh} variant="outline" size="sm">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
-            </Button>
-            <Button onClick={handleClearCache} variant="outline" size="sm">
-              <Trash2 className="w-4 h-4 mr-2" />
-              Clear Cache
-            </Button>
+    <>
+      <div className="space-y-8">
+        {title && (
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-playfair font-semibold heading-decoration">
+              {title}
+            </h2>
+            <div className="flex gap-2">
+              <Button onClick={handleRefresh} variant="outline" size="sm">
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Refresh
+              </Button>
+              <Button onClick={handleClearCache} variant="outline" size="sm">
+                <Trash2 className="w-4 h-4 mr-2" />
+                Clear Cache
+              </Button>
+            </div>
           </div>
+        )}
+        
+        <div className="grid md:grid-cols-2 gap-8">
+          {content.map((item, index) => (
+            <Card 
+              key={item.slug || index} 
+              className={`overflow-hidden hover:shadow-lg transition-shadow ${
+                isClickable ? 'cursor-pointer hover:shadow-xl' : ''
+              }`}
+              onClick={isClickable ? () => handleArticleClick(item) : undefined}
+            >
+              {(item.thumbnail || item.image) && (
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src={item.thumbnail || item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.log(`Failed to load image: ${item.thumbnail || item.image}`);
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+              <CardHeader>
+                <CardTitle className="line-clamp-2">{item.title}</CardTitle>
+                {item.date && (
+                  <CardDescription>
+                    {format(new Date(item.date), "MMMM dd, yyyy")}
+                  </CardDescription>
+                )}
+                {item.type && (
+                  <CardDescription className="capitalize">
+                    {item.type}
+                  </CardDescription>
+                )}
+              </CardHeader>
+              <CardContent>
+                {item.excerpt && (
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.excerpt}</p>
+                )}
+                <div className="prose prose-sm max-w-none">
+                  <p className="line-clamp-3 whitespace-pre-line">{item.body}</p>
+                </div>
+                {isClickable && (
+                  <p className="text-xs text-baft-maroon mt-2 font-medium">Click to read more →</p>
+                )}
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      )}
-      
-      <div className="grid md:grid-cols-2 gap-8">
-        {content.map((item, index) => (
-          <Card key={item.slug || index} className="overflow-hidden hover:shadow-lg transition-shadow">
-            {(item.thumbnail || item.image) && (
-              <div className="aspect-video overflow-hidden">
-                <img 
-                  src={item.thumbnail || item.image} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    console.log(`Failed to load image: ${item.thumbnail || item.image}`);
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              </div>
-            )}
-            <CardHeader>
-              <CardTitle className="line-clamp-2">{item.title}</CardTitle>
-              {item.date && (
-                <CardDescription>
-                  {format(new Date(item.date), "MMMM dd, yyyy")}
-                </CardDescription>
-              )}
-              {item.type && (
-                <CardDescription className="capitalize">
-                  {item.type}
-                </CardDescription>
-              )}
-            </CardHeader>
-            <CardContent>
-              {item.excerpt && (
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.excerpt}</p>
-              )}
-              <div className="prose prose-sm max-w-none">
-                <p className="line-clamp-3 whitespace-pre-line">{item.body}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        
+        <div className="text-center text-sm text-gray-500 mt-4">
+          Showing {content.length} {content.length === 1 ? 'item' : 'items'} from {collection}
+          <br />
+          <span className="text-xs">Content auto-refreshes every 2 minutes</span>
+        </div>
       </div>
-      
-      <div className="text-center text-sm text-gray-500 mt-4">
-        Showing {content.length} {content.length === 1 ? 'item' : 'items'} from {collection}
-        <br />
-        <span className="text-xs">Content auto-refreshes every 2 minutes</span>
-      </div>
-    </div>
+
+      <ArticleModal 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        article={selectedArticle}
+      />
+    </>
   );
 };
 
