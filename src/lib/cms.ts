@@ -1,4 +1,3 @@
-
 /**
  * Utility functions for interacting with Netlify CMS content
  */
@@ -142,14 +141,19 @@ const importMarkdownFiles = async (bustCache = false): Promise<Record<string, CM
         const fileName = pathParts[pathParts.length - 1] || '';
         const slug = fileName.replace('.md', '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
         
+        // Handle award recipients special case - use 'name' as title
+        const title = collection === 'award-recipients' 
+          ? frontmatter.name || frontmatter.title || 'Untitled'
+          : frontmatter.title || 'Untitled';
+        
         const item: CMSContent = {
-          title: frontmatter.title || 'Untitled',
+          title,
           slug,
-          date: frontmatter.date,
-          body: body || '',
+          date: frontmatter.date || frontmatter.year?.toString(),
+          body: body || frontmatter.bio || '',
           image: frontmatter.image,
           thumbnail: frontmatter.image || frontmatter.thumbnail,
-          excerpt: frontmatter.excerpt,
+          excerpt: frontmatter.excerpt || frontmatter.category,
           type: frontmatter.type || collection,
           ...frontmatter
         };
