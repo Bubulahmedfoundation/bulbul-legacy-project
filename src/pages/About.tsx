@@ -123,7 +123,7 @@ const About = () => {
             {/* Naser Ezaz Bijoy */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
               <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-baft-cream">
-                <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=400" alt="Naser Ezaz Bijoy" className="w-full h-full object-cover" />
+                <img alt="Naser Ezaz Bijoy" className="w-full h-full object-cover" src="/lovable-uploads/e0d3ed91-94e3-4d24-8a81-6eed99914530.jpg" />
               </div>
               <h3 className="text-xl font-playfair font-semibold mb-2">Naser Ezaz Bijoy</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
