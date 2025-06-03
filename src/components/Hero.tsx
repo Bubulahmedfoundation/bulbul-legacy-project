@@ -1,6 +1,7 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { HandCoins, Award, ArrowDown } from "lucide-react";
+import { Award, ArrowDown } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 const Hero = () => {
   const scrollToNext = () => {
@@ -63,18 +64,11 @@ const Hero = () => {
             </div>
 
             {/* Responsive button layout */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto mt-8">
               <Link to="/about" className="w-full">
                 <Button variant="outline" size="lg" className="border-2 border-white text-white bg-white/5 hover:bg-white/15 text-base md:text-lg group transition-all duration-300 shadow-lg hover:shadow-xl w-full h-12 md:h-14">
                   Learn About Bulbul
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </Button>
-              </Link>
-              
-              <Link to="/get-involved#donate" className="w-full">
-                <Button size="lg" className="bg-baft-gold hover:bg-baft-gold/90 text-black text-base md:text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full h-12 md:h-14">
-                  <HandCoins className="w-5 h-5" />
-                  Donate Now
                 </Button>
               </Link>
               
