@@ -8,19 +8,19 @@ const ctaItems = [
     title: "Bulbul Ahmed Memorial Award",
     description: "Recognizing outstanding contributions to Bangladeshi arts and culture since 2016.",
     icon: Award,
-    link: "/programs#awards"
+    link: "/news-and-programs#awards"
   },
   {
     title: "Humanitarian Initiatives",
     description: "Providing relief and support to vulnerable communities throughout Bangladesh.",
     icon: Gift,
-    link: "/programs#humanitarian"
+    link: "/news-and-programs#humanitarian"
   },
   {
     title: "Upcoming Events",
     description: "Join us for ceremonies, fundraisers, and cultural events throughout the year.",
     icon: Calendar,
-    link: "/news"
+    link: "/news-and-programs"
   }
 ];
 

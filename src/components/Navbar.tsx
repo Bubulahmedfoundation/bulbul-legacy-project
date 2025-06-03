@@ -66,23 +66,6 @@ const Navbar = () => {
           )}>
             Filmography
           </Link>
-          <Link to="/get-involved" className={cn(
-            "transition-colors hover:text-baft-gold px-2 py-1",
-            isScrolled ? "text-baft-darkgray" : "text-white"
-          )}>
-            Get Involved
-          </Link>
-          <Link 
-            to="/get-involved#donate" 
-            className={cn(
-              "px-6 py-2 rounded-md transition-all duration-300", 
-              isScrolled 
-                ? "bg-baft-gold text-white hover:bg-baft-gold/90" 
-                : "bg-baft-gold text-baft-darkgray hover:bg-baft-gold/90"
-            )}
-          >
-            Donate
-          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -145,23 +128,6 @@ const Navbar = () => {
           >
             Filmography
           </Link>
-          <Link 
-            to="/get-involved" 
-            className="text-baft-darkgray hover:text-baft-maroon hover:bg-gray-100 rounded-md transition-colors px-4 py-3 font-medium" 
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Get Involved
-          </Link>
-          
-          <div className="pt-4 mt-4 border-t border-gray-200">
-            <Link 
-              to="/get-involved#donate" 
-              className="w-full px-5 py-3 bg-baft-gold text-baft-darkgray rounded-md text-center hover:bg-baft-gold/90 transition-colors font-medium flex items-center justify-center"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Donate Now
-            </Link>
-          </div>
         </div>
       </div>
     </nav>

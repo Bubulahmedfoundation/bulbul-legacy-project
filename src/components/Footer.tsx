@@ -44,9 +44,8 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><Link to="/" className="text-gray-300 hover:text-baft-gold transition-colors">Home</Link></li>
               <li><Link to="/about" className="text-gray-300 hover:text-baft-gold transition-colors">About Us</Link></li>
-              <li><Link to="/programs" className="text-gray-300 hover:text-baft-gold transition-colors">Programs</Link></li>
-              <li><Link to="/news" className="text-gray-300 hover:text-baft-gold transition-colors">News & Events</Link></li>
-              <li><Link to="/get-involved" className="text-gray-300 hover:text-baft-gold transition-colors">Get Involved</Link></li>
+              <li><Link to="/news-and-programs" className="text-gray-300 hover:text-baft-gold transition-colors">News & Programs</Link></li>
+              <li><Link to="/filmography" className="text-gray-300 hover:text-baft-gold transition-colors">Filmography</Link></li>
             </ul>
           </div>
 
@@ -54,11 +53,11 @@ const Footer = () => {
           <div>
             <h3 className="font-playfair text-xl mb-4 font-semibold">Programs</h3>
             <ul className="space-y-2">
-              <li><Link to="/programs#awards" className="text-gray-300 hover:text-baft-gold transition-colors">Memorial Award</Link></li>
-              <li><Link to="/programs#winter" className="text-gray-300 hover:text-baft-gold transition-colors">Winter Drives</Link></li>
-              <li><Link to="/programs#refugee" className="text-gray-300 hover:text-baft-gold transition-colors">Refugee Support</Link></li>
-              <li><Link to="/programs#schools" className="text-gray-300 hover:text-baft-gold transition-colors">School Support</Link></li>
-              <li><Link to="/programs#covid" className="text-gray-300 hover:text-baft-gold transition-colors">COVID-19 Relief</Link></li>
+              <li><Link to="/news-and-programs#awards" className="text-gray-300 hover:text-baft-gold transition-colors">Memorial Award</Link></li>
+              <li><Link to="/news-and-programs#winter" className="text-gray-300 hover:text-baft-gold transition-colors">Winter Drives</Link></li>
+              <li><Link to="/news-and-programs#refugee" className="text-gray-300 hover:text-baft-gold transition-colors">Refugee Support</Link></li>
+              <li><Link to="/news-and-programs#schools" className="text-gray-300 hover:text-baft-gold transition-colors">School Support</Link></li>
+              <li><Link to="/news-and-programs#covid" className="text-gray-300 hover:text-baft-gold transition-colors">COVID-19 Relief</Link></li>
             </ul>
           </div>
 

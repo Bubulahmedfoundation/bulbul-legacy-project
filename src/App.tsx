@@ -8,7 +8,6 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import NewsAndPrograms from "./pages/NewsAndPrograms";
-import GetInvolved from "./pages/GetInvolved";
 import Filmography from "./pages/Filmography";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
@@ -59,15 +58,6 @@ const App = () => (
             {/* Redirect old routes to the new combined page */}
             <Route path="/news" element={<Navigate to="/news-and-programs" />} />
             <Route path="/programs" element={<Navigate to="/news-and-programs" />} />
-            <Route path="/get-involved" element={
-              <>
-                <Navbar />
-                <main>
-                  <GetInvolved />
-                </main>
-                <Footer />
-              </>
-            } />
             <Route path="/filmography" element={
               <>
                 <Navbar />
