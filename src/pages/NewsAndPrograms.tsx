@@ -183,7 +183,7 @@ const NewsAndPrograms = () => {
             </div>
             <div className="relative">
               <div className="border-4 border-white shadow-md rounded overflow-hidden">
-                <img src="/lovable-uploads/057c4d23-f52f-4405-8d04-d9226dea839d.png" alt="Refugee support program" className="w-full h-full object-cover" />
+                <img alt="Refugee support program" className="w-full h-full object-cover" src="/lovable-uploads/921a794c-4647-4890-949d-055667698717.jpg" />
               </div>
             </div>
           </div>
