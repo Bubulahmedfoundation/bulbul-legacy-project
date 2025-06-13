@@ -49,7 +49,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <Mail className="w-5 h-5 mr-3 mt-0.5 text-baft-gold" />
-                <span className="text-gray-300">contact@bulbulahmedfoundation.org</span>
+                <span className="text-gray-300">mohanayokbaft</span>
               </li>
               <li className="flex items-start">
                 <Phone className="w-5 h-5 mr-3 mt-0.5 text-baft-gold" />
