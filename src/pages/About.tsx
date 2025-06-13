@@ -28,7 +28,7 @@ const About = () => {
               <h2 className="text-3xl font-playfair font-semibold mb-6 heading-decoration">
                 Our Story
               </h2>
-              <p className="mb-4 leading-relaxed">The Bulbul Ahmed Foundation Trust was established in 2015 by the family of legendary Bangladeshi actor Bulbul Ahmed, who passed away in 2010. The foundation was created to honor his memory and continue his lifelong commitment to arts, culture, and humanitarian causes.</p>
+              <p className="mb-4 leading-relaxed">The Bulbul Ahmed Foundation Trust (BAFT) was established in 2015 by the family of legendary Bangladeshi actor Bulbul Ahmed, who passed away in 2010. The foundation was created to honor his memory and continue his lifelong commitment to arts, culture, and humanitarian causes.</p>
               <p className="mb-4 leading-relaxed">Born on 4th September 1941, Bulbul Ahmed was one of Bangladesh's most versatile and beloved actors. His career spanned over four decades, during which he portrayed memorable characters in cinema, television, and theater. Beyond his artistic contributions, he was known for his philanthropic activities and support for social causes.</p>
               <p className="leading-relaxed">Today, Bulbul Ahmed Foundation Trust works to preserve his cultural legacy while extending his humanitarian spirit through various programs focused on education, cultural preservation, and providing relief to communities in need.</p>
             </div>
@@ -76,7 +76,7 @@ const About = () => {
                 <h3 className="text-2xl font-playfair font-semibold mb-2">Tahsin Farzana Tilottoma</h3>
                 <p className="text-baft-maroon mb-4">General Secretary</p>
                 <Separator className="mb-4" />
-                <p className="leading-relaxed">Tahsin Farzana Tilottoma, the eldest daughter of BA is GS of BAFT . By profession she is a lawyer and also a singer. As General Secretary oversees the day-to-day operations of Bulbul Ahmed Foundation Trust. With extensive experience in nonprofit management and community development, she has successfully expanded the foundation's reach and impact since joining in 2015. Her dedication to both preserving cultural heritage and providing humanitarian aid has been vital to the foundation's success.</p>
+                <p className="leading-relaxed">Tahsin Farzana Tilottoma, the eldest daughter of Bulbul Ahmed is General Secretary of Bulbul Ahmed Foundation Trust (BAFT) . By profession she is a lawyer and also a singer. As General Secretary, she oversees the day-to-day operations of Bulbul Ahmed Foundation Trust. With extensive experience in nonprofit management and community development, she has successfully expanded the foundation's reach and impact since joining in 2015. Her dedication to both preserving cultural heritage and providing humanitarian aid has been vital to the foundation's success.</p>
               </div>
             </div>
           </div>
