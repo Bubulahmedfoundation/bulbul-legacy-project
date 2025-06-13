@@ -1,12 +1,8 @@
-
 import { Link } from "react-router-dom";
 import { Facebook, Youtube, Mail, Phone } from "lucide-react";
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  return (
-    <footer className="bg-baft-darkgray text-white">
+  return <footer className="bg-baft-darkgray text-white">
       <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {/* Foundation Info */}
@@ -17,24 +13,10 @@ const Footer = () => {
               humanitarian efforts since 2015.
             </p>
             <div className="flex space-x-3 mt-6">
-              <a 
-                href="https://www.facebook.com/profile.php?id=100036108054429" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-baft-gold/80 transition-colors"
-                aria-label="Facebook"
-              >
+              <a href="https://www.facebook.com/profile.php?id=100036108054429" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-baft-gold/80 transition-colors" aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a 
-                href="https://youtube.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-baft-gold/80 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
+              
             </div>
           </div>
 
@@ -94,8 +76,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
