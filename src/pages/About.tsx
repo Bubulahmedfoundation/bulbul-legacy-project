@@ -28,12 +28,7 @@ const About = () => {
               <h2 className="text-3xl font-playfair font-semibold mb-6 heading-decoration">
                 Our Story
               </h2>
-              <p className="mb-4 leading-relaxed">
-                The Bulbul Ahmed Foundation Trust was established in 2015 by the family and friends of 
-                the legendary Bangladeshi actor Bulbul Ahmed, who passed away in 2010. The foundation 
-                was created to honor his memory and continue his lifelong commitment to arts, 
-                culture, and humanitarian causes.
-              </p>
+              <p className="mb-4 leading-relaxed">The Bulbul Ahmed Foundation Trust was established in 2015 by the family of legendary Bangladeshi actor Bulbul Ahmed, who passed away in 2010. The foundation was created to honor his memory and continue his lifelong commitment to arts, culture, and humanitarian causes.</p>
               <p className="mb-4 leading-relaxed">Born on 4th September 1941, Bulbul Ahmed was one of Bangladesh's most versatile and beloved actors. His career spanned over four decades, during which he portrayed memorable characters in cinema, television, and theater. Beyond his artistic contributions, he was known for his philanthropic activities and support for social causes.</p>
               <p className="leading-relaxed">Today, Bulbul Ahmed Foundation Trust works to preserve his cultural legacy while extending his humanitarian spirit through various programs focused on education, cultural preservation, and providing relief to communities in need.</p>
             </div>
