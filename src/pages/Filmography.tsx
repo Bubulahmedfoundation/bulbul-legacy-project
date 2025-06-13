@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import { Film } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,7 +26,7 @@ const films = [
   },
   {
     id: 11,
-    title: "New Film",
+    title: "Bhalo Manush",
     year: 1981,
     videoUrl: "https://www.youtube.com/embed/y_pWq63g6Jg",
   },
