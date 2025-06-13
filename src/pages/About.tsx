@@ -216,10 +216,7 @@ const About = () => {
           </Carousel>
           
           <div className="max-w-3xl mx-auto mt-12 text-center">
-            <p className="italic text-lg">
-              "Art is the mirror that reflects society's soul. Through our cultural work, we preserve 
-              not just memories, but identity and heritage for generations to come."
-            </p>
+            <p className="italic text-lg">&quot;The greatest joy in life is seeing your child smile&quot;</p>
             <p className="mt-4 text-baft-maroon font-medium">— Bulbul Ahmed (1940-2010)</p>
           </div>
         </div>
