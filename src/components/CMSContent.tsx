@@ -3,15 +3,17 @@ import { fetchCollection, CMSContent, refreshContent, clearContentCache } from "
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Trash2 } from "lucide-react";
+import { RefreshCw, Trash2, Play } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "@/components/ui/use-toast";
 import ArticleModal from "./ArticleModal";
+
 interface CMSContentListProps {
   collection: string;
   limit?: number;
   title?: string;
 }
+
 export const CMSContentList = ({
   collection,
   limit = 10,
@@ -22,6 +24,7 @@ export const CMSContentList = ({
   const [error, setError] = useState<string | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<CMSContent | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const loadContent = async (forceRefresh = false) => {
     setLoading(true);
     setError(null);
@@ -48,13 +51,16 @@ export const CMSContentList = ({
       setLoading(false);
     }
   };
+
   useEffect(() => {
     loadContent();
   }, [collection, limit]);
+
   const handleRefresh = () => {
     console.log(`Refreshing ${collection} content...`);
     loadContent(true);
   };
+
   const handleClearCache = () => {
     console.log('Clearing content cache...');
     clearContentCache();
@@ -64,6 +70,7 @@ export const CMSContentList = ({
     });
     loadContent(true);
   };
+
   const handleFullRefresh = async () => {
     console.log('Full content refresh...');
     setLoading(true);
@@ -85,20 +92,37 @@ export const CMSContentList = ({
       setLoading(false);
     }
   };
+
+  const handleVideoClick = (videoUrl: string) => {
+    if (videoUrl) {
+      window.open(videoUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   const handleArticleClick = (article: CMSContent) => {
+    // For videos, open the video URL directly
+    if (collection === 'videos' && article.videoUrl) {
+      handleVideoClick(article.videoUrl);
+      return;
+    }
+    
+    // For other content types, open in modal
     setSelectedArticle(article);
     setIsModalOpen(true);
   };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedArticle(null);
   };
+
   if (loading) {
     return <div className="py-12 text-center">
         <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-4" />
         <p>Loading content...</p>
       </div>;
   }
+
   if (error) {
     return <div className="py-12 text-center">
         <p className="text-red-600 mb-4">{error}</p>
@@ -114,6 +138,7 @@ export const CMSContentList = ({
         </div>
       </div>;
   }
+
   if (content.length === 0) {
     return <div className="py-12 text-center">
         <p className="mb-4">No content available for {collection}.</p>
@@ -130,8 +155,9 @@ export const CMSContentList = ({
       </div>;
   }
 
-  // Check if this collection should have clickable items (news, press-releases, and award-recipients)
-  const isClickable = collection === 'news' || collection === 'press-releases' || collection === 'award-recipients';
+  // Check if this collection should have clickable items
+  const isClickable = collection === 'news' || collection === 'press-releases' || collection === 'award-recipients' || collection === 'videos';
+  
   return <>
       <div className="space-y-8">
         {title && <div className="flex items-center justify-between">
@@ -151,12 +177,17 @@ export const CMSContentList = ({
           </div>}
         
         <div className="grid md:grid-cols-2 gap-8">
-          {content.map((item, index) => <Card key={item.slug || index} className={`overflow-hidden hover:shadow-lg transition-shadow ${isClickable ? 'cursor-pointer hover:shadow-xl' : ''}`} onClick={isClickable ? () => handleArticleClick(item) : undefined}>
-              {(item.thumbnail || item.image) && <div className="aspect-video overflow-hidden">
+          {content.map((item, index) => <Card key={item.slug || index} className={`overflow-hidden hover:shadow-lg transition-shadow ${isClickable ? 'cursor-pointer hover:shadow-xl' : ''} ${collection === 'videos' ? 'relative' : ''}`} onClick={isClickable ? () => handleArticleClick(item) : undefined}>
+              {(item.thumbnail || item.image) && <div className="aspect-video overflow-hidden relative">
                   <img src={item.thumbnail || item.image} alt={item.title} className="w-full h-full object-cover" onError={e => {
               console.log(`Failed to load image: ${item.thumbnail || item.image}`);
               e.currentTarget.style.display = 'none';
             }} />
+                  {collection === 'videos' && <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
+                      <div className="bg-white/90 rounded-full p-4 hover:bg-white transition-colors">
+                        <Play className="w-8 h-8 text-baft-maroon ml-1" fill="currentColor" />
+                      </div>
+                    </div>}
                 </div>}
               <CardHeader>
                 <CardTitle className="line-clamp-2">{item.title}</CardTitle>
@@ -172,7 +203,9 @@ export const CMSContentList = ({
                 <div className="prose prose-sm max-w-none">
                   <p className="line-clamp-3 whitespace-pre-line font-thin">{item.body}</p>
                 </div>
-                {isClickable && <p className="text-xs text-baft-maroon mt-2 font-medium">Click to read more →</p>}
+                {isClickable && <p className="text-xs text-baft-maroon mt-2 font-medium">
+                    {collection === 'videos' ? 'Click to watch video →' : 'Click to read more →'}
+                  </p>}
               </CardContent>
             </Card>)}
         </div>
@@ -187,10 +220,12 @@ export const CMSContentList = ({
       <ArticleModal isOpen={isModalOpen} onClose={handleCloseModal} article={selectedArticle} />
     </>;
 };
+
 interface CMSContentItemProps {
   collection: string;
   slug: string;
 }
+
 export const CMSContentItem = ({
   collection,
   slug
