@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Film } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,6 +22,12 @@ const films = [
     title: "Shesh Uttar",
     year: 1980,
     videoUrl: "https://www.youtube.com/embed/-00wuAQLEGs",
+  },
+  {
+    id: 11,
+    title: "New Film",
+    year: 1981,
+    videoUrl: "https://www.youtube.com/embed/y_pWq63g6Jg",
   },
   {
     id: 4,
