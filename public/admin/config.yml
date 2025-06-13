@@ -37,7 +37,7 @@ collections:
     create: true
     fields:
       - {label: "Name", name: "name", widget: "string"}
-      - {label: "Year", name: "year", widget: "number"}
+      - {label: "Award Date", name: "date", widget: "datetime"}
       - {label: "Category", name: "category", widget: "string"}
       - {label: "Portrait", name: "image", widget: "image"}
       - {label: "Bio", name: "body", widget: "markdown"}
