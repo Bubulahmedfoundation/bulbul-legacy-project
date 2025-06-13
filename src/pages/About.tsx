@@ -217,7 +217,7 @@ const About = () => {
           
           <div className="max-w-3xl mx-auto mt-12 text-center">
             <p className="italic text-lg">&quot;The greatest joy in life is seeing your child smile&quot;</p>
-            <p className="mt-4 text-baft-maroon font-medium">— Bulbul Ahmed (1940-2010)</p>
+            <p className="mt-4 text-baft-maroon font-medium">— Bulbul Ahmed (1941-2010)</p>
           </div>
         </div>
       </section>
