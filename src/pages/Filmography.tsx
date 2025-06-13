@@ -18,7 +18,7 @@ const films = [
   },
   {
     id: 12,
-    title: "New Film",
+    title: "Rupali Soikote",
     year: 1979,
     videoUrl: "https://www.youtube.com/embed/smGSt_9khIk",
   },
