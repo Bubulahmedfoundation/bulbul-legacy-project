@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Film } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +21,18 @@ const films = [
     title: "Rupali Soikote",
     year: 1979,
     videoUrl: "https://www.youtube.com/embed/smGSt_9khIk",
+  },
+  {
+    id: 14,
+    title: "Wada",
+    year: 1979,
+    videoUrl: "https://www.youtube.com/embed/4XUemXDB8dQ",
+  },
+  {
+    id: 8,
+    title: "The Father",
+    year: 1979,
+    videoUrl: "https://www.youtube.com/embed/bF9UeoRRVtw",
   },
   {
     id: 3,
@@ -70,12 +81,6 @@ const films = [
     title: "Dipu Number 2",
     year: 1996,
     videoUrl: "https://www.youtube.com/embed/-zz7T8waQbI",
-  },
-  {
-    id: 8,
-    title: "The Father",
-    year: 1979,
-    videoUrl: "https://www.youtube.com/embed/bF9UeoRRVtw",
   },
 ];
 
