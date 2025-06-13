@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import { Film } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,6 +15,12 @@ const films = [
     title: "Badhu Biday",
     year: 1978,
     videoUrl: "https://www.youtube.com/embed/8XyDvGrfi-g",
+  },
+  {
+    id: 12,
+    title: "New Film",
+    year: 1979,
+    videoUrl: "https://www.youtube.com/embed/smGSt_9khIk",
   },
   {
     id: 3,
