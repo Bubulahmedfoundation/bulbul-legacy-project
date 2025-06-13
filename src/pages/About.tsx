@@ -99,8 +99,8 @@ const About = () => {
               <h3 className="text-xl font-playfair font-semibold mb-2">Tazrin Faraha Oindrila</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-sm text-gray-600 mb-3">Board member since 2018</p>
-              <p className="text-sm leading-relaxed">Tazrin Farhana Oindrila, the youngest daughter of BA is one of the members of BAFT . She, also known as Oindrila Ahmed, is a Bangladeshi actress, TV presenter, and aspiring filmmaker. As a trustee she helps to fulfill the vision and mission of BAFT</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2015</p>
+              <p className="text-sm leading-relaxed">Tazrin Farhana Oindrila, the youngest daughter of Bulbul Ahmed is one of the members of BAFT . She, also known as Oindrila Ahmed, is a Bangladeshi actress, TV presenter, and aspiring filmmaker. As a trustee she helps to fulfill the vision and mission of BAFT</p>
             </div>
             
             {/* Wasif Ahmed Shubho */}
@@ -111,8 +111,8 @@ const About = () => {
               <h3 className="text-xl font-playfair font-semibold mb-2">Wasif Ahmed Shubho</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-sm text-gray-600 mb-3">Board member since 2019</p>
-              <p className="text-sm leading-relaxed">Wasif Ahmed Shubho, the eldest son of B.A., is also a trustee of the Foundation. A professional banker based in Australia, he nurtures his passion for acting and singing to uphold the family legacy. Under the umbrella of the Foundation, he supports BAFT activists by providing humanitarian assistance both at home and abroad.</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2015</p>
+              <p className="text-sm leading-relaxed">Wasif Ahmed Shubho, the eldest son of Bulbul Ahmed, is also a trustee of the Foundation. A professional banker based in Australia, he nurtures his passion for acting and singing to uphold the family legacy. Under the umbrella of the Foundation, he supports BAFT activists by providing humanitarian assistance both at home and abroad.</p>
             </div>
             
             {/* Naser Ezaz Bijoy */}
@@ -123,7 +123,7 @@ const About = () => {
               <h3 className="text-xl font-playfair font-semibold mb-2">Naser Ezaz Bijoy</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-sm text-gray-600 mb-3">Board member since 2017</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2015</p>
               <p className="text-sm leading-relaxed">Naser Ezaz Bijoy, CEO of Standard Chartered Bank, Bangladesh is another member of the board of trustees of BAFT . He is the eldest Son in law of Mohanayok Bulbul Ahmed</p>
             </div>
             
@@ -135,7 +135,7 @@ const About = () => {
               <h3 className="text-xl font-playfair font-semibold mb-2">Shukla Sarwat Siraj</h3>
               <p className="text-baft-maroon mb-3">Trustee</p>
               <Separator className="my-4 mx-auto w-16" />
-              <p className="text-sm text-gray-600 mb-3">Board member since 2016</p>
+              <p className="text-sm text-gray-600 mb-3">Board member since 2015</p>
               <p className="text-sm leading-relaxed">Barrister Shukla Sarwat Siraj, a senior Supreme Court lawyer in Bangladesh is another member of the board of Trustees and the legal adviser of BAFT . She actively works to protect Bangladesh’s cultural heritage and traditional products.</p>
             </div>
           </div>
